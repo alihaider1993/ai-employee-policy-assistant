@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: employee-policy-postgres
+    environment:
+      POSTGRES_DB: employee_policy
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: local_dev_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: employee-policy-api
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://app_user:local_dev_password@postgres:5432/employee_policy
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+pydantic-settings
+sqlalchemy
+psycopg[binary]
+langchain
+langgraph
+openai
+langchain-openai
+langchain-community
+pypdf
+langchain-text-splitters
+azure-search-documents
+pytest
+httpx
