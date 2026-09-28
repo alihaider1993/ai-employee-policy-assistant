@@ -8,6 +8,12 @@ Built with **Python, FastAPI, LangChain, LangGraph, Azure OpenAI, Azure AI Searc
 
 ---
 
+## 🎥 Project Demo
+
+[▶️ Watch the 3-minute AI Employee Policy Assistant Demo](https://www.loom.com/share/b6b551c614f143198fc6277c381a2c57)
+
+The demo shows the production application running on Azure, including the FastAPI API, LangGraph routing, RAG-based policy answers with source attribution, Azure AI Search vector retrieval, Azure OpenAI deployments, and automated testing.
+
 ## Architecture
 
 ```text
@@ -60,6 +66,40 @@ Built with **Python, FastAPI, LangChain, LangGraph, Azure OpenAI, Azure AI Searc
         PostgreSQL
        Persistence
 ```
+
+---
+
+## 📸 Application Screenshots
+
+### Production FastAPI API
+
+The application is deployed to Azure Container Apps and exposed through a FastAPI REST API with automatically generated Swagger documentation.
+
+![Production FastAPI Swagger UI](docs/screenshots/01-fastapi-swagger.png)
+
+### Grounded RAG Responses
+
+Policy questions are answered using retrieved context from the FCA Employee Handbook. The API returns the generated answer together with the source document and page numbers.
+
+![RAG response with source attribution](docs/screenshots/03-carry-over-leave-rag-sources.png)
+
+### LangGraph Routing and Scope Control
+
+LangGraph classifies incoming requests and routes them through different workflow branches. Requests outside the employee-policy scope receive a controlled response rather than being passed through the policy RAG pipeline.
+
+![Out-of-scope LangGraph routing](docs/screenshots/07-out-of-scope-routing.png)
+
+### Azure AI Search Vector Index
+
+The FCA Employee Handbook was split into 410 chunks, embedded using Azure OpenAI `text-embedding-3-small`, and indexed in Azure AI Search for vector retrieval.
+
+![Azure AI Search vector index](docs/screenshots/11-azure-ai-search-vector-index.png)
+
+### Automated Testing
+
+The project includes pytest coverage for API behaviour and LangGraph workflow logic.
+
+![Pytest results - 5 tests passed](docs/screenshots/13-pytest-5-passed.png)
 
 ---
 
