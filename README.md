@@ -1,8 +1,8 @@
 # AI Employee Policy Assistant
 
-A production-style **Retrieval-Augmented Generation (RAG)** application for answering employee policy questions using grounded document retrieval and Large Language Models.
+I built this project to get hands-on experience with LangChain, LangGraph, PostgreSQL and Docker.
 
-The project demonstrates how a modern AI application can combine API development, workflow orchestration, vector search, LLMs, relational databases, containerisation, automated testing, and cloud deployment.
+It's a RAG application that answers employee policy questions from an actual policy document and shows which pages each answer came from. For the demo I'm using the publicly available FCA Employee Handbook. It runs as a FastAPI service on Azure Container Apps, with Azure OpenAI for the models and Azure AI Search for retrieval.
 
 Built with **Python, FastAPI, LangChain, LangGraph, Azure OpenAI, Azure AI Search, PostgreSQL, SQLAlchemy, Alembic, Docker, pytest, Azure Container Registry, and Azure Container Apps**.
 
