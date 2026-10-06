@@ -1,24 +1,18 @@
-from datetime import date
-
 from app.core import rate_limit
 from app.core.rate_limit import RateLimiter, client_ip
 
 
-class FakeTime:
+class FakeClock:
     def __init__(self):
         self.now = 0.0
-        self.day = date(2026, 1, 1)
 
-    def clock(self):
+    def __call__(self):
         return self.now
 
-    def today(self):
-        return self.day
 
-
-def make_limiter(per_minute=2, per_day=100):
-    fake = FakeTime()
-    return RateLimiter(per_minute, per_day, clock=fake.clock, today=fake.today), fake
+def make_limiter(per_minute=2):
+    clock = FakeClock()
+    return RateLimiter(per_minute, clock=clock), clock
 
 
 def test_allows_up_to_per_minute_limit_then_refuses():
@@ -48,23 +42,14 @@ def test_per_minute_window_slides():
 
 
 def test_refused_requests_do_not_count():
-    limiter, fake = make_limiter(per_minute=1, per_day=2)
+    limiter, fake = make_limiter(per_minute=1)
 
     assert limiter.check("a") is None
+    fake.now = 30.0
     assert limiter.check("a") is not None
+    # Only the allowed request at t=0 counts, so the window is clear at t=60.
     fake.now = 60.0
     assert limiter.check("a") is None
-
-
-def test_daily_limit_applies_across_clients_and_resets_next_day():
-    limiter, fake = make_limiter(per_minute=10, per_day=2)
-
-    assert limiter.check("a") is None
-    assert limiter.check("b") is None
-    assert "daily question limit" in limiter.check("c")
-
-    fake.day = date(2026, 1, 2)
-    assert limiter.check("c") is None
 
 
 def test_client_ip_uses_address_added_by_the_trusted_proxy():

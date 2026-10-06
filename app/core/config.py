@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     azure_search_index: str
 
     # Caps on questions, to limit Azure OpenAI spend when the app is public.
+    # Per minute applies per visitor to every question; per day is counted in
+    # Postgres across all visitors, for questions that call Azure (not cached).
     rate_limit_per_minute: int = 5
     rate_limit_per_day: int = 200
     # Proxies in front of the app that append to X-Forwarded-For; 0 means none.

@@ -1,8 +1,8 @@
-"""In-memory request limits that cap Azure OpenAI spend on a public demo.
+"""Per-visitor request limits for the public demo.
 
-State lives in the process, so limits reset on restart and apply per replica.
-That is enough for a single-replica deployment (Hugging Face Spaces, or
-Container Apps at 0-1 replicas).
+The per-minute limit lives in the process, so it resets on restart and applies
+per replica. The daily cap on Azure spend is counted in Postgres instead (see
+app/database/daily_cap.py) so restarts and redeploys can't reset it.
 """
 
 import logging
@@ -48,29 +48,22 @@ def client_ip(headers, fallback, trusted_hops=1):
     return addresses[-min(trusted_hops, len(addresses))]
 
 
+class DailyCapReached(Exception):
+    """Raised instead of calling Azure once today's question cap is used up."""
+
+    message = "The demo has reached its daily question limit. Please try again tomorrow."
+
+
 class RateLimiter:
-    def __init__(self, per_client_per_minute, global_per_day, clock=time.monotonic, today=utc_today):
+    def __init__(self, per_client_per_minute, clock=time.monotonic):
         self.per_client_per_minute = per_client_per_minute
-        self.global_per_day = global_per_day
         self._clock = clock
-        self._today = today
         self._lock = threading.Lock()
         self._hits = {}
-        self._day = today()
-        self._day_count = 0
 
     def check(self, client):
-        """Record a request from client and return None, or a refusal message if over a limit."""
+        """Record a request from client and return None, or a refusal message if over the limit."""
         with self._lock:
-            today = self._today()
-            if today != self._day:
-                self._day = today
-                self._day_count = 0
-                self._hits.clear()
-
-            if self._day_count >= self.global_per_day:
-                return "The demo has reached its daily question limit. Please try again tomorrow."
-
             now = self._clock()
             if len(self._hits) > MAX_TRACKED_CLIENTS:
                 self._drop_idle_clients(now)
@@ -82,7 +75,6 @@ class RateLimiter:
                 return "You're asking questions too quickly. Please wait a minute and try again."
 
             hits.append(now)
-            self._day_count += 1
             return None
 
     def _drop_idle_clients(self, now):

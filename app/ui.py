@@ -4,7 +4,7 @@ import logging
 
 import gradio as gr
 
-from app.core.rate_limit import client_ip
+from app.core.rate_limit import DailyCapReached, client_ip
 from app.schemas.ask import MAX_QUESTION_LENGTH
 
 logger = logging.getLogger(__name__)
@@ -44,6 +44,8 @@ def make_responder(answer_question, limiter, trusted_hops):
 
         try:
             return format_answer(answer_question(question))
+        except DailyCapReached:
+            return DailyCapReached.message
         except Exception:
             logger.exception("Failed to answer a UI question")
             return "Something went wrong while answering. Please try again, or rephrase the question."

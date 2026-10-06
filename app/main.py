@@ -6,8 +6,9 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 
 from app.core.config import settings
-from app.core.rate_limit import RateLimiter, client_ip
+from app.core.rate_limit import DailyCapReached, RateLimiter, client_ip, utc_today
 from app.database.connection import SessionLocal
+from app.database.daily_cap import reserve_daily_question
 from app.graph.workflow import policy_graph
 from app.models.conversation import Conversation
 from app.schemas.ask import AskRequest, AskResponse
@@ -24,8 +25,8 @@ app = FastAPI(
     version=settings.app_version,
 )
 
-# Shared by /ask and the UI so both count towards the same limits.
-limiter = RateLimiter(settings.rate_limit_per_minute, settings.rate_limit_per_day)
+# Shared by /ask and the UI so both count towards the same per-minute limit.
+limiter = RateLimiter(settings.rate_limit_per_minute)
 
 
 def answer_question(question: str) -> AskResponse:
@@ -45,6 +46,10 @@ def answer_question(question: str) -> AskResponse:
             return AskResponse(
                 answer=cached_conversation.answer,
             )
+
+        # Only questions that call Azure count towards the daily cap
+        if not reserve_daily_question(db, settings.rate_limit_per_day, utc_today()):
+            raise DailyCapReached()
 
         # No cached answer, so run the AI workflow
         result = policy_graph.invoke(
@@ -99,7 +104,10 @@ def ask_question(payload: AskRequest, request: Request):
     if refusal:
         raise HTTPException(status_code=429, detail=refusal)
 
-    return answer_question(payload.question)
+    try:
+        return answer_question(payload.question)
+    except DailyCapReached:
+        raise HTTPException(status_code=429, detail=DailyCapReached.message)
 
 
 app = gr.mount_gradio_app(
