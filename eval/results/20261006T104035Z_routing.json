@@ -1,0 +1,760 @@
+{
+  "part": "routing",
+  "started_at": "2026-10-06T10:40:35+00:00",
+  "summary": {
+    "runs": 3,
+    "total": 63,
+    "outcomes": {
+      "correct": 61,
+      "wrong": 2,
+      "invalid": 0,
+      "error": 0
+    },
+    "accuracy_by_type": {
+      "policy": {
+        "total": 33,
+        "correct": 31,
+        "accuracy": 0.9393939393939394
+      },
+      "not_covered": {
+        "total": 9,
+        "correct": 9,
+        "accuracy": 1.0
+      },
+      "general": {
+        "total": 12,
+        "correct": 12,
+        "accuracy": 1.0
+      },
+      "out_of_scope": {
+        "total": 9,
+        "correct": 9,
+        "accuracy": 1.0
+      }
+    },
+    "confusion": {
+      "policy_question": {
+        "policy_question": 40,
+        "general_question": 2,
+        "out_of_scope": 0,
+        "invalid": 0,
+        "error": 0
+      },
+      "general_question": {
+        "policy_question": 0,
+        "general_question": 12,
+        "out_of_scope": 0,
+        "invalid": 0,
+        "error": 0
+      },
+      "out_of_scope": {
+        "policy_question": 0,
+        "general_question": 0,
+        "out_of_scope": 9,
+        "invalid": 0,
+        "error": 0
+      }
+    },
+    "labels_by_question": {
+      "q01": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q02": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q03": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q04": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q05": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q06": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q07": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q08": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q09": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q10": {
+        "expected_label": "policy_question",
+        "labels": {
+          "general_question": 2,
+          "policy_question": 1
+        }
+      },
+      "q11": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q12": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q13": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q14": {
+        "expected_label": "policy_question",
+        "labels": {
+          "policy_question": 3
+        }
+      },
+      "q15": {
+        "expected_label": "general_question",
+        "labels": {
+          "general_question": 3
+        }
+      },
+      "q16": {
+        "expected_label": "general_question",
+        "labels": {
+          "general_question": 3
+        }
+      },
+      "q17": {
+        "expected_label": "out_of_scope",
+        "labels": {
+          "out_of_scope": 3
+        }
+      },
+      "q18": {
+        "expected_label": "out_of_scope",
+        "labels": {
+          "out_of_scope": 3
+        }
+      },
+      "q19": {
+        "expected_label": "out_of_scope",
+        "labels": {
+          "out_of_scope": 3
+        }
+      },
+      "q20": {
+        "expected_label": "general_question",
+        "labels": {
+          "general_question": 3
+        }
+      },
+      "q21": {
+        "expected_label": "general_question",
+        "labels": {
+          "general_question": 3
+        }
+      }
+    },
+    "changed_between_runs": [
+      "q10"
+    ]
+  },
+  "results": [
+    {
+      "run": 1,
+      "id": "q01",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q02",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q03",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q04",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q05",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q06",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q07",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q08",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q09",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q10",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "general_question",
+      "outcome": "wrong",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q11",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q12",
+      "type": "not_covered",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q13",
+      "type": "not_covered",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q14",
+      "type": "not_covered",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q15",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q16",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q17",
+      "type": "out_of_scope",
+      "expected_label": "out_of_scope",
+      "label": "out_of_scope",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q18",
+      "type": "out_of_scope",
+      "expected_label": "out_of_scope",
+      "label": "out_of_scope",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q19",
+      "type": "out_of_scope",
+      "expected_label": "out_of_scope",
+      "label": "out_of_scope",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q20",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 1,
+      "id": "q21",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q01",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q02",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q03",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q04",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q05",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q06",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q07",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q08",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q09",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q10",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "general_question",
+      "outcome": "wrong",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q11",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q12",
+      "type": "not_covered",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q13",
+      "type": "not_covered",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q14",
+      "type": "not_covered",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q15",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q16",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q17",
+      "type": "out_of_scope",
+      "expected_label": "out_of_scope",
+      "label": "out_of_scope",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q18",
+      "type": "out_of_scope",
+      "expected_label": "out_of_scope",
+      "label": "out_of_scope",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q19",
+      "type": "out_of_scope",
+      "expected_label": "out_of_scope",
+      "label": "out_of_scope",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q20",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 2,
+      "id": "q21",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q01",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q02",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q03",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q04",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q05",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q06",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q07",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q08",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q09",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q10",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q11",
+      "type": "policy",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q12",
+      "type": "not_covered",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q13",
+      "type": "not_covered",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q14",
+      "type": "not_covered",
+      "expected_label": "policy_question",
+      "label": "policy_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q15",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q16",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q17",
+      "type": "out_of_scope",
+      "expected_label": "out_of_scope",
+      "label": "out_of_scope",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q18",
+      "type": "out_of_scope",
+      "expected_label": "out_of_scope",
+      "label": "out_of_scope",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q19",
+      "type": "out_of_scope",
+      "expected_label": "out_of_scope",
+      "label": "out_of_scope",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q20",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    },
+    {
+      "run": 3,
+      "id": "q21",
+      "type": "general",
+      "expected_label": "general_question",
+      "label": "general_question",
+      "outcome": "correct",
+      "error": null
+    }
+  ]
+}

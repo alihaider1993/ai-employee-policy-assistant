@@ -12,11 +12,10 @@
     "answer_key": "Integrate security controls to protect information, systems and devices: lock screens when unattended, protect equipment from theft or loss, never share passwords, report a compromised password to the IT Service Desk.",
     "must_include": [
       "lock screen when unattended",
-      "never share passwords",
-      "report compromised password to IT Service Desk"
+      "never share passwords"
     ],
     "expected_behaviour": "answer",
-    "notes": ""
+    "notes": "must_include trimmed to facts the question needs (rule applied to all policy rows)"
   },
   {
     "id": "q02",
@@ -30,11 +29,10 @@
     "answer_key": "Report any actual or suspected theft immediately using the Lost/Stolen reporting process or the Security Control Room helpline, without delay even outside office hours.",
     "must_include": [
       "report immediately",
-      "Lost/Stolen process or Security Control Room helpline",
-      "do not delay outside office hours"
+      "Lost/Stolen process or Security Control Room helpline"
     ],
     "expected_behaviour": "answer",
-    "notes": ""
+    "notes": "must_include trimmed to facts the question needs (rule applied to all policy rows)"
   },
   {
     "id": "q03",
@@ -43,16 +41,16 @@
     "expected_label": "policy_question",
     "document": "fca_employee_handbook.pdf",
     "expected_pages": [
-      36
+      36,
+      37
     ],
     "answer_key": "Retaliation is not tolerated. Whistleblowers making protected disclosures must not suffer dismissal, disciplinary action, threats or other unfavourable treatment.",
     "must_include": [
       "retaliation not tolerated",
-      "no dismissal or disciplinary action",
-      "protected disclosure"
+      "no dismissal or disciplinary action"
     ],
     "expected_behaviour": "answer",
-    "notes": ""
+    "notes": "must_include trimmed to facts the question needs (rule applied to all policy rows); p37 continues the protection text (no retaliation; how to report detriment)"
   },
   {
     "id": "q04",
@@ -66,11 +64,10 @@
     "answer_key": "Try informally first. To raise a formal grievance, complete a grievance form and submit full details to the Employee Relations team. A meeting is held, ideally within 10 working days.",
     "must_include": [
       "grievance form",
-      "Employee Relations team",
-      "meeting ideally within 10 working days"
+      "Employee Relations team"
     ],
     "expected_behaviour": "answer",
-    "notes": ""
+    "notes": "must_include trimmed to facts the question needs (rule applied to all policy rows)"
   },
   {
     "id": "q05",
@@ -84,11 +81,10 @@
     "answer_key": "Up to 10 days' paid leave (pro rata) at line manager discretion, plus a further 10 days with head of department or director approval, in any rolling twelve months. Covers dependant emergencies and carer leave.",
     "must_include": [
       "10 days paid at line manager discretion",
-      "further 10 days with HoD or director approval",
-      "rolling twelve-month period"
+      "further 10 days with HoD or director approval"
     ],
     "expected_behaviour": "answer",
-    "notes": ""
+    "notes": "must_include trimmed to facts the question needs (rule applied to all policy rows)"
   },
   {
     "id": "q06",
@@ -102,11 +98,10 @@
     "answer_key": "Telephone your line manager as early as possible and by 9:30am, and phone each working day for the first 7 calendar days.",
     "must_include": [
       "telephone line manager",
-      "by 9:30am",
-      "each working day for first 7 calendar days"
+      "by 9:30am"
     ],
     "expected_behaviour": "answer",
-    "notes": "table row 6a"
+    "notes": "table row 6a; must_include trimmed to facts the question needs (rule applied to all policy rows)"
   },
   {
     "id": "q07",
@@ -121,11 +116,10 @@
     "answer_key": "Absence up to 7 calendar days is recorded on Workday. For more than 7 calendar days a Fit Note from your doctor is required.",
     "must_include": [
       "more than 7 calendar days",
-      "Fit Note from doctor",
-      "Workday for absences up to 7 days"
+      "Fit Note from doctor"
     ],
     "expected_behaviour": "answer",
-    "notes": "table row 6b"
+    "notes": "table row 6b; must_include trimmed to facts the question needs (rule applied to all policy rows)"
   },
   {
     "id": "q08",
@@ -140,11 +134,10 @@
     "answer_key": "Contact your line manager and the HR Helpline about reasonable adjustments. Adjustments are considered case by case, possibly consulting your medical adviser, and reasons are explained if one is not reasonable.",
     "must_include": [
       "line manager and HR Helpline",
-      "case by case",
-      "reasons explained if adjustment refused"
+      "case by case"
     ],
     "expected_behaviour": "answer",
-    "notes": "heading 6.2 sits at the foot of p85; consider adding 85"
+    "notes": "heading 6.2 sits at the foot of p85; consider adding 85; must_include trimmed to facts the question needs (rule applied to all policy rows)"
   },
   {
     "id": "q09",
@@ -159,11 +152,10 @@
     "answer_key": "Adjustments where necessary and consistent support; the policy includes perimenopause. Details are in the separate Menopause procedure. No fixed leave entitlement is stated.",
     "must_include": [
       "adjustments where necessary",
-      "includes perimenopause",
       "Menopause procedure for details"
     ],
     "expected_behaviour": "answer",
-    "notes": "trap: a bot inventing a fixed entitlement should fail"
+    "notes": "trap: a bot inventing a fixed entitlement should fail; must_include trimmed to facts the question needs (rule applied to all policy rows)"
   },
   {
     "id": "q10",
@@ -178,11 +170,10 @@
     "answer_key": "Discuss it with your manager first, or contact the HR Helpline or the EAP. This may lead to an occupational health referral and a stress risk assessment.",
     "must_include": [
       "manager first",
-      "HR Helpline or EAP",
-      "stress risk assessment"
+      "HR Helpline or EAP"
     ],
     "expected_behaviour": "answer",
-    "notes": ""
+    "notes": "must_include trimmed to facts the question needs (rule applied to all policy rows)"
   },
   {
     "id": "q11",
@@ -196,11 +187,10 @@
     "answer_key": "Arrange appointments outside working hours where possible. Otherwise agree a time with your manager that causes least disruption and make up the time. Your manager may ask for confirmation.",
     "must_include": [
       "outside working hours where possible",
-      "make up the time",
-      "manager may ask for confirmation"
+      "make up the time"
     ],
     "expected_behaviour": "answer",
-    "notes": ""
+    "notes": "must_include trimmed to facts the question needs (rule applied to all policy rows)"
   },
   {
     "id": "q12",

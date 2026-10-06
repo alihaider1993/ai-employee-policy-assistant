@@ -1,0 +1,199 @@
+{
+  "part": "answers",
+  "started_at": "2026-10-06T10:24:53+00:00",
+  "summary": {
+    "total": 3,
+    "outcomes": {
+      "pass": 2,
+      "fail": 1,
+      "skipped": 0,
+      "error": 0
+    },
+    "overall": {
+      "judged": 3,
+      "passed": 2,
+      "pass_rate": 0.6666666666666666
+    },
+    "by_type": {
+      "policy": {
+        "judged": 1,
+        "passed": 0,
+        "pass_rate": 0.0
+      },
+      "not_covered": {
+        "judged": 1,
+        "passed": 1,
+        "pass_rate": 1.0
+      },
+      "general": {
+        "judged": 0,
+        "passed": 0,
+        "pass_rate": null
+      },
+      "out_of_scope": {
+        "judged": 1,
+        "passed": 1,
+        "pass_rate": 1.0
+      }
+    },
+    "policy_faithful": {
+      "judged": 1,
+      "faithful": 1,
+      "share": 1.0
+    },
+    "review_status": {
+      "approved": 2,
+      "not reviewed": 1
+    },
+    "failures": [
+      {
+        "id": "q01",
+        "type": "policy",
+        "question": "What is the policy on security of devices like laptops?",
+        "answer": "The policy on the security of devices like laptops requires employees to integrate security controls into daily work to protect information, systems, and devices. Devices such as laptops, hybrids, and smartphones are considered valuable assets, and confidential firm data tied to these devices is protected under FSMA 2000 and FSBRA 2013. Employees must manage these devices correctly to maintain security.\n\nKey points include:\n- Lock computer screens when devices are left unattended (e.g., using Windows + L keys).\n- Do not leave FCA/PSR equipment unattended or unlocked.\n- Avoid using personal devices to store, process, or share FCA/PSR information outside the approved BYOD solution.\n- Always adhere to established protocols to safeguard sensitive information and maintain confidentiality.\n\n(Source: FCA Employee Handbook, Pages 23-24)",
+        "reasons": [
+          "missing: never share passwords",
+          "missing: report compromised password to IT Service Desk"
+        ]
+      }
+    ],
+    "errors": []
+  },
+  "results": [
+    {
+      "id": "q01",
+      "type": "policy",
+      "question": "What is the policy on security of devices like laptops?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "The policy on the security of devices like laptops requires employees to integrate security controls into daily work to protect information, systems, and devices. Devices such as laptops, hybrids, and smartphones are considered valuable assets, and confidential firm data tied to these devices is protected under FSMA 2000 and FSBRA 2013. Employees must manage these devices correctly to maintain security.\n\nKey points include:\n- Lock computer screens when devices are left unattended (e.g., using Windows + L keys).\n- Do not leave FCA/PSR equipment unattended or unlocked.\n- Avoid using personal devices to store, process, or share FCA/PSR information outside the approved BYOD solution.\n- Always adhere to established protocols to safeguard sensitive information and maintain confidentiality.\n\n(Source: FCA Employee Handbook, Pages 23-24)",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 23
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 24
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 24,
+          "content": "domestic waste. \n \nWhat is the harm? \n \nSecuring paper-based information is challenging due to the reliance on limited \nmanual controls to prevent unauthorised access. Loss or compromise of \ndocuments could harm regulated firms and erode public confidence. Similarly, \nleaving your hybrid device una ttended and unlocked may enable unauthorised \nactions using your credentials. \n                          \n1.3.10 Be Secure - Protect information, passwords and equipment \n \nYou must Integrate security controls into your daily work to protect information, \nsystems, and devices (e.g., laptops, hybrids, smartphones). These assets are \nvaluable, and confidential firm data is protected under FSMA 2000 and FSBRA \n2013, so you must manage it correctly."
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 25,
+          "content": "FCA/PSR assigned user accounts in \nline with their intended purpose. \n\u2022 Use non -FCA/PSR voicemail or \ntext messaging systems to \ncommunicate FCA/PSR Sensitive & \nFCA/PSR Secret information.  \n \n\u2022 Share your passwords with \nanyone (including line managers, \nProfessional Business or IT \nSupport colleagues etc).  \n \n\u2022 Use FCA/PSR user credentials or \nFCA /PSR email addresses for \npersonal use, such as personal \nsocial media accounts or online \nshopping. \n \n\u2022 Use personal equipment (laptops, \nphones etc.) to photograph, \nScreenshot, store, share or \nprocess FCA/PSR information of \nany category outside of the \napproved BYOD solution. \n \n\u2022 Use any personal device with \nvideo recording capabilities (e.g., \nwearable smart tech, Go -Pro \ncameras etc) inside FCA office \nbuildings. Covert recording, \nintentional or accidental, \nundermines trust, may breach \ndata protection laws, and risks the \nconfidentiality of our work. This \ndoes not apply to \u2018non -recording\u2019"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 24,
+          "content": "e.g., from home or outside the \noffice. \n \n\u2022 Ensure that hard copy information \nis securely stored in a locked \ncabinet or equivalent when not in \nuse for a prolonged period of time  \nboth in the office and when at \nhome. Ensure any default locker \npins are set to a chosen personal \ncode. \n \n\u2022 Lock computer screens prior to \nleaving them unattended (e.g., \nusing the \uf0ff L keys). \n \n\u2022 Use FCA/PSR printing facilities only \n(unless specifically authorised via \nthe approved and published \nprocess) and minimise the printing \nof documents where practicable. \nUse information in digital form \nwhenever possible. \n \n\u2022 Consider the need to remove \npapers from the office including \nwhether there is sensitive content \nin personal notebooks. Ensure you \nhave business and line manager \nsupport to justify taking papers \noutside of the office  where these \ncontain sensitive data. W henever \npossible you should utilise more \nsecure digital options. \nYou must not \n\u2022 Leave any FCA/PSR equipment or"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "lock screen when unattended",
+            "present": true,
+            "reason": "The bot's answer explicitly mentions locking computer screens when devices are left unattended."
+          },
+          {
+            "fact": "never share passwords",
+            "present": false,
+            "reason": "The bot's answer does not mention the requirement to never share passwords."
+          },
+          {
+            "fact": "report compromised password to IT Service Desk",
+            "present": false,
+            "reason": "The bot's answer does not mention reporting a compromised password to the IT Service Desk."
+          }
+        ],
+        "faithful": true,
+        "faithful_reason": "All claims in the bot's answer are supported by the retrieved chunks.",
+        "refused": false,
+        "refused_reason": "The bot provided an answer and did not decline to answer the question."
+      },
+      "outcome": "fail",
+      "reasons": [
+        "missing: never share passwords",
+        "missing: report compromised password to IT Service Desk"
+      ],
+      "error": null
+    },
+    {
+      "id": "q12",
+      "type": "not_covered",
+      "question": "Do I get a company car or a car allowance?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "The provided policy context does not contain enough information to determine whether you are entitled to a company car or a car allowance. Please refer to the Flexible Benefits Plan booklet or contact your HR department for clarification.",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 46
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 45
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 47,
+          "content": "Base salary and core benefits are contractual elements and form part of your Personal \nStatement of Terms and Conditions of Employment. \n \nFlexible benefits \n \nThe FCA operates a Flexible Benefits Plan under which you will receive an amount of \nmoney each month (your \u2018flex account\u2019) which can be used for additional benefits to \nsuit your needs and lifestyle. \n \nAdjusted salary \n \nYour \u2018adjusted salary\u2019 is the term used to describe the amount that you are paid after \napplying any increase or reduction to your base salary because of the choices you \nhave made for your Flexible Benefits Plan. If there are no adjustments resulting from \nthe Flexible Benefits Plan, your \u2018adjusted salary\u2019 will be the same as your base salary. \n \nFor a full explanation of the Flexible Benefits Plan and how it works, please see the \nFlexible Benefits Plan booklet. \n \nAnnual pay review including Performance Related Pay \n \nSalaries are reviewed annually with any increases usually taking effect  1 April. Any"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 47,
+          "content": "47 \n \nother deductions from your pay, for example, if you owe money to the FCA due to \nany overpayment of remuneration or expenses, or in response to a court order. \n \nIf you resign, you will receive your P45 via your contact email address after your \nfinal salary payment. You should download copies of any payslips and P60s you may \nneed from the CGI iPayview system before the end of your employment. \n \nPension \n \nThe FCA operates a non-contributory pension plan for all employees that offers \npension benefits in the Money Purchase part of the Plan. \n \nCore benefits \n \nAll employees receive some core benefits outside of the Flexible Benefits Plan. In \naddition to core annual leave , these include life assurance, permanent health \nassurance and private medical insurance. \n \nBase salary and core benefits are contractual elements and form part of your Personal \nStatement of Terms and Conditions of Employment. \n \nFlexible benefits"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 46,
+          "content": "the amount owed. This can be from your base salary, annual leave pay, sick pay, \nmaternity/adoption or shared parental payments and any other type of pay. \nAmounts that you owe may include season ticket loans or other loans, expenses \nallowance, annual leave taken in excess of entitlement, repayment of training \nexpenses incurred under a sponsored study arrangement, a deficit of hours \nunder the flexitime scheme, estimated value of any FCA property damaged by \nyou, or the estimated value of any FCA property reta ined by you without \npermission when you leave. \n \nWe also reserve the right to deduct from your pay an amount equal to any \nallowance you receive while performing public service or on jury service. \n \nTax, National Insurance Contributions and any other statutory payments are \ndeducted from your pay on a regular basis. We have a statutory right to make \n \n3"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [],
+        "faithful": true,
+        "faithful_reason": "The bot's answer accurately reflects the lack of information in the retrieved chunks regarding a company car or car allowance.",
+        "refused": true,
+        "refused_reason": "The bot correctly declined to answer definitively, as the handbook does not cover this topic."
+      },
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q17",
+      "type": "out_of_scope",
+      "question": "Write a Python function that reverses a string.",
+      "question_type": "out_of_scope",
+      "review_status": "",
+      "answer": "I can help with employee policy and workplace-related questions. This request is outside the scope of the Employee Policy Assistant.",
+      "sources": [],
+      "behaviour": "out_of_scope_message",
+      "chunks": null,
+      "chunks_match_sources": null,
+      "judgement": {
+        "must_include": [],
+        "faithful": null,
+        "faithful_reason": "No retrieved chunks were provided to verify the claims.",
+        "refused": true,
+        "refused_reason": "The bot correctly declined to answer as the request is outside the scope of the Employee Policy Assistant."
+      },
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    }
+  ]
+}

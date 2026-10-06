@@ -1,18 +1,22 @@
 """Run the golden question set against live Azure OpenAI and Azure AI Search.
 
 Not a unit test: this calls live services and is not collected by pytest.
-It calls graph nodes and the retriever directly and never goes through /ask
-or the database.
+It calls graph nodes, the compiled graph and the retriever directly and never
+goes through /ask or the database.
 
 Run from the repo root as a module so app.* imports resolve:
 
     python -m eval.run_eval --part routing
     python -m eval.run_eval --part routing --limit 5
     python -m eval.run_eval --part routing --ids q01,q05
+    python -m eval.run_eval --part routing --repeat 3
     python -m eval.run_eval --part retrieval --k 5
+    python -m eval.run_eval --part answers
+    python -m eval.run_eval --part answers --repeat 3
 
-Results are saved to eval/results/<timestamp>_routing.json and
-eval/results/<timestamp>_retrieval_k<K>.json.
+Results are saved to eval/results/<timestamp>_routing.json,
+eval/results/<timestamp>_retrieval_k<K>.json and
+eval/results/<timestamp>_answers.json.
 """
 
 import argparse
@@ -30,6 +34,53 @@ CONFUSION_COLUMNS = (*LABELS, "invalid", "error")
 SCORED_TYPE = "policy"
 UNSCORED_RETRIEVAL_TYPES = ("not_covered",)
 MAX_ERROR_MESSAGE = 200
+# Matches the retriever default that generate_policy_answer uses.
+ANSWER_TOP_K = 3
+ANSWER_TYPES = ("policy", "not_covered", "general", "out_of_scope")
+ANSWER_OUTCOMES = ("pass", "fail", "skipped", "error")
+JUDGE_ATTEMPTS = 2
+
+JUDGE_PROMPT = """You are grading an Employee Policy Assistant's answer for an evaluation.
+Return JSON only, with exactly this shape:
+
+{{
+  "must_include": [{{"fact": "<fact, copied exactly>", "present": true, "in_chunks": true, "reason": "<one sentence>"}}],
+  "faithful": true,
+  "faithful_reason": "<one sentence>",
+  "refused": false,
+  "refused_reason": "<one sentence>"
+}}
+
+Rules:
+- "must_include": one item per required fact below, in the same order. "present" is
+  true if the bot's answer states the fact, in any wording. "in_chunks" is true if
+  the retrieved chunk text states the fact, in any wording, and false if it does not.
+  Use [] if there are no required facts.
+- "faithful": true if every claim in the bot's answer is supported by the retrieved
+  chunks, and false if any claim is not.
+- Whenever chunks are given, "in_chunks" and "faithful" must be true or false, never
+  null, even if the chunks are irrelevant to the question. Use null for them only
+  when the Retrieved chunks section below is exactly "(none)".
+- "refused": true if the answer declines to answer, or says the handbook or the
+  provided policy information does not cover the question.
+- The reference answer is guidance for what a correct answer contains. Do not
+  penalise extra detail unless it is unsupported by the chunks.
+
+Question:
+{question}
+
+Reference answer:
+{answer_key}
+
+Required facts (JSON list):
+{must_include}
+
+Retrieved chunks:
+{chunks}
+
+Bot's answer:
+{answer}
+"""
 
 
 def select_entries(entries, ids, limit):
@@ -70,7 +121,7 @@ def routing_outcome(label, expected_label):
     return "correct" if label == expected_label else "wrong"
 
 
-def run_routing(entries):
+def run_routing(entries, run=1):
     # Imported here so --help works without a configured environment.
     from app.graph.nodes import classify_question
 
@@ -85,6 +136,7 @@ def run_routing(entries):
             "sources": [],
         }
         result = {
+            "run": run,
             "id": entry["id"],
             "type": entry["type"],
             "expected_label": entry["expected_label"],
@@ -131,16 +183,34 @@ def summarise_routing(results):
             column = result["label"]
         confusion[result["expected_label"]][column] += 1
 
+    runs = max(result["run"] for result in results) if results else 0
+    stability = {}
+    for result in results:
+        if result["id"] not in stability:
+            stability[result["id"]] = {"expected_label": result["expected_label"], "labels": Counter()}
+        key = result["label"] if result["error"] is None else f"error: {result['error']['type']}"
+        stability[result["id"]]["labels"][key] += 1
+
     return {
+        "runs": runs,
         "total": len(results),
         "outcomes": {outcome: outcomes[outcome] for outcome in OUTCOMES},
         "accuracy_by_type": by_type,
         "confusion": confusion,
+        "labels_by_question": {
+            entry_id: {"expected_label": row["expected_label"], "labels": dict(row["labels"])}
+            for entry_id, row in stability.items()
+        },
+        "changed_between_runs": [
+            entry_id for entry_id, row in stability.items() if len(row["labels"]) > 1
+        ],
     }
 
 
 def print_routing_summary(summary):
-    print(f"\n{summary['total']} question(s)")
+    if summary["runs"] > 1:
+        print(f"\n{summary['runs']} runs; counts below are over all {summary['total']} classifications")
+    print(f"\n{summary['total']} classification(s)")
     for outcome, count in summary["outcomes"].items():
         print(f"  {outcome}: {count}")
 
@@ -153,6 +223,15 @@ def print_routing_summary(summary):
     print(f"  {'':<17}" + "".join(f"{column:>18}" for column in CONFUSION_COLUMNS))
     for expected, row in summary["confusion"].items():
         print(f"  {expected:<17}" + "".join(f"{row[column]:>18}" for column in CONFUSION_COLUMNS))
+
+    if summary["runs"] > 1:
+        print(f"\nLabels per question over {summary['runs']} runs")
+        for entry_id, row in summary["labels_by_question"].items():
+            labels = ", ".join(f"{label!r} x{count}" for label, count in row["labels"].items())
+            print(f"  {entry_id:<6} expected {row['expected_label']:<17} {labels}")
+
+        changed = summary["changed_between_runs"]
+        print(f"\nChanged label between runs ({len(changed)}): {', '.join(changed) or 'none'}")
 
 
 def score_retrieval(pages, expected_pages):
@@ -271,6 +350,365 @@ def print_retrieval_summary(summary):
             print(f"  {error['id']}  {error['type']}: {error['message']}")
 
 
+def fixed_messages():
+    from app.graph.nodes import handle_out_of_scope, handle_rejected_answer
+
+    empty_state = {"question": "", "question_type": "", "answer": "", "review_status": "", "sources": []}
+    return {
+        "out_of_scope_message": handle_out_of_scope(empty_state)["answer"],
+        "rejected_message": handle_rejected_answer(empty_state)["answer"],
+    }
+
+
+def classify_behaviour(answer, messages):
+    for behaviour, message in messages.items():
+        if answer == message:
+            return behaviour
+    return "answered"
+
+
+def format_chunks(chunks):
+    if not chunks:
+        return "(none)"
+    return "\n\n---\n\n".join(
+        f"Printed page: {chunk['page']}\n{chunk['content']}" for chunk in chunks
+    )
+
+
+def classify_miss(fact):
+    """Label a fact the answer missed. Without chunks (general branch) it is a generation miss."""
+    if fact["present"]:
+        return None
+    return "retrieval_miss" if fact["in_chunks"] is False else "generation_miss"
+
+
+def parse_judgement(text, must_include, has_chunks):
+    judgement = json.loads(text)
+    facts = judgement.get("must_include")
+    if not isinstance(facts, list) or len(facts) != len(must_include):
+        found = len(facts) if isinstance(facts, list) else "no"
+        raise ValueError(f"judge returned {found} facts, expected {len(must_include)}")
+    if not all(isinstance(fact, dict) and isinstance(fact.get("present"), bool) for fact in facts):
+        raise ValueError("judge returned a fact without a boolean 'present'")
+    for fact in facts:
+        if has_chunks and not isinstance(fact.get("in_chunks"), bool):
+            raise ValueError("judge returned a fact without a boolean 'in_chunks'")
+        if not has_chunks:
+            fact["in_chunks"] = None
+        fact["miss"] = classify_miss(fact)
+    if not isinstance(judgement.get("refused"), bool):
+        raise ValueError("judge returned no boolean 'refused'")
+    if has_chunks and not isinstance(judgement.get("faithful"), bool):
+        raise ValueError("judge returned no boolean 'faithful' although chunks were given")
+    if not has_chunks:
+        judgement["faithful"] = None
+    return judgement
+
+
+def score_answer(entry_type, must_include, behaviour, judgement):
+    """Return (outcome, reasons) for one judged question."""
+    missing = [
+        f"missing ({fact['miss']}): {fact['fact']} - {fact.get('reason', '')}"
+        for fact in judgement["must_include"]
+        if fact["miss"]
+    ]
+
+    if entry_type == "policy":
+        reasons = list(missing)
+        if judgement["faithful"] is not True:
+            reasons.append(f"not faithful: {judgement.get('faithful_reason', '')}")
+        return ("fail" if reasons else "pass"), reasons
+    if entry_type == "not_covered":
+        if judgement["refused"] or behaviour == "rejected_message":
+            return "pass", []
+        return "fail", [f"did not refuse: {judgement.get('refused_reason', '')}"]
+    if entry_type == "out_of_scope":
+        if behaviour == "out_of_scope_message":
+            return "pass", []
+        return "fail", [f"behaviour was {behaviour}, not out_of_scope_message"]
+    if not must_include:
+        return "skipped", ["general question with no must_include (routing only)"]
+    return ("fail" if missing else "pass"), missing
+
+
+def judge_answer(judge, prompt, must_include, has_chunks, rejections):
+    """Ask the judge, retrying once if its reply is rejected.
+
+    Each rejected reply is appended to rejections with its raw text. Raises
+    ValueError when every attempt is rejected, so the question is marked
+    "error" rather than passed or failed by default.
+    """
+    for attempt in range(1, JUDGE_ATTEMPTS + 1):
+        raw = judge.invoke(prompt).content
+        try:
+            return parse_judgement(raw, must_include, has_chunks)
+        except ValueError as exc:  # includes json.JSONDecodeError
+            rejections.append({"attempt": attempt, "error": str(exc), "raw": raw})
+    raise ValueError(f"judge reply rejected {JUDGE_ATTEMPTS} times: {rejections[-1]['error']}")
+
+
+def run_answers(entries, run=1):
+    # Imported here so --help works without a configured environment.
+    from app.ai.client import llm
+    from app.graph.workflow import policy_graph
+    from app.rag.retriever import retrieve_policy_chunks
+
+    judge = llm.bind(temperature=0, response_format={"type": "json_object"})
+    messages = fixed_messages()
+    secrets = secret_values()
+    results = []
+    for entry in entries:
+        result = {
+            "run": run,
+            "id": entry["id"],
+            "type": entry["type"],
+            "question": entry["question"],
+            "question_type": None,
+            "review_status": None,
+            "answer": None,
+            "sources": None,
+            "behaviour": None,
+            "chunks": None,
+            "chunks_match_sources": None,
+            "judgement": None,
+            "judge_rejections": [],
+            "outcome": None,
+            "reasons": [],
+            "error": None,
+        }
+        try:
+            state = policy_graph.invoke(
+                {
+                    "question": entry["question"],
+                    "question_type": "",
+                    "answer": "",
+                    "review_status": "",
+                    "sources": [],
+                }
+            )
+        except Exception as exc:  # the real graph failing is a failed answer
+            result["error"] = describe_error(exc, secrets)
+            result["outcome"] = "fail"
+            result["reasons"] = [f"graph raised {result['error']['type']}: {result['error']['message']}"]
+            results.append(result)
+            print_answer_row(result)
+            continue
+
+        result["question_type"] = state["question_type"]
+        result["review_status"] = state["review_status"]
+        result["answer"] = state["answer"]
+        result["sources"] = state["sources"]
+        result["behaviour"] = classify_behaviour(state["answer"], messages)
+
+        try:
+            if entry["type"] in ("policy", "not_covered"):
+                chunks = retrieve_policy_chunks(entry["question"], top_k=ANSWER_TOP_K)
+                # Chunks keep the index's 0-based page; printed pages are page + 1.
+                result["chunks"] = [
+                    {"source": chunk["source"], "page": chunk["page"] + 1, "content": chunk["content"]}
+                    for chunk in chunks
+                ]
+                if state["sources"]:
+                    retrieved = []
+                    for chunk in chunks:
+                        source = {"document": chunk["source"], "page": chunk["page"]}
+                        if source not in retrieved:
+                            retrieved.append(source)
+                    result["chunks_match_sources"] = retrieved == state["sources"]
+
+            prompt = JUDGE_PROMPT.format(
+                question=entry["question"],
+                answer_key=entry["answer_key"],
+                must_include=json.dumps(entry["must_include"]),
+                chunks=format_chunks(result["chunks"]),
+                answer=state["answer"],
+            )
+            result["judgement"] = judge_answer(
+                judge,
+                prompt,
+                entry["must_include"],
+                has_chunks=bool(result["chunks"]),
+                rejections=result["judge_rejections"],
+            )
+        except Exception as exc:  # an eval-side failure must not stop the run
+            result["error"] = describe_error(exc, secrets)
+            result["outcome"] = "error"
+        else:
+            result["outcome"], result["reasons"] = score_answer(
+                entry["type"], entry["must_include"], result["behaviour"], result["judgement"]
+            )
+        results.append(result)
+        print_answer_row(result)
+    return results
+
+
+def print_answer_row(result):
+    print(
+        f"{result['id']:<6} {result['type']:<13} {str(result['question_type']):<17} "
+        f"{str(result['review_status'] or '-'):<9} {str(result['behaviour']):<21} {result['outcome']}"
+    )
+
+
+def summarise_answers(results):
+    def pass_rate(rows):
+        judged = [result for result in rows if result["outcome"] in ("pass", "fail")]
+        passed = sum(result["outcome"] == "pass" for result in judged)
+        return {
+            "judged": len(judged),
+            "passed": passed,
+            "pass_rate": passed / len(judged) if judged else None,
+        }
+
+    policy_judged = [
+        result
+        for result in results
+        if result["type"] == "policy" and result["judgement"] is not None
+    ]
+    faithful = sum(result["judgement"]["faithful"] is True for result in policy_judged)
+
+    facts = [
+        fact
+        for result in results
+        if result["type"] in ("policy", "general") and result["judgement"] is not None
+        for fact in result["judgement"]["must_include"]
+    ]
+    facts_present = sum(fact["present"] for fact in facts)
+
+    return {
+        "total": len(results),
+        "outcomes": {
+            outcome: sum(result["outcome"] == outcome for result in results)
+            for outcome in ANSWER_OUTCOMES
+        },
+        "overall": pass_rate(results),
+        "by_type": {
+            entry_type: pass_rate([result for result in results if result["type"] == entry_type])
+            for entry_type in ANSWER_TYPES
+        },
+        "policy_faithful": {
+            "judged": len(policy_judged),
+            "faithful": faithful,
+            "share": faithful / len(policy_judged) if policy_judged else None,
+        },
+        "fact_recall": {
+            "present": facts_present,
+            "required": len(facts),
+            "recall": facts_present / len(facts) if facts else None,
+            "generation_miss": sum(fact["miss"] == "generation_miss" for fact in facts),
+            "retrieval_miss": sum(fact["miss"] == "retrieval_miss" for fact in facts),
+        },
+        "review_status": dict(
+            Counter(result["review_status"] or "not reviewed" for result in results if result["answer"] is not None)
+        ),
+        "failures": [
+            {
+                "id": result["id"],
+                "type": result["type"],
+                "question": result["question"],
+                "answer": result["answer"],
+                "reasons": result["reasons"],
+            }
+            for result in results
+            if result["outcome"] == "fail"
+        ],
+        "errors": [
+            {"id": result["id"], **result["error"], "judge_rejections": result["judge_rejections"]}
+            for result in results
+            if result["outcome"] == "error"
+        ],
+    }
+
+
+def print_answers_summary(summary):
+    def show(stats):
+        rate = "n/a" if stats["pass_rate"] is None else f"{stats['pass_rate']:.0%}"
+        return f"{stats['passed']}/{stats['judged']}  {rate}"
+
+    print(f"\n{summary['total']} question(s)")
+    for outcome, count in summary["outcomes"].items():
+        print(f"  {outcome}: {count}")
+
+    print(f"\nPass rate (skipped and errors excluded)\n  {'overall':<13} {show(summary['overall'])}")
+    for entry_type, stats in summary["by_type"].items():
+        print(f"  {entry_type:<13} {show(stats)}")
+
+    faithful = summary["policy_faithful"]
+    share = "n/a" if faithful["share"] is None else f"{faithful['share']:.0%}"
+    print(f"\nPolicy answers faithful: {faithful['faithful']}/{faithful['judged']}  {share}")
+
+    recall = summary["fact_recall"]
+    rate = "n/a" if recall["recall"] is None else f"{recall['recall']:.0%}"
+    print(f"\nFact recall (policy and general): {recall['present']}/{recall['required']}  {rate}")
+    print(f"  generation_miss: {recall['generation_miss']}")
+    print(f"  retrieval_miss:  {recall['retrieval_miss']}")
+
+    print("\nReview status")
+    for status, count in summary["review_status"].items():
+        print(f"  {status}: {count}")
+
+    print(f"\nFailures ({len(summary['failures'])})")
+    for failure in summary["failures"]:
+        print(f"  {failure['id']}  {failure['question']}")
+        print(f"        answer: {failure['answer']}")
+        for reason in failure["reasons"]:
+            print(f"        - {reason}")
+
+    if summary["errors"]:
+        print(f"\nErrors ({len(summary['errors'])})")
+        for error in summary["errors"]:
+            print(f"  {error['id']}  {error['type']}: {error['message']}")
+            for rejection in error["judge_rejections"]:
+                print(f"        attempt {rejection['attempt']} rejected: {rejection['error']}")
+                print(f"        raw reply: {rejection['raw']}")
+
+
+def summarise_answer_runs(results, run_summaries):
+    def mean_rate(rates):
+        rates = [rate for rate in rates if rate is not None]
+        return sum(rates) / len(rates) if rates else None
+
+    per_question = {}
+    for result in results:
+        if result["id"] not in per_question:
+            per_question[result["id"]] = {
+                "type": result["type"],
+                "outcomes": {outcome: 0 for outcome in ANSWER_OUTCOMES},
+            }
+        per_question[result["id"]]["outcomes"][result["outcome"]] += 1
+
+    return {
+        "runs": len(run_summaries),
+        "per_question": per_question,
+        "mean_pass_rate": {
+            "overall": mean_rate([summary["overall"]["pass_rate"] for summary in run_summaries]),
+            **{
+                entry_type: mean_rate(
+                    [summary["by_type"][entry_type]["pass_rate"] for summary in run_summaries]
+                )
+                for entry_type in ANSWER_TYPES
+            },
+        },
+        "per_run": run_summaries,
+    }
+
+
+def print_answer_runs_summary(summary):
+    runs = summary["runs"]
+    print(f"\n===== Across {runs} runs")
+    print("\nPasses per question")
+    for entry_id, row in summary["per_question"].items():
+        others = ", ".join(
+            f"{count} {outcome}"
+            for outcome, count in row["outcomes"].items()
+            if outcome != "pass" and count
+        )
+        print(f"  {entry_id:<6} {row['type']:<13} {row['outcomes']['pass']}/{runs}" + (f"  ({others})" if others else ""))
+
+    print("\nPass rate averaged over runs (skipped and errors excluded per run)")
+    for scope, rate in summary["mean_pass_rate"].items():
+        print(f"  {scope:<13} {'n/a' if rate is None else f'{rate:.0%}'}")
+
+
 def save_results(name, part, started_at, summary, results):
     RESULTS_DIR.mkdir(exist_ok=True)
     path = RESULTS_DIR / f"{started_at:%Y%m%dT%H%M%SZ}_{name}.json"
@@ -286,21 +724,31 @@ def save_results(name, part, started_at, summary, results):
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--part", required=True, choices=("routing", "retrieval"))
+    parser.add_argument("--part", required=True, choices=("routing", "retrieval", "answers"))
     parser.add_argument("--limit", type=int, help="run only the first N questions")
     parser.add_argument("--ids", help="comma-separated question ids, e.g. q01,q05")
     parser.add_argument("--k", type=int, default=3, help="chunks to retrieve (retrieval only, default 3)")
+    parser.add_argument(
+        "--repeat", type=int, default=1, help="run the set N times (routing and answers, default 1)"
+    )
     args = parser.parse_args(argv)
 
     if args.limit is not None and args.limit < 1:
         parser.error("--limit must be at least 1")
     if args.k < 1:
         parser.error("--k must be at least 1")
+    if args.repeat < 1:
+        parser.error("--repeat must be at least 1")
+    if args.repeat > 1 and args.part == "retrieval":
+        parser.error("--repeat is only supported with --part routing or --part answers")
     args.ids = [entry_id.strip() for entry_id in args.ids.split(",") if entry_id.strip()] if args.ids else []
     return args
 
 
 def main(argv=None):
+    # Model answers can contain characters the Windows console code page cannot
+    # encode; without this, printing them crashes the run before results are saved.
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     args = parse_args(argv)
     entries = json.loads(GOLDEN_PATH.read_text(encoding="utf-8"))
     entries = select_entries(entries, args.ids, args.limit)
@@ -308,10 +756,31 @@ def main(argv=None):
 
     if args.part == "routing":
         name = "routing"
-        print(f"{'id':<6} {'type':<13} {'expected':<17} {'label':<20} outcome")
-        results = run_routing(entries)
+        results = []
+        for run in range(1, args.repeat + 1):
+            if args.repeat > 1:
+                print(f"\nRun {run}/{args.repeat}")
+            print(f"{'id':<6} {'type':<13} {'expected':<17} {'label':<20} outcome")
+            results += run_routing(entries, run)
         summary = summarise_routing(results)
         print_routing_summary(summary)
+    elif args.part == "answers":
+        name = "answers"
+        results = []
+        run_summaries = []
+        for run in range(1, args.repeat + 1):
+            if args.repeat > 1:
+                print(f"\n===== Run {run}/{args.repeat}")
+            print(f"{'id':<6} {'type':<13} {'question_type':<17} {'review':<9} {'behaviour':<21} outcome")
+            run_results = run_answers(entries, run)
+            run_summaries.append(summarise_answers(run_results))
+            print_answers_summary(run_summaries[-1])
+            results += run_results
+        if args.repeat > 1:
+            summary = summarise_answer_runs(results, run_summaries)
+            print_answer_runs_summary(summary)
+        else:
+            summary = run_summaries[0]
     else:
         name = f"retrieval_k{args.k}"
         print(f"{'id':<6} {'type':<13} {'expected':<14} {'returned':<24} outcome")

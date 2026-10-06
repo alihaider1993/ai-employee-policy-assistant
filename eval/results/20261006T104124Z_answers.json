@@ -1,0 +1,1198 @@
+{
+  "part": "answers",
+  "started_at": "2026-10-06T10:41:24+00:00",
+  "summary": {
+    "total": 21,
+    "outcomes": {
+      "pass": 13,
+      "fail": 3,
+      "skipped": 2,
+      "error": 3
+    },
+    "overall": {
+      "judged": 16,
+      "passed": 13,
+      "pass_rate": 0.8125
+    },
+    "by_type": {
+      "policy": {
+        "judged": 8,
+        "passed": 5,
+        "pass_rate": 0.625
+      },
+      "not_covered": {
+        "judged": 3,
+        "passed": 3,
+        "pass_rate": 1.0
+      },
+      "general": {
+        "judged": 2,
+        "passed": 2,
+        "pass_rate": 1.0
+      },
+      "out_of_scope": {
+        "judged": 3,
+        "passed": 3,
+        "pass_rate": 1.0
+      }
+    },
+    "policy_faithful": {
+      "judged": 8,
+      "faithful": 7,
+      "share": 0.875
+    },
+    "fact_recall": {
+      "present": 22,
+      "required": 26,
+      "recall": 0.8461538461538461,
+      "generation_miss": 3,
+      "retrieval_miss": 1
+    },
+    "review_status": {
+      "approved": 13,
+      "not reviewed": 8
+    },
+    "failures": [
+      {
+        "id": "q07",
+        "type": "policy",
+        "question": "After how many sick days is a doctor's note required?",
+        "answer": "According to the FCA Employee Handbook, a doctor's note (a \"Fit Note\") is required after more than 7 calendar days of sickness absence.\n\nSource: FCA Employee Handbook, Page 81",
+        "reasons": [
+          "missing (generation_miss): Workday for absences up to 7 days - The bot's answer does not mention Workday for absences up to 7 days, although this is stated in the retrieved chunks."
+        ]
+      },
+      {
+        "id": "q09",
+        "type": "policy",
+        "question": "If I am going through menopause, what am I entitled to?",
+        "answer": "The provided policy context states that if you are going through menopause (including perimenopause), you are entitled to:\n\n1. **Support and Adjustments:** The organization aims to proactively make necessary adjustments to support you and ensure the workplace does not worsen your symptoms.\n2. **Fair Treatment:** You will be treated fairly, with dignity, respect, and understanding, while your health and well-being are fully supported.\n3. **Open Conversations:** A workplace environment where you can have open and honest discussions about menopause and ask for help.\n4. **Awareness:** Managers and colleagues are equipped to understand menopause-related issues to effectively support you.\n\n(Source: FCA Employee Handbook, Page 85)",
+        "reasons": [
+          "missing (retrieval_miss): Menopause procedure for details - The bot does not mention the separate Menopause procedure for further details, which is stated in the chunks."
+        ]
+      },
+      {
+        "id": "q10",
+        "type": "policy",
+        "question": "How do I resolve stress at work?",
+        "answer": "Managing stress at work is essential for maintaining good mental health, enhancing productivity, and improving overall job satisfaction. Below are strategies to help you resolve workplace stress:\n\n---\n\n### **1. Identify Stress Triggers**\n   - **Track Stressors**: Keep a journal to identify specific situations, activities, or people that cause stress.\n   - **Analyze Patterns**: Once you recognize what triggers stress, you can take steps to address or minimize it.\n\n---\n\n### **2. Manage Your Time Effectively**\n   - **Prioritize Tasks**: Use methods like the Eisenhower Matrix or to-do lists to organize tasks by urgency and importance.\n   - **Break Large Tasks into Smaller Steps**: This makes daunting projects feel more manageable.\n   - **Set Realistic Deadlines**: Avoid overcommitting or agreeing to unreasonable timelines.\n\n---\n\n### **3. Practice Healthy Communication**\n   - **Speak Up**: Discuss workloads and expectations with your supervisor if you feel overwhelmed.\n   - **Set Boundaries**: Politely say \u201cno\u201d to additional responsibilities if you\u2019re already stretched too thin.\n   - **Resolve Conflicts**: Address interpersonal issues constructively and avoid letting them fester.\n\n---\n\n### **4. Practice Stress-Relief Techniques**\n   - **Deep Breathing**: Focus on slow, deep breaths when you start feeling overwhelmed.\n   - **Mindfulness & Meditation**: Take a few minutes daily to stay present and calm your mind.\n   - **Physical Movement**: Stretch at your desk, take a walk, or try quick exercises to release tension.\n\n---\n\n### **5. Foster a Healthy Work-Life Balance**\n   - **Set Clear Boundaries**: Avoid working late nights or checking emails outside work hours.\n   - **Make Time for Hobbies**: Pursue activities you enjoy outside of work.\n   - **Take Breaks**: Use your lunch break to recharge and take short, frequent breaks throughout the day.\n\n---\n\n### **6. Build Supportive Relationships**\n   - **Seek Help**: Talk to your colleagues, manager, or HR team if you need support with workload or workplace conflicts.\n   - **Connect with Peers**: Develop friendships with coworkers for mutual support and camaraderie.\n   - **Talk to Loved Ones**: Discuss your feelings and stressors with friends or family members.\n\n---\n\n### **7. Take Care of Yourself**\n   - **Get Adequate Sleep**: Aim for 7-9 hours of rest per night to approach work with energy and focus.\n   - **Eat Healthy**: Avoid junk food and opt for balanced meals to sustain your energy levels.\n   - **Exercise Regularly**: Physical activity reduces stress hormones and boosts mood.\n\n---\n\n### **8. Create an Organized Workspace**\n   - **Declutter**: A clean and organized desk can reduce mental distractions.\n   - **Personalize Your Space**: Add items that make you happy, such as photos or plants, to create a positive atmosphere.\n\n---\n\n### **9. Seek Professional Help**\n   - **Talk to a Counselor**: Many workplaces provide Employee Assistance Programs (EAPs) offering free or low-cost counseling.\n   - **Consider Stress Management Training**: Join courses or workshops that teach coping strategies.\n   - **See a Therapist**: If stress persists, consider consulting a mental health professional for guidance.\n\n---\n\n### **10. Reassess Your Career Goals**\n   - **Reevaluate Your Job Fit**: If chronic stress persists despite your efforts, think about whether the role aligns with your values and skills.\n   - **Explore New Opportunities**: Sometimes it\u2019s necessary to consider a job change if the environment or work itself is negatively impacting you.\n\n---\n\n### **11. Make Use of Workplace Resources**\n   - Utilize available tools and benefits, such as wellness programs or yoga/meditation sessions offered by your organization, which can help you manage stress more effectively.\n\n---\n\n### **12. Cultivate a Positive Mindset**\n   - **Practice Gratitude**: Reflect on positive aspects of your workday to shift your focus away from stressors.\n   - **Focus on What You Can Control**: Let go of things outside your influence and channel energy into what you can change or improve.\n\n---\n\nBy taking proactive steps to identify and address your stressors, you can improve your day-to-day work experience and maintain your well-being.",
+        "reasons": [
+          "missing (generation_miss): manager first - The bot's answer does not explicitly mention discussing stress with a manager first, which is stated in the retrieved chunks.",
+          "missing (generation_miss): stress risk assessment - The bot does not mention stress risk assessments, which are explicitly stated in the retrieved chunks.",
+          "not faithful: The bot's answer includes unsupported claims and omits key facts from the retrieved chunks, such as discussing stress with a manager first and stress risk assessments."
+        ]
+      }
+    ],
+    "errors": [
+      {
+        "id": "q01",
+        "type": "ValueError",
+        "message": "judge reply rejected 2 times: judge returned a fact without a boolean 'in_chunks'",
+        "judge_rejections": [
+          {
+            "attempt": 1,
+            "error": "judge returned a fact without a boolean 'in_chunks'",
+            "raw": "{\n  \"must_include\": [\n    {\n      \"fact\": \"lock screen when unattended\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot explicitly mentions locking computer screens when leaving devices unattended, which aligns with the retrieved chunk text.\"\n    },\n    {\n      \"fact\": \"never share passwords\",\n      \"present\": false,\n      \"in_chunks\": true,\n      \"reason\": \"The bot's answer does not mention the prohibition on sharing passwords, although the retrieved chunks clearly state this policy.\"\n    },\n    {\n      \"fact\": \"report compromised password to IT Service Desk\",\n      \"present\": false,\n      \"in_chunks\": null,\n      \"reason\": \"The bot's answer does not mention reporting compromised passwords, and the retrieved chunks do not provide information on this.\"\n    }\n  ],\n  \"faithful\": true,\n  \"faithful_reason\": \"All claims made by the bot are supported by the retrieved chunks, even though some required facts are omitted.\",\n  \"refused\": false,\n  \"refused_reason\": \"The bot provides an answer and does not decline to address the question.\"\n}"
+          },
+          {
+            "attempt": 2,
+            "error": "judge returned a fact without a boolean 'in_chunks'",
+            "raw": "{\n  \"must_include\": [\n    {\n      \"fact\": \"lock screen when unattended\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot explicitly mentions locking computer screens when leaving devices unattended, which aligns with the retrieved chunk text.\"\n    },\n    {\n      \"fact\": \"never share passwords\",\n      \"present\": false,\n      \"in_chunks\": true,\n      \"reason\": \"The bot's answer does not mention the prohibition on sharing passwords, although the retrieved chunk text explicitly states this.\"\n    },\n    {\n      \"fact\": \"report compromised password to IT Service Desk\",\n      \"present\": false,\n      \"in_chunks\": null,\n      \"reason\": \"The bot's answer does not mention reporting compromised passwords, and the retrieved chunks do not provide this information.\"\n    }\n  ],\n  \"faithful\": true,\n  \"faithful_reason\": \"All claims made by the bot are supported by the retrieved chunks, even though some required facts are omitted.\",\n  \"refused\": false,\n  \"refused_reason\": \"The bot provides an answer and does not decline to address the question.\"\n}"
+          }
+        ]
+      },
+      {
+        "id": "q03",
+        "type": "ValueError",
+        "message": "judge reply rejected 2 times: judge returned a fact without a boolean 'in_chunks'",
+        "judge_rejections": [
+          {
+            "attempt": 1,
+            "error": "judge returned a fact without a boolean 'in_chunks'",
+            "raw": "{\n  \"must_include\": [\n    {\n      \"fact\": \"retaliation not tolerated\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot explicitly states that employees must not threaten, retaliate, or subject whistleblowers to detriment, which aligns with the retrieved chunks.\"\n    },\n    {\n      \"fact\": \"no dismissal or disciplinary action\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot mentions that whistleblowers must not face disciplinary action or other detriments, supported by the retrieved chunks.\"\n    },\n    {\n      \"fact\": \"protected disclosure\",\n      \"present\": false,\n      \"in_chunks\": null,\n      \"reason\": \"The bot does not explicitly mention the term 'protected disclosure,' and the retrieved chunks do not provide this specific phrasing.\"\n    }\n  ],\n  \"faithful\": true,\n  \"faithful_reason\": \"All claims made by the bot are supported by the retrieved chunks, even if the term 'protected disclosure' is not explicitly mentioned.\",\n  \"refused\": false,\n  \"refused_reason\": \"The bot provides an answer and does not decline to address the question.\"\n}"
+          },
+          {
+            "attempt": 2,
+            "error": "judge returned a fact without a boolean 'in_chunks'",
+            "raw": "{\n  \"must_include\": [\n    {\n      \"fact\": \"retaliation not tolerated\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot explicitly states that employees must not threaten or retaliate against whistleblowers, which aligns with the retrieved chunks.\"\n    },\n    {\n      \"fact\": \"no dismissal or disciplinary action\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot mentions that whistleblowers must not suffer detriment, including disciplinary action, as supported by the retrieved chunks.\"\n    },\n    {\n      \"fact\": \"protected disclosure\",\n      \"present\": false,\n      \"in_chunks\": null,\n      \"reason\": \"The bot does not explicitly mention the term 'protected disclosure,' and the retrieved chunks do not provide this specific phrasing.\"\n    }\n  ],\n  \"faithful\": true,\n  \"faithful_reason\": \"All claims made by the bot are supported by the retrieved chunks, even if the term 'protected disclosure' is not explicitly mentioned.\",\n  \"refused\": false,\n  \"refused_reason\": \"The bot provides an answer and does not decline to address the question.\"\n}"
+          }
+        ]
+      },
+      {
+        "id": "q05",
+        "type": "ValueError",
+        "message": "judge reply rejected 2 times: judge returned a fact without a boolean 'in_chunks'",
+        "judge_rejections": [
+          {
+            "attempt": 1,
+            "error": "judge returned a fact without a boolean 'in_chunks'",
+            "raw": "{\n  \"must_include\": [\n    {\"fact\": \"10 days paid at line manager discretion\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot did not mention this fact.\"},\n    {\"fact\": \"further 10 days with HoD or director approval\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot did not mention this fact.\"},\n    {\"fact\": \"rolling twelve-month period\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot did not mention this fact.\"}\n  ],\n  \"faithful\": null,\n  \"faithful_reason\": \"No chunks were provided that address the question directly.\",\n  \"refused\": true,\n  \"refused_reason\": \"The bot explicitly stated that the policy context does not contain enough information to answer the question.\"\n}"
+          },
+          {
+            "attempt": 2,
+            "error": "judge returned a fact without a boolean 'in_chunks'",
+            "raw": "{\n  \"must_include\": [\n    {\"fact\": \"10 days paid at line manager discretion\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot's answer does not mention this fact.\"},\n    {\"fact\": \"further 10 days with HoD or director approval\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot's answer does not mention this fact.\"},\n    {\"fact\": \"rolling twelve-month period\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot's answer does not mention this fact.\"}\n  ],\n  \"faithful\": null,\n  \"faithful_reason\": \"No chunks provided relevant information about leave for caring for a sick immediate family member.\",\n  \"refused\": true,\n  \"refused_reason\": \"The bot explicitly stated that the provided policy context does not contain enough information to answer the question.\"\n}"
+          }
+        ]
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "q01",
+      "type": "policy",
+      "question": "What is the policy on security of devices like laptops?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "The policy on the security of devices like laptops states that employees must integrate security controls into their daily work to protect devices (e.g., laptops, hybrids, smartphones) and information. These assets contain confidential firm data protected under FSMA 2000 and FSBRA 2013, and must be managed correctly. Employees should lock computer screens when leaving devices unattended (e.g., using the Windows key + L shortcut) and must not leave FCA/PSR equipment or devices unattended and unlocked. Personal devices should not be used to store, process, or share FCA/PSR information unless part of an approved solution. \n\nSource: FCA Employee Handbook, Pages 23-24.",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 23
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 24
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 24,
+          "content": "domestic waste. \n \nWhat is the harm? \n \nSecuring paper-based information is challenging due to the reliance on limited \nmanual controls to prevent unauthorised access. Loss or compromise of \ndocuments could harm regulated firms and erode public confidence. Similarly, \nleaving your hybrid device una ttended and unlocked may enable unauthorised \nactions using your credentials. \n                          \n1.3.10 Be Secure - Protect information, passwords and equipment \n \nYou must Integrate security controls into your daily work to protect information, \nsystems, and devices (e.g., laptops, hybrids, smartphones). These assets are \nvaluable, and confidential firm data is protected under FSMA 2000 and FSBRA \n2013, so you must manage it correctly."
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 25,
+          "content": "FCA/PSR assigned user accounts in \nline with their intended purpose. \n\u2022 Use non -FCA/PSR voicemail or \ntext messaging systems to \ncommunicate FCA/PSR Sensitive & \nFCA/PSR Secret information.  \n \n\u2022 Share your passwords with \nanyone (including line managers, \nProfessional Business or IT \nSupport colleagues etc).  \n \n\u2022 Use FCA/PSR user credentials or \nFCA /PSR email addresses for \npersonal use, such as personal \nsocial media accounts or online \nshopping. \n \n\u2022 Use personal equipment (laptops, \nphones etc.) to photograph, \nScreenshot, store, share or \nprocess FCA/PSR information of \nany category outside of the \napproved BYOD solution. \n \n\u2022 Use any personal device with \nvideo recording capabilities (e.g., \nwearable smart tech, Go -Pro \ncameras etc) inside FCA office \nbuildings. Covert recording, \nintentional or accidental, \nundermines trust, may breach \ndata protection laws, and risks the \nconfidentiality of our work. This \ndoes not apply to \u2018non -recording\u2019"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 24,
+          "content": "e.g., from home or outside the \noffice. \n \n\u2022 Ensure that hard copy information \nis securely stored in a locked \ncabinet or equivalent when not in \nuse for a prolonged period of time  \nboth in the office and when at \nhome. Ensure any default locker \npins are set to a chosen personal \ncode. \n \n\u2022 Lock computer screens prior to \nleaving them unattended (e.g., \nusing the \uf0ff L keys). \n \n\u2022 Use FCA/PSR printing facilities only \n(unless specifically authorised via \nthe approved and published \nprocess) and minimise the printing \nof documents where practicable. \nUse information in digital form \nwhenever possible. \n \n\u2022 Consider the need to remove \npapers from the office including \nwhether there is sensitive content \nin personal notebooks. Ensure you \nhave business and line manager \nsupport to justify taking papers \noutside of the office  where these \ncontain sensitive data. W henever \npossible you should utilise more \nsecure digital options. \nYou must not \n\u2022 Leave any FCA/PSR equipment or"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": null,
+      "judge_rejections": [
+        {
+          "attempt": 1,
+          "error": "judge returned a fact without a boolean 'in_chunks'",
+          "raw": "{\n  \"must_include\": [\n    {\n      \"fact\": \"lock screen when unattended\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot explicitly mentions locking computer screens when leaving devices unattended, which aligns with the retrieved chunk text.\"\n    },\n    {\n      \"fact\": \"never share passwords\",\n      \"present\": false,\n      \"in_chunks\": true,\n      \"reason\": \"The bot's answer does not mention the prohibition on sharing passwords, although the retrieved chunks clearly state this policy.\"\n    },\n    {\n      \"fact\": \"report compromised password to IT Service Desk\",\n      \"present\": false,\n      \"in_chunks\": null,\n      \"reason\": \"The bot's answer does not mention reporting compromised passwords, and the retrieved chunks do not provide information on this.\"\n    }\n  ],\n  \"faithful\": true,\n  \"faithful_reason\": \"All claims made by the bot are supported by the retrieved chunks, even though some required facts are omitted.\",\n  \"refused\": false,\n  \"refused_reason\": \"The bot provides an answer and does not decline to address the question.\"\n}"
+        },
+        {
+          "attempt": 2,
+          "error": "judge returned a fact without a boolean 'in_chunks'",
+          "raw": "{\n  \"must_include\": [\n    {\n      \"fact\": \"lock screen when unattended\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot explicitly mentions locking computer screens when leaving devices unattended, which aligns with the retrieved chunk text.\"\n    },\n    {\n      \"fact\": \"never share passwords\",\n      \"present\": false,\n      \"in_chunks\": true,\n      \"reason\": \"The bot's answer does not mention the prohibition on sharing passwords, although the retrieved chunk text explicitly states this.\"\n    },\n    {\n      \"fact\": \"report compromised password to IT Service Desk\",\n      \"present\": false,\n      \"in_chunks\": null,\n      \"reason\": \"The bot's answer does not mention reporting compromised passwords, and the retrieved chunks do not provide this information.\"\n    }\n  ],\n  \"faithful\": true,\n  \"faithful_reason\": \"All claims made by the bot are supported by the retrieved chunks, even though some required facts are omitted.\",\n  \"refused\": false,\n  \"refused_reason\": \"The bot provides an answer and does not decline to address the question.\"\n}"
+        }
+      ],
+      "outcome": "error",
+      "reasons": [],
+      "error": {
+        "type": "ValueError",
+        "message": "judge reply rejected 2 times: judge returned a fact without a boolean 'in_chunks'"
+      }
+    },
+    {
+      "id": "q02",
+      "type": "policy",
+      "question": "What should we do if we suspect theft of information?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "If you suspect theft of information, you should:\n\n1. **Immediately report the suspected or actual information security incident** in line with the FCA/PSR Incident Reporting Standard.\n2. **Use the Lost/Stolen reporting process** or contact the Security Control Room helpline at 0207 066 2222 (details are on your Emergency & Incident Card).\n3. Escalate immediately if in doubt to ensure prompt action.\n4. Seek guidance from your Line Manager or the Cyber & Information Resilience Team if necessary.\n\nFast reporting helps reduce the impact of such incidents and implement additional controls to contain them.\n\n**Source:** FCA Employee Handbook, Pages 21 and 25.",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 25
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 21
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 26,
+          "content": "26 \n \nWhat is the harm? \n \nPoor security practices weaken our ability to meet obligations for managing \nand protecting information. Misusing basic security measures like passwords, \nundermines the systems designed to keep data secure. This can lead to loss or \ndamage of FCA/PSR equipment, disruption of IT services, and compromise of \ninformation\u2014causing potential harm to consumers, firms, and loss of public \nconfidence. \n \n1.3.11 Be Alert - See it, suspect it, report it \n \nYou have a responsibility to remain alert and report any actual or suspected \nsecurity threat, for example the loss or theft of information or equipment, a \nsuspected or known external cyber -attack, or compromise of your log -in \ncredentials. Fast and diligent reporting can help reduce the impact of an incident \nand can assist in implementing additional controls to contain it. If in any doubt, \nescalate immediately. \n \nYou must You must not \n\u2022 Immediately report any suspected or"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 22,
+          "content": "immediately report to the IT Service \nDesk and complete the Loss Reporting \ne-Form if you believe you have clicked \non or opened malicious content. \n \n\u2022 Contact the IS Service Desk \nimmediately if our anti- virus software \nraises any alerts.   \n \n\u2022 Seek guidance from your line manager \nif you are unsure of the legitimacy of \na request for information. If in doubt, \nthis should be reported immediately \nvia Phishing@fca.org.uk and to the \nC&IR CCDI team. \n \n\u2022 Report the receipt of inappropriate \nmaterial to your Line Manager. \n \n\u2022 Transmit and transport \ninformation in accordance with the \nFCA Information Classification and \nHandling Guide  and the PSR \nInformation Classification and \nHandling guide \n\u2022 Send any FCA/PSR information to \nyour personal email address \n(excluding your own personal \ninformation such as personal training \ncertificates, your CV and \nremuneration details), or any email \naddress not directly connected with \nthe work being completed / related to"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 26,
+          "content": "and can assist in implementing additional controls to contain it. If in any doubt, \nescalate immediately. \n \nYou must You must not \n\u2022 Immediately report any suspected or \nactual information security incidents, \ndata privacy incidents, suspected \nweakness, non -compliances or near \nmisses in line with the FCA/PSR \nIncident Reporting Standard. \n \n\u2022 Report all known or suspected \nincidents using the Lost/Stolen \nreporting process or telephone the \nSecurity Control Room telephone \nhelpline (0207 066 2222 \u2013  full \ncontact details can be found on your \nEmergency & Incident Card). \n \n\u2022 Report incidents if you observe any \nwrongdoing relating to the \nrequirements contained within this \npolicy. Please ask your Line Manager \nor contact the Cyber & Information \nResilience Team if you have any \nconcerns. \n \n\u2022 Knowingly ignore or disregard \nany form of security incident or \npossible breach. \n \n\u2022 Delay reporting an incident \neven if the incident is \ndiscovered outside of office \nhours."
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "report immediately",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot explicitly states to immediately report suspected or actual incidents, which aligns with the retrieved chunks.",
+            "miss": null
+          },
+          {
+            "fact": "Lost/Stolen process or Security Control Room helpline",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot mentions using the Lost/Stolen reporting process or contacting the Security Control Room helpline, as stated in the retrieved chunks.",
+            "miss": null
+          },
+          {
+            "fact": "do not delay outside office hours",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot emphasizes immediate reporting without delay, even outside office hours, which matches the retrieved chunks.",
+            "miss": null
+          }
+        ],
+        "faithful": true,
+        "faithful_reason": "All claims in the bot's answer are supported by the retrieved chunks, with no unsupported information included.",
+        "refused": false,
+        "refused_reason": "The bot provides a detailed answer and does not decline to answer the question."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q03",
+      "type": "policy",
+      "question": "What protection is offered to whistleblowers?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "The FCA Employee Handbook outlines several protections for whistleblowers:\n\n1. **Protection Against Retaliation or Detriment**: Employees must not threaten, retaliate, or subject whistleblowers to detriment in any way. Detriments may include failure to promote, denial of training, ostracism, harassment, blocking access to resources, reassignment, demotion, suspension, or disciplinary action. Any retaliation can lead to disciplinary measures against the offending employee (Source: FCA Employee Handbook, Page 36\u201337).\n\n2. **Confidentiality**: The Internal Whistleblowing Team treats reports in confidence and protects the whistleblower's identity unless:\n   - The law overrides this right.\n   - The whistleblower provides consent.\n   - The whistleblower has self-disclosed their identity. \nIf revealing the identity is essential for resolving a concern, it will be discussed with the whistleblower to determine the best course of action (Source: FCA Employee Handbook, Page 34).\n\n3. **Support**: Whistleblowers have access to resources, such as the Employee Assistance Programme for confidential wellbeing support and counseling. Additional support can be sought from Staff Representatives, the Wellbeing Pulse page, or external independent advice from the charity Protect (https://protect-advice.org.uk) (Source: FCA Employee Handbook, Page 36).\n\nThese measures reflect the organization's commitment to protecting and supporting whistleblowers.",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 36
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 34
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 37,
+          "content": "threaten or retaliate against whistleblowers in any way. If any employee is found to be \ninvolved in such conduct, they may be subject to disciplinary action. \n \nIf you have any questions on the application of the Policy, or are not clear whether \nsomething is within the scope of this Policy, you can seek advice from \ninternal.whistle@fca.org.uk or the Chief Internal Auditor. Line managers requiring guidance \nwith respect to internal whistleblowing should contact the Internal Whistleblowing Team. \nConfidential wellbeing support and counselling is available to employees who raise concerns \nunder this Policy via the Employee Assistance Programme. Further support is also available \nfrom Staff Representatives and the Wellbeing Pulse page.  \n \nEmployees who require independent advice relating to whistleblowing may contact the \nindependent charity \u2013 Protect (https://protect-advice.org.uk) on 020 3117 2520. Protect \ngives free and confidential advice on whistleblowing matters."
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 37,
+          "content": "37 \n \ndisadvantage\u2019 because they blew the whistle. This could include (but is not limited to) any \nof the following: failure to promote; denial of training; closer monitoring; ostracism or \nbullying or harassment; blocking access to resources; unrequested reassign ment or \nrelocation; demotion, suspension or disciplinary sanction\u201d. \n \nIf you are a whistleblower and you believe that you have suffered any such detriment as a \nresult of whistleblowing, you should inform the Chief Internal Auditor or the Whistleblowers\u2019 \nChampion immediately.  We will listen to understand the situation, work with you to \nestablish what has happened, when, and why it could be a detriment, before deciding on \nany appropriate next steps. \n \nWe take any alleged whistleblowing detriment very seriously. Our employees must not \nthreaten or retaliate against whistleblowers in any way. If any employee is found to be \ninvolved in such conduct, they may be subject to disciplinary action."
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 35,
+          "content": "All reports, except those that can be resolved by a line manager or member of the Senior \nLeadership Team, will be assessed by the Internal Whistleblowing team.  Each report \nreceived by the Internal Whistleblowing Team will be treated in confidence. If you ask us \nnot to disclose your identity, the team will protect your identity and it will only be disclosed \non a need-to-know basis to those responsible for investigating the concern. In exceptional \ncircumstances protecting your identity may not be possible. For example,  \n\u2022 if this right is overridden by law; \n\u2022 if the whistleblower provides consent; or  \n\u2022 if the whistleblower has self-disclosed their identity as a whistleblower to others.  \n \nIf we are unable to resolve a concern without revealing your identity, for example where \nyour personal evidence is essential, we will discuss with you whether and how the matter \ncan best proceed. \n \nIn instances where a whistleblower makes a report directly or escalates to the"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": null,
+      "judge_rejections": [
+        {
+          "attempt": 1,
+          "error": "judge returned a fact without a boolean 'in_chunks'",
+          "raw": "{\n  \"must_include\": [\n    {\n      \"fact\": \"retaliation not tolerated\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot explicitly states that employees must not threaten, retaliate, or subject whistleblowers to detriment, which aligns with the retrieved chunks.\"\n    },\n    {\n      \"fact\": \"no dismissal or disciplinary action\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot mentions that whistleblowers must not face disciplinary action or other detriments, supported by the retrieved chunks.\"\n    },\n    {\n      \"fact\": \"protected disclosure\",\n      \"present\": false,\n      \"in_chunks\": null,\n      \"reason\": \"The bot does not explicitly mention the term 'protected disclosure,' and the retrieved chunks do not provide this specific phrasing.\"\n    }\n  ],\n  \"faithful\": true,\n  \"faithful_reason\": \"All claims made by the bot are supported by the retrieved chunks, even if the term 'protected disclosure' is not explicitly mentioned.\",\n  \"refused\": false,\n  \"refused_reason\": \"The bot provides an answer and does not decline to address the question.\"\n}"
+        },
+        {
+          "attempt": 2,
+          "error": "judge returned a fact without a boolean 'in_chunks'",
+          "raw": "{\n  \"must_include\": [\n    {\n      \"fact\": \"retaliation not tolerated\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot explicitly states that employees must not threaten or retaliate against whistleblowers, which aligns with the retrieved chunks.\"\n    },\n    {\n      \"fact\": \"no dismissal or disciplinary action\",\n      \"present\": true,\n      \"in_chunks\": true,\n      \"reason\": \"The bot mentions that whistleblowers must not suffer detriment, including disciplinary action, as supported by the retrieved chunks.\"\n    },\n    {\n      \"fact\": \"protected disclosure\",\n      \"present\": false,\n      \"in_chunks\": null,\n      \"reason\": \"The bot does not explicitly mention the term 'protected disclosure,' and the retrieved chunks do not provide this specific phrasing.\"\n    }\n  ],\n  \"faithful\": true,\n  \"faithful_reason\": \"All claims made by the bot are supported by the retrieved chunks, even if the term 'protected disclosure' is not explicitly mentioned.\",\n  \"refused\": false,\n  \"refused_reason\": \"The bot provides an answer and does not decline to address the question.\"\n}"
+        }
+      ],
+      "outcome": "error",
+      "reasons": [],
+      "error": {
+        "type": "ValueError",
+        "message": "judge reply rejected 2 times: judge returned a fact without a boolean 'in_chunks'"
+      }
+    },
+    {
+      "id": "q04",
+      "type": "policy",
+      "question": "I'm unhappy with how my manager treats me. How do I raise a formal complaint?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "To raise a formal complaint about how your manager treats you, you need to:\n\n1. Complete a grievance form (available from the HR Helpline).\n2. Submit the form with full details of your grievance to the Employee Relations team. Your written complaint should include:\n   - Full details of the conduct in question.\n   - The name of the person(s) involved.\n   - The date, time, and location where the conduct occurred.\n   - The names of any witnesses.\n   - Any actions you have taken to address the issue so far.\n\nOnce submitted, an appropriate manager will be appointed, and a meeting will be arranged to discuss your concerns, supported by an HR representative. The meeting will typically be held within 10 working days, depending on availability and any investigations needed. \n\nFor informal resolution, you can first discuss your concerns with your line manager, their manager, or the HR Helpline if appropriate.\n\n(Source: FCA Employee Handbook, Page 55)",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 55
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 53
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 56,
+          "content": "To raise a formal grievance you must complete a grievance form and submit full details of \nyour grievance to the Employee Relations team. Grievance forms are available from the HR \nHelpline. \n \nAn appropriate manager will be appointed and a meeting will be arranged for you to explain \nand discuss your concerns. The manager will be supported by an HR representative. We will \naim to hold the meeting as soon as reasonably practicable, ideally within 10 working days \nof receiving your written grievance, subject to the availability of relevant individuals and  \nany prerequisite investigation. We will digitally record the meeting and send you a copy of"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 56,
+          "content": "to either procedure, we will use the Equality Complaints Procedure to hear your complaint. \n \nWe have a separate Whistleblowing Policy to enable employees to report illegal activities, \nwrongdoing or malpractice. However, if you feel you have been victimised for an act of \nwhistleblowing, you may raise the matter under this Grievance Procedure. \n \nRaising grievances informally \n \nMost grievances can be resolved quickly and informally. In the first instance you should \ndiscuss your concerns with your immediate line manager. If you feel unable to speak to \nyour line manager then you should contact your line manager\u2019s manager or the HR Helpline. \nIf this does not resolve the issue you should follow the formal procedure below. \n \nFormal written grievances \nStage 1: \nTo raise a formal grievance you must complete a grievance form and submit full details of \nyour grievance to the Employee Relations team. Grievance forms are available from the HR \nHelpline."
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 54,
+          "content": "54 \n \nOfficer, the FCA\u2019s Employee Assistance Programm e or an SCC Representative for \nconfidential advice. Other sources of support include a member of an appropriate staff \nnetwork group or a trusted colleague. \n \nIf informal steps are not appropriate, or have been unsuccessful, you should follow the \nformal procedure set out below. \n \nStage 1: Raising a formal complaint \n \nIf you wish to make a formal complaint, you should complete a grievance form and submit \nit to the Employee Relations team who will appoint an appropriate manager to hear your \ncomplaint. Grievance forms are available from the HR Helpline. \n \nYour written complaint should set out: \n \n\u2022 full details of the conduct in question \n \n\u2022 the name of the perpetrator(s) \n \n\u2022 the date and time and where such conduct occurred \n \n\u2022 the names of any witnesses \n \n\u2022 any action that has been taken so far to attempt to stop the conduct from occurring"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "grievance form",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot explicitly mentions completing a grievance form, which matches the retrieved chunks.",
+            "miss": null
+          },
+          {
+            "fact": "Employee Relations team",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot states that the grievance form should be submitted to the Employee Relations team, consistent with the retrieved chunks.",
+            "miss": null
+          },
+          {
+            "fact": "meeting ideally within 10 working days",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot mentions that the meeting will typically be held within 10 working days, aligning with the retrieved chunks.",
+            "miss": null
+          }
+        ],
+        "faithful": true,
+        "faithful_reason": "All claims in the bot's answer are supported by the retrieved chunks, with no unsupported information added.",
+        "refused": false,
+        "refused_reason": "The bot provides a detailed answer and does not decline to answer the question."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q05",
+      "type": "policy",
+      "question": "My immediate family member is sick. How much leave can I take to care for them?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "The provided policy context does not contain enough information regarding leave entitlement specifically to care for an immediate family member who is sick.",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 69
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 87
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 72
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 70,
+          "content": "\u2022 If you have taken less than 4 weeks, the remainder may be carried over under this rule. For \nexample, a full time employee who has taken 2 weeks\u2019 holiday plus 2 bank holidays before \nstarting long-term sick leave can only carry over 1 week and 3  days. Any annual leave \ncarried over under this rule but not taken within 18 months of the end of the annual leave \nyear in which it accrued will be lost. \n \nAlternatively you can choose to take your 4-week minimum paid annual leave during your \nsick leave, in which case you will be paid at your normal rate. \n \nFamily leave and annual leave entitlement \n \nAnnual leave entitlement continues to accrue during periods of maternity, paternity, \nadoption, parental or shared parental leave (referred to collectively in this policy as family \nleave). \n \nIf you are planning a longer period of family leave that is likely to last beyond the end of \nthe annual leave  year, you should discuss your annual leave plans with your manager in"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 88,
+          "content": "If you or your partner are undergoing fertility treatment you may take up to 3 days\u2019 unpaid \nleave in any 1 year. If you require additional time off, you should discuss this with your line \nmanager who will be able to approve your request in Workday. \n \nFertility treatment differs case -by-case and in order that appropriate assistance can be \noffered, it is important that you discuss treatment dates and key stages with your manager. \n \nWhere possible, GP and hospital appointments which are not being taken as annual leave \nshould be made for the beginning or end of the working day. This may not always be possible \nand where an appointment and travel time is likely to last over 2 hours, annual leave should \nbe used. \n \nGiving as much notice as possible of appointments will help with planning work. If \nappointments or treatment may be required at short notice please discuss this with your \nmanager. A manager may ask to see an appointment card or supporting documentation."
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 73,
+          "content": "73 \n \n \nTaking parental leave \n \nYou can choose to take parental leave any time up until the child\u2019s 18th birthday. You \nmust give your line manager notice of your intention to take parental leave. \n \nYou must take your parental leave in blocks of whole weeks, except in the case of children \nwith disabilities, where you can request odd days. \n \nYou must give us 21 days\u2019 notice by completing the Unpaid Parental Leave request via \nWorkday . \n \nWe can postpone your leave (see below) except when you give notice to take it \nimmediately after the time your child is born or is placed with your family for adoption. \n \nWe may ask you to confirm that you are the parent or the person who is legally \nresponsible for the child. Any such request will be reasonable and we will not check your \nentitlement every time you ask for leave. \n \nPostponement of parental leave \n \nIf your manager believes your absence would unduly disrupt the business, or where other"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": null,
+      "judge_rejections": [
+        {
+          "attempt": 1,
+          "error": "judge returned a fact without a boolean 'in_chunks'",
+          "raw": "{\n  \"must_include\": [\n    {\"fact\": \"10 days paid at line manager discretion\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot did not mention this fact.\"},\n    {\"fact\": \"further 10 days with HoD or director approval\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot did not mention this fact.\"},\n    {\"fact\": \"rolling twelve-month period\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot did not mention this fact.\"}\n  ],\n  \"faithful\": null,\n  \"faithful_reason\": \"No chunks were provided that address the question directly.\",\n  \"refused\": true,\n  \"refused_reason\": \"The bot explicitly stated that the policy context does not contain enough information to answer the question.\"\n}"
+        },
+        {
+          "attempt": 2,
+          "error": "judge returned a fact without a boolean 'in_chunks'",
+          "raw": "{\n  \"must_include\": [\n    {\"fact\": \"10 days paid at line manager discretion\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot's answer does not mention this fact.\"},\n    {\"fact\": \"further 10 days with HoD or director approval\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot's answer does not mention this fact.\"},\n    {\"fact\": \"rolling twelve-month period\", \"present\": false, \"in_chunks\": null, \"reason\": \"The bot's answer does not mention this fact.\"}\n  ],\n  \"faithful\": null,\n  \"faithful_reason\": \"No chunks provided relevant information about leave for caring for a sick immediate family member.\",\n  \"refused\": true,\n  \"refused_reason\": \"The bot explicitly stated that the provided policy context does not contain enough information to answer the question.\"\n}"
+        }
+      ],
+      "outcome": "error",
+      "reasons": [],
+      "error": {
+        "type": "ValueError",
+        "message": "judge reply rejected 2 times: judge returned a fact without a boolean 'in_chunks'"
+      }
+    },
+    {
+      "id": "q06",
+      "type": "policy",
+      "question": "How do I report that I'm sick?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "To report that you are sick, follow the steps below:\n\n1. **If you are ill or injured at work**: Inform your line manager immediately.\n2. **If you cannot attend work**:\n   - Telephone your line manager as early as possible and no later than **9:30 am**.\n   - Inform them of:\n     - The nature of your illness or injury,\n     - The expected length of your absence, and\n     - Any urgent or outstanding work that requires attention.\n3. **For the first 7 calendar days**:\n   - Telephone your line manager **on each working day** of your sickness unless agreed otherwise.\n4. **For absences longer than 7 calendar days**:\n   - Obtain a certificate from your doctor to confirm your incapacity.\n\nAdditionally:\n- Ensure to record your absence on Workday for absences up to 7 calendar days and participate in a return-to-work meeting upon your return.\n\n(Source: FCA Employee Handbook, Page 81-82)",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 81
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 82
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 82,
+          "content": "appropriate. \n \nFor more information on managing sickness, please refer to the Manager\u2019s Guide to Dealing \nwith Sickness Absence. \n \nDisabilities \n \nWe are aware that sickness absence may result from a disability. If you consider that you \nare affected by a disability or any medical condition which affects your ability to undertake \nyour work, you should inform the HR Helpline and/or your line manager. Any information \nyou provide will be handled in a confidential manner. \n \nAt each stage of the sickness absence management procedure, consideration will be given \nto whether there are reasonable adjustments that could be made to the requirements of a \njob or other aspects of working arrangements that will provide support at work and/or assist \na return to work. \n \nSickness absence reporting procedure \n \nIf you are taken ill or injured while at work you should inform your line manager. \n \nIf you cannot attend work because you are ill or injured you should telephone your line"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 82,
+          "content": "If you are taken ill or injured while at work you should inform your line manager. \n \nIf you cannot attend work because you are ill or injured you should telephone your line \nmanager as early as possible and by 9:30am. You should inform them of the nature of your \nillness or injury, the expected length of your absence from work and any outstanding or \nurgent work that requires attention. \n \nUnless agreed otherwise, you should telephone your line manager on each working day of \nsickness for the first 7 calendar days (excluding weekends). You should expect to remain in \ncontact during your absence with your line manager and/or HR who will want to enquire after \nyour health and be advised, if possible, as to your expected return date. \n \nEvidence of incapacity \n \nFor absence up to 7 calendar days, you must record your absence on Workday and \nparticipate in a return to work meeting. \n \nFor absence of more than a week (7 calendar days): you must obtain a certificate from your"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 83,
+          "content": "83 \n \nweek or less, on production of a doctor\u2019s invoice. \n \nUnauthorised absence \n \nCases of unauthorised absence will be dealt with under our Disciplinary Procedure. \n \nAbsence that has not been notified according to the sickness absence reporting procedure \nwill be treated as unauthorised absence. \n \nIf you do not report for work and have not telephoned your line manager to explain the \nreason for your absence, your line manager will try to contact you, by telephone and in \nwriting if necessary. This should not be treated as a substitute for reporting sickness \nabsence. \n \nSick pay \n \nYou may be entitled to Statutory Sick Pay (SSP ) if you satisfy the relevant statutory \nrequirements. Qualifying days for SSP are Monday to Friday  or your working days  as set \nout in your employment contract and includes bank holidays. \n \nYou will normally be entitled to receive occupational sick pay (OSP) if you have complied"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "telephone line manager",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot explicitly states to telephone the line manager if you cannot attend work.",
+            "miss": null
+          },
+          {
+            "fact": "by 9:30am",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot specifies that you must call your line manager no later than 9:30am.",
+            "miss": null
+          },
+          {
+            "fact": "each working day for first 7 calendar days",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot mentions calling the line manager on each working day for the first 7 calendar days unless agreed otherwise.",
+            "miss": null
+          }
+        ],
+        "faithful": true,
+        "faithful_reason": "All claims in the bot's answer are supported by the retrieved chunks, which provide detailed instructions on sickness reporting procedures.",
+        "refused": false,
+        "refused_reason": "The bot provides a complete answer and does not decline to answer the question."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q07",
+      "type": "policy",
+      "question": "After how many sick days is a doctor's note required?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "According to the FCA Employee Handbook, a doctor's note (a \"Fit Note\") is required after more than 7 calendar days of sickness absence.\n\nSource: FCA Employee Handbook, Page 81",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 81
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 82,
+          "content": "82 \n \ncalendar days (a fit note will be required beyond 7 calendar days) \n \n\u2022 \u2018long-term sickness absence\u2019 means any period of sickness (continuous or \naggregated) lasting 66 working days or more \n \nWe monitor absence levels including recurring sickness absence. Generally, where the \n\u2018trigger points\u2019 are reached of 10 working days lost in any 12 month rolling period or 5 \nseparate occasions of sickness absence in any 12 month rolling period, we will wor k with \nyou to understand the nature of the illness and to seek to minimise future absences, which \ncould include a referral to Occupational Health. These \u2018trigger points\u2019 do not apply to \ndisability or pregnancy-related illnesses which will be assessed on a case-by-case basis by \nline managers in conjunction with HR, working closely with Occupational Health as \nappropriate. \n \nFor more information on managing sickness, please refer to the Manager\u2019s Guide to Dealing \nwith Sickness Absence. \n \nDisabilities"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 82,
+          "content": "be needed to facilitate your return to work, taking account of your doctor\u2019s advice. This may \ntake place at a return-to-work meeting. If appropriate measures cannot be taken, you will \nremain on sick leave and we will set a date to review the situation. \n \nIf we are concerned about the reason for absence, or frequent short-term absence, we may \nrequire a medical certificate for each absence regardless of duration. In such circumstances, \nwe will cover any costs incurred in obtaining such medical certificates, for absences of a"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 82,
+          "content": "participate in a return to work meeting. \n \nFor absence of more than a week (7 calendar days): you must obtain a certificate from your \ndoctor (a \u2018Statement of Fitness for Work\u2019 known as a \u2018Fit Note\u2019) stating that you are not fit \nto work and the reason why. This should be forwarded to your line manager without delay. \nIf your absence continues, further Fit Notes must be provided to cover the whole period of \nabsence. \n \nFor sickness absence beyond 7 days, managers will update Workday and contact individuals \nto confirm keeping in touch arrangements. \n \nIf your doctor provides a certificate stating that you \u2018may be fit for work\u2019 you should inform \nyour line manager immediately. We will discuss with you any additional measures that may \nbe needed to facilitate your return to work, taking account of your doctor\u2019s advice. This may \ntake place at a return-to-work meeting. If appropriate measures cannot be taken, you will"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "more than 7 calendar days",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot's answer explicitly mentions 'more than 7 calendar days,' which is supported by the retrieved chunks.",
+            "miss": null
+          },
+          {
+            "fact": "Fit Note from doctor",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot's answer specifies that a 'Fit Note' is required, which aligns with the retrieved chunks.",
+            "miss": null
+          },
+          {
+            "fact": "Workday for absences up to 7 days",
+            "present": false,
+            "in_chunks": true,
+            "reason": "The bot's answer does not mention Workday for absences up to 7 days, although this is stated in the retrieved chunks.",
+            "miss": "generation_miss"
+          }
+        ],
+        "faithful": true,
+        "faithful_reason": "All claims made by the bot are supported by the retrieved chunks.",
+        "refused": false,
+        "refused_reason": "The bot provided an answer and did not decline to answer the question."
+      },
+      "judge_rejections": [],
+      "outcome": "fail",
+      "reasons": [
+        "missing (generation_miss): Workday for absences up to 7 days - The bot's answer does not mention Workday for absences up to 7 days, although this is stated in the retrieved chunks."
+      ],
+      "error": null
+    },
+    {
+      "id": "q08",
+      "type": "policy",
+      "question": "How will I be adjusted due to a disability?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "If you have a disability or become disabled, the FCA Employee Handbook states that you are encouraged to inform your line manager and the HR Helpline about your condition so that they can assess and provide appropriate support. Reasonable adjustments may be made to minimize difficulties caused by the disability. These adjustments will be considered on a case-by-case basis in consultation with you and, if necessary, your medical adviser. If a proposed adjustment is deemed unreasonable, the reasons will be explained, and alternatives will be explored. \n\nThis policy reflects the FCA's commitment to equality, diversity, and inclusion, as well as obligations under the Equality Act 2010.\n\n(Source: FCA Employee Handbook, Pages 50, 85, and 86)",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 50
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 85
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 51,
+          "content": "failure to make reasonable adjustments to alleviate disadvantages caused by a \ndisability. \n \nDisabilities \n \nIf you are disabled or become disabled, we encourage you to tell us about your condition \nso that we can support you as appropriate. \n \nIf you experience difficulties at work because of your disability, you may wish to contact \nyour line manager and the HR Helpline to discuss any reasonable adjustments that would \nhelp overcome or minimise the difficulty. We may wish to consult with you and your medical \nadviser about possible adjustments. We will consider the matter carefully and try to \naccommodate your needs within reason. If we consider a particular adjustment would not \nbe reasonable we will explain our reasons and try to find an alternative sol ution where \npossible. \n \nWe will monitor the physical features of our premises to consider whether they might place \nanyone with a disability at a substantial disadvantage. Where necessary, we will take"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 86,
+          "content": "practice, or process places a disabled person or an individual with a long-term condition at a \nsubstantial disadvantage compared to others. \n \nWhere needs arise due to injury not related to a disability or due to personal circumstances \n(for example, a broken leg or caring responsibilities), individuals should discuss these with \ntheir manager to explore whether informal/formal flexible working arr angements, a Display \nScreen Equipment (DSE) assessment, or both may be appropriate. In these circumstances, \nreasonable adjustments would not normally apply.  If a colleague or their line manager is \nunsure what route reflects their specific circumstances, the working arrangements route \nfinder will help. \n \nThe accompanying procedure sets out the full details of the reasonable adjustments process.  \n \n6.3 Menopause policy \n Our approach  \nProviding an inclusive and supportive environment, where all colleagues are treated fairly, with"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 86,
+          "content": "86 \n \n Our approach  \nWe are committed to providing an inclusive, supportive, and accessible working environment \nfor all colleagues. We recognise that adjustments are specific to each individual and each \nrole and will be considered on a case -by-case basis. Our aim is to support  all colleagues to \nperform their roles effectively and to participate fully in the workplace, regardless of disability \nor health condition. \n \nPolicy statement \nThis policy applies to all colleagues throughout the employee lifecycle including recruitment.  \n \nWe are committed to meeting our obligations under the Equality Act 2010 and to fostering \nan environment that values equality, diversity, and inclusion throughout the workplace. We \nwill make reasonable adjustments, as appropriate, where any physical feature , working \npractice, or process places a disabled person or an individual with a long-term condition at a \nsubstantial disadvantage compared to others."
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "line manager and HR Helpline",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot's answer explicitly mentions contacting the line manager and HR Helpline, which is supported by the retrieved chunks.",
+            "miss": null
+          },
+          {
+            "fact": "case by case",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot's answer states that adjustments are considered on a case-by-case basis, which aligns with the retrieved chunks.",
+            "miss": null
+          },
+          {
+            "fact": "reasons explained if adjustment refused",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot's answer mentions that reasons will be explained if an adjustment is deemed unreasonable, which is supported by the retrieved chunks.",
+            "miss": null
+          }
+        ],
+        "faithful": true,
+        "faithful_reason": "All claims in the bot's answer are directly supported by the retrieved chunks, with no unsupported information included.",
+        "refused": false,
+        "refused_reason": "The bot provided a complete answer and did not decline to answer the question."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q09",
+      "type": "policy",
+      "question": "If I am going through menopause, what am I entitled to?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "The provided policy context states that if you are going through menopause (including perimenopause), you are entitled to:\n\n1. **Support and Adjustments:** The organization aims to proactively make necessary adjustments to support you and ensure the workplace does not worsen your symptoms.\n2. **Fair Treatment:** You will be treated fairly, with dignity, respect, and understanding, while your health and well-being are fully supported.\n3. **Open Conversations:** A workplace environment where you can have open and honest discussions about menopause and ask for help.\n4. **Awareness:** Managers and colleagues are equipped to understand menopause-related issues to effectively support you.\n\n(Source: FCA Employee Handbook, Page 85)",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 85
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 86,
+          "content": "\u2022 ensure consistent support is made available to those impacted by the menopause or its \nsymptoms.  \nIn this policy, where we refer to the menopause, we also mean the perimenopause. \nThe menopause largely impacts women in their 40s to 60s; however, it can occur at an earlier age \nsuch as those who have undergone a hysterectomy or cancer treatment. Other groups affected by the \nmenopause at any age include those who have functioning ovaries, such as some transgender, some \nnon-binary people and some intersex people. This policy is inclusive of all gender identities.  \nDisability, age, race, ethnicity, religion, sexual orientation or marital/civil partnership status may also \naffect how menopause is experienced and managed. So, although it may be a natural life change for \nsome, it can affect everyone differently."
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 86,
+          "content": "6.3 Menopause policy \n Our approach  \nProviding an inclusive and supportive environment, where all colleagues are treated fairly, with \ndignity, respect and understanding, and their health and wellbeing is fully supported, is one of our \nmain priorities.  \nWe recognise that, at any time, many colleagues will either be experiencing perimenopausal or \nmenopausal symptoms or know someone who is. We also recognise the menopause as the important \nworkplace issue it is.  \nWe want to take a proactive approach, promoting greater understanding across the workforce so that \npeople can be supported to give their best, regardless of perimenopausal or menopausal symptoms \nand their impact. We want our workplace to be one where colleagues feel able to have open and \nhonest conversations about the menopause and ask for help, and managers and colleagues feel \nequipped and empowered to support them.  \nPolicy statement \nThe aim of this policy and accompanying procedure is to:"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 86,
+          "content": "equipped and empowered to support them.  \nPolicy statement \nThe aim of this policy and accompanying procedure is to: \n\u2022 ensure that we work proactively to make adjustments, where necessary, to support those \nexperiencing the menopause and to ensure the workplace does not make their symptoms \nworse. \n\u2022 raise wider awareness and understanding across our whole workforce of the menopause and \nthe symptoms colleagues may experience. \n\u2022 make managers aware of their responsibility to understand the menopause and the related \nissues that can affect colleagues. \n\u2022 provide greater clarity and direction on how we deal with menopause related issues, either for \nindividuals experiencing them or those who are affected indirectly, for example, partners, \ncolleagues or line managers. \n\u2022 ensure consistent support is made available to those impacted by the menopause or its \nsymptoms.  \nIn this policy, where we refer to the menopause, we also mean the perimenopause."
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "adjustments where necessary",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot explicitly mentions proactive adjustments to support individuals experiencing menopause.",
+            "miss": null
+          },
+          {
+            "fact": "includes perimenopause",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot states that the policy includes perimenopause, which aligns with the retrieved chunks.",
+            "miss": null
+          },
+          {
+            "fact": "Menopause procedure for details",
+            "present": false,
+            "in_chunks": false,
+            "reason": "The bot does not mention the separate Menopause procedure for further details, which is stated in the chunks.",
+            "miss": "retrieval_miss"
+          }
+        ],
+        "faithful": true,
+        "faithful_reason": "All claims made by the bot are supported by the retrieved chunks, though it omits mentioning the Menopause procedure for details.",
+        "refused": false,
+        "refused_reason": "The bot provides an answer and does not decline to address the question."
+      },
+      "judge_rejections": [],
+      "outcome": "fail",
+      "reasons": [
+        "missing (retrieval_miss): Menopause procedure for details - The bot does not mention the separate Menopause procedure for further details, which is stated in the chunks."
+      ],
+      "error": null
+    },
+    {
+      "id": "q10",
+      "type": "policy",
+      "question": "How do I resolve stress at work?",
+      "question_type": "general_question",
+      "review_status": "",
+      "answer": "Managing stress at work is essential for maintaining good mental health, enhancing productivity, and improving overall job satisfaction. Below are strategies to help you resolve workplace stress:\n\n---\n\n### **1. Identify Stress Triggers**\n   - **Track Stressors**: Keep a journal to identify specific situations, activities, or people that cause stress.\n   - **Analyze Patterns**: Once you recognize what triggers stress, you can take steps to address or minimize it.\n\n---\n\n### **2. Manage Your Time Effectively**\n   - **Prioritize Tasks**: Use methods like the Eisenhower Matrix or to-do lists to organize tasks by urgency and importance.\n   - **Break Large Tasks into Smaller Steps**: This makes daunting projects feel more manageable.\n   - **Set Realistic Deadlines**: Avoid overcommitting or agreeing to unreasonable timelines.\n\n---\n\n### **3. Practice Healthy Communication**\n   - **Speak Up**: Discuss workloads and expectations with your supervisor if you feel overwhelmed.\n   - **Set Boundaries**: Politely say \u201cno\u201d to additional responsibilities if you\u2019re already stretched too thin.\n   - **Resolve Conflicts**: Address interpersonal issues constructively and avoid letting them fester.\n\n---\n\n### **4. Practice Stress-Relief Techniques**\n   - **Deep Breathing**: Focus on slow, deep breaths when you start feeling overwhelmed.\n   - **Mindfulness & Meditation**: Take a few minutes daily to stay present and calm your mind.\n   - **Physical Movement**: Stretch at your desk, take a walk, or try quick exercises to release tension.\n\n---\n\n### **5. Foster a Healthy Work-Life Balance**\n   - **Set Clear Boundaries**: Avoid working late nights or checking emails outside work hours.\n   - **Make Time for Hobbies**: Pursue activities you enjoy outside of work.\n   - **Take Breaks**: Use your lunch break to recharge and take short, frequent breaks throughout the day.\n\n---\n\n### **6. Build Supportive Relationships**\n   - **Seek Help**: Talk to your colleagues, manager, or HR team if you need support with workload or workplace conflicts.\n   - **Connect with Peers**: Develop friendships with coworkers for mutual support and camaraderie.\n   - **Talk to Loved Ones**: Discuss your feelings and stressors with friends or family members.\n\n---\n\n### **7. Take Care of Yourself**\n   - **Get Adequate Sleep**: Aim for 7-9 hours of rest per night to approach work with energy and focus.\n   - **Eat Healthy**: Avoid junk food and opt for balanced meals to sustain your energy levels.\n   - **Exercise Regularly**: Physical activity reduces stress hormones and boosts mood.\n\n---\n\n### **8. Create an Organized Workspace**\n   - **Declutter**: A clean and organized desk can reduce mental distractions.\n   - **Personalize Your Space**: Add items that make you happy, such as photos or plants, to create a positive atmosphere.\n\n---\n\n### **9. Seek Professional Help**\n   - **Talk to a Counselor**: Many workplaces provide Employee Assistance Programs (EAPs) offering free or low-cost counseling.\n   - **Consider Stress Management Training**: Join courses or workshops that teach coping strategies.\n   - **See a Therapist**: If stress persists, consider consulting a mental health professional for guidance.\n\n---\n\n### **10. Reassess Your Career Goals**\n   - **Reevaluate Your Job Fit**: If chronic stress persists despite your efforts, think about whether the role aligns with your values and skills.\n   - **Explore New Opportunities**: Sometimes it\u2019s necessary to consider a job change if the environment or work itself is negatively impacting you.\n\n---\n\n### **11. Make Use of Workplace Resources**\n   - Utilize available tools and benefits, such as wellness programs or yoga/meditation sessions offered by your organization, which can help you manage stress more effectively.\n\n---\n\n### **12. Cultivate a Positive Mindset**\n   - **Practice Gratitude**: Reflect on positive aspects of your workday to shift your focus away from stressors.\n   - **Focus on What You Can Control**: Let go of things outside your influence and channel energy into what you can change or improve.\n\n---\n\nBy taking proactive steps to identify and address your stressors, you can improve your day-to-day work experience and maintain your well-being.",
+      "sources": [],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 90,
+          "content": "90 \n \n \n\u2022 ensure that employees understand the standards of behaviour expected of them \nand others and act on behaviour which falls below those standards \n \n\u2022 provide adequate training to ensure employees are able to carry out their roles \n \n\u2022 monitor working hours to ensure employees are not overworking \n \n\u2022 monitor annual leave to make sure employees are taking breaks from work to \nsupport your physical and mental wellbeing \n \nResolving stress \n \nIf you believe you are suffering from stress you should discuss this with your manager in \nthe first instance. If you feel unable to do so you should contact the HR Helpline or access \nthe EAP. \n \nOnce an issue affecting your health comes to the attention of your manager or HR, steps \nwill be taken to address that issue. This may include a referral to occupational health and \nthe completion of a stress risk assessment. \nIf you are absent due to stress you should follow the sickness absence reporting procedure"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 89,
+          "content": "disruption to your work. You should also make up the time. Your manager may ask to see \nconfirmation of the appointment or supporting documentation. \n \n6.9 Stress at work policy \n \nWe are committed to identifying, tackling and preventing the causes of work-related stress \nand to providing appropriate support and consideration to staff suffering from stress, on a \nconfidential basis where appropriate. \n \nThis commitment extends to maintaining a working environment that protects the \npsychological as well as physical health of all our employees, wherever possible.  \n \nWhat is stress? \n \nThe UK Health and Safety Executive define stress as the adverse reaction people have to \nexcessive pressures or demands placed on them. \n \nA certain amount of pressure can motivate us and enable us to perform at our best. \nHowever, when pressure becomes excessive we can potentially start to experience stress. \n \nPressures from outside the workplace, whether the result of unexpected or traumatic events"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 89,
+          "content": "However, when pressure becomes excessive we can potentially start to experience stress. \n \nPressures from outside the workplace, whether the result of unexpected or traumatic events \nsuch as accidents, illness, bereavement, family breakdown or financial worries, can result \nin stress. They can also compound normal workplace pressures. \n \nWe recognise that what triggers stress and the capacity to deal with stress varies from \nperson to person. \n \nSupport \n \nWe are committed to helping staff who may be suffering from stress. We aim to do this in \nthe following ways: \n \n\u2022 identify workplace stressors as far as reasonably practicable and conduct stress \nrisk assessments \n \n\u2022 provide training for all people managers in good management practices \n \n\u2022 provide confidential free counselling for staff affected by either work or external \nstress through an EAP (Employee Assistance Programme) \n\u2022 provide adequate resources to enable managers to implement the FCA\u2019s agreed"
+        }
+      ],
+      "chunks_match_sources": null,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "manager first",
+            "present": false,
+            "in_chunks": true,
+            "reason": "The bot's answer does not explicitly mention discussing stress with a manager first, which is stated in the retrieved chunks.",
+            "miss": "generation_miss"
+          },
+          {
+            "fact": "HR Helpline or EAP",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot mentions seeking professional help through an EAP, aligning with the retrieved chunks.",
+            "miss": null
+          },
+          {
+            "fact": "stress risk assessment",
+            "present": false,
+            "in_chunks": true,
+            "reason": "The bot does not mention stress risk assessments, which are explicitly stated in the retrieved chunks.",
+            "miss": "generation_miss"
+          }
+        ],
+        "faithful": false,
+        "faithful_reason": "The bot's answer includes unsupported claims and omits key facts from the retrieved chunks, such as discussing stress with a manager first and stress risk assessments.",
+        "refused": false,
+        "refused_reason": "The bot provides an answer rather than declining or stating the handbook does not cover the question."
+      },
+      "judge_rejections": [],
+      "outcome": "fail",
+      "reasons": [
+        "missing (generation_miss): manager first - The bot's answer does not explicitly mention discussing stress with a manager first, which is stated in the retrieved chunks.",
+        "missing (generation_miss): stress risk assessment - The bot does not mention stress risk assessments, which are explicitly stated in the retrieved chunks.",
+        "not faithful: The bot's answer includes unsupported claims and omits key facts from the retrieved chunks, such as discussing stress with a manager first and stress risk assessments."
+      ],
+      "error": null
+    },
+    {
+      "id": "q11",
+      "type": "policy",
+      "question": "I have a medical appointment monthly during office hours. What is the policy on that?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "The provided policy context establishes the rules for attending medical appointments during office hours. According to the FCA Employee Handbook (Source: FCA Employee Handbook, Page: 88), wherever possible, employees are expected to arrange medical appointments outside normal working hours. If this is not feasible, the following applies:\n\n1. **Discuss with Your Manager**: You should inform your manager about the appointment and try to schedule it at a time that causes the least disruption to your work.\n\n2. **Make Up the Time**: You are required to make up the time spent at the appointment.\n\n3. **Appointment Confirmation**: Your manager may request confirmation of the appointment or supporting documentation.\n\nIf you have concerns about frequent appointments or work arrangements, you may wish to assess whether a **flexible working request** is needed (Source: FCA Employee Handbook, Page: 87). \n\n",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 88
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 87
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 83
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 89,
+          "content": "89 \n \nresponsibility at all times. \n \nWe recognise that problems relating to fertility and conception can cause considerable \npsychological and physical distress and are sympathetic to those who decide to undergo \nthis treatment. We provide a free Employee Assistance Programme (EAP) to all individuals, \nwhich gives confidential, impartial advice and support whenever it is needed. \n \nIf a course of treatment or a medical procedure causes illness and sickness absence, this \nwill be recorded in line with the Sickness Policy. \n \n6.8 Medical and dental appointments \n \nWherever possible you should arrange all medical (doctor, dentist and hospital) \nappointments outside normal working hours. If this is not possible, you should discuss this \nwith your manager and try to arrange appointments at times which cause the least \ndisruption to your work. You should also make up the time. Your manager may ask to see \nconfirmation of the appointment or supporting documentation."
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 88,
+          "content": "appointments or treatment may be required at short notice please discuss this with your \nmanager. A manager may ask to see an appointment card or supporting documentation. \n \nYou may wish to reconsider your work arrangements and assess whether a flexible working \nrequest is needed. \nWe understand that individuals may need to take delivery of medication and this should be \ndiscussed with your manager and HR Business Partner to make suitable arrangements. We \ntake no responsibility for medication while it is on the FCA\u2019s premises and it remains your"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 84,
+          "content": "84 \n \nPlease see the Salary and Benefits Policy for more information on pay and benefits in \nconnection with sickness absence. \n \nSick leave and Annual leave \n \nPlease see the Annual leave Policy for details about accrual of annual leave during sick \nleave and sickness during pre-arranged annual leave. \nMedical examinations \n \nWe may, at any time in operating this policy, require you to consent to a medical \nexamination by our Occupational Health advisers and/or a doctor  nominated by us (at our \nexpense). \n \nYou will be asked to agree that any report produced regarding any such examination may \nbe disclosed to us and that we may discuss the contents of the report with our advisers and \nthe relevant doctor. \n \nReturn to work meetings \n \nThe purpose of a Return to Work (RTW) meeting is to welcome you back to work and check \nwhether you are well enough to resume to usual duties. \n \nA RTW meeting enables us to confirm the details of your absence and gives you the"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "outside working hours where possible",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot explicitly states that employees are expected to arrange medical appointments outside normal working hours wherever possible.",
+            "miss": null
+          },
+          {
+            "fact": "make up the time",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot mentions that employees are required to make up the time spent at the appointment.",
+            "miss": null
+          },
+          {
+            "fact": "manager may ask for confirmation",
+            "present": true,
+            "in_chunks": true,
+            "reason": "The bot states that managers may request confirmation of the appointment or supporting documentation.",
+            "miss": null
+          }
+        ],
+        "faithful": true,
+        "faithful_reason": "All claims in the bot's answer are directly supported by the retrieved chunks, which align with the policy text provided.",
+        "refused": false,
+        "refused_reason": "The bot provides a detailed answer and does not decline to answer the question."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q12",
+      "type": "not_covered",
+      "question": "Do I get a company car or a car allowance?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "The provided policy context does not contain enough information to determine if you are eligible for a company car or a car allowance.",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 46
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 45
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 47,
+          "content": "Base salary and core benefits are contractual elements and form part of your Personal \nStatement of Terms and Conditions of Employment. \n \nFlexible benefits \n \nThe FCA operates a Flexible Benefits Plan under which you will receive an amount of \nmoney each month (your \u2018flex account\u2019) which can be used for additional benefits to \nsuit your needs and lifestyle. \n \nAdjusted salary \n \nYour \u2018adjusted salary\u2019 is the term used to describe the amount that you are paid after \napplying any increase or reduction to your base salary because of the choices you \nhave made for your Flexible Benefits Plan. If there are no adjustments resulting from \nthe Flexible Benefits Plan, your \u2018adjusted salary\u2019 will be the same as your base salary. \n \nFor a full explanation of the Flexible Benefits Plan and how it works, please see the \nFlexible Benefits Plan booklet. \n \nAnnual pay review including Performance Related Pay \n \nSalaries are reviewed annually with any increases usually taking effect  1 April. Any"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 47,
+          "content": "47 \n \nother deductions from your pay, for example, if you owe money to the FCA due to \nany overpayment of remuneration or expenses, or in response to a court order. \n \nIf you resign, you will receive your P45 via your contact email address after your \nfinal salary payment. You should download copies of any payslips and P60s you may \nneed from the CGI iPayview system before the end of your employment. \n \nPension \n \nThe FCA operates a non-contributory pension plan for all employees that offers \npension benefits in the Money Purchase part of the Plan. \n \nCore benefits \n \nAll employees receive some core benefits outside of the Flexible Benefits Plan. In \naddition to core annual leave , these include life assurance, permanent health \nassurance and private medical insurance. \n \nBase salary and core benefits are contractual elements and form part of your Personal \nStatement of Terms and Conditions of Employment. \n \nFlexible benefits"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 46,
+          "content": "the amount owed. This can be from your base salary, annual leave pay, sick pay, \nmaternity/adoption or shared parental payments and any other type of pay. \nAmounts that you owe may include season ticket loans or other loans, expenses \nallowance, annual leave taken in excess of entitlement, repayment of training \nexpenses incurred under a sponsored study arrangement, a deficit of hours \nunder the flexitime scheme, estimated value of any FCA property damaged by \nyou, or the estimated value of any FCA property reta ined by you without \npermission when you leave. \n \nWe also reserve the right to deduct from your pay an amount equal to any \nallowance you receive while performing public service or on jury service. \n \nTax, National Insurance Contributions and any other statutory payments are \ndeducted from your pay on a regular basis. We have a statutory right to make \n \n3"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [],
+        "faithful": true,
+        "faithful_reason": "The bot's answer correctly reflects the absence of relevant information in the retrieved chunks.",
+        "refused": true,
+        "refused_reason": "The bot appropriately declined to answer, stating that the provided policy context does not cover the question."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q13",
+      "type": "not_covered",
+      "question": "Does the FCA pay for gym membership?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "The provided policy context does not contain enough information to determine whether the FCA pays for gym memberships.",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 46
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 45
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 47,
+          "content": "47 \n \nother deductions from your pay, for example, if you owe money to the FCA due to \nany overpayment of remuneration or expenses, or in response to a court order. \n \nIf you resign, you will receive your P45 via your contact email address after your \nfinal salary payment. You should download copies of any payslips and P60s you may \nneed from the CGI iPayview system before the end of your employment. \n \nPension \n \nThe FCA operates a non-contributory pension plan for all employees that offers \npension benefits in the Money Purchase part of the Plan. \n \nCore benefits \n \nAll employees receive some core benefits outside of the Flexible Benefits Plan. In \naddition to core annual leave , these include life assurance, permanent health \nassurance and private medical insurance. \n \nBase salary and core benefits are contractual elements and form part of your Personal \nStatement of Terms and Conditions of Employment. \n \nFlexible benefits"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 47,
+          "content": "Flexible Benefits Plan booklet. \n \nAnnual pay review including Performance Related Pay \n \nSalaries are reviewed annually with any increases usually taking effect  1 April. Any \nincrease will be at the sole discretion of the FCA. \n \nThe specific eligibility criteria confirming which employees are eligible to participate \nin the annual review will be set out each year in the annual pay review guidance.  \n \nWe will confirm any increase in salary in writing. You will not be eligible to receive \nany increase if you have given or received notice of termination of employment \nbefore the 1 April.  \n \nRetention payments \n \nThe FCA recognises the need to identify and retain key skills to deliver our business \nplan. In some situations we may consider an additional payment to retain certain \nindividuals. \n \n \n3.2 Overtime policy \n \nIn certain circumstances, you may be entitled to payment for work performed outside your"
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 46,
+          "content": "behaviours that the FCA expects and requires. \n \nElements of remuneration \n \nAll permanent and fixed-term employees are eligible to receive the following: \n \nBase salary (\u2018pay\u2019) \n \nThis is the salary for your role and determines all other benefits including pension \ncontribution made by the FCA, flexible benefits allowance, overtime (if \nappropriate), A and sick pay. In addition, Performance Related Pay is determined \nwith reference to both your salary and performance rating. \n \nThe FCA sets its base salaries using benchmarking data for the financial and non- \nfinancial sectors and the London and National geographical areas. As a general \nprinciple, salaries at the FCA are around the median for the relevant career family \nand grade level. This positioning is decided by  a range of factors including, but \nnot limited to, experience, skills and affordability. In any group of employees, we \nexpect that there will be a range of salaries at, above and below the median of"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [],
+        "faithful": true,
+        "faithful_reason": "The bot's answer correctly states that the retrieved chunks do not provide information about gym memberships.",
+        "refused": true,
+        "refused_reason": "The bot appropriately declined to answer due to the lack of relevant information in the provided policy context."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q14",
+      "type": "not_covered",
+      "question": "Is there free staff parking at the office?",
+      "question_type": "policy_question",
+      "review_status": "approved",
+      "answer": "The provided policy context does not contain enough information to determine whether there is free staff parking at the office.",
+      "sources": [
+        {
+          "document": "FCA Employee Handbook",
+          "page": 14
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 74
+        },
+        {
+          "document": "FCA Employee Handbook",
+          "page": 15
+        }
+      ],
+      "behaviour": "answered",
+      "chunks": [
+        {
+          "source": "FCA Employee Handbook",
+          "page": 15,
+          "content": "from office \npremises \nYes No \nDrinks reception \nor similar \nnetworking \nopportunity \nVenue at or away \nfrom office \npremises \nYes No \nAn evening meal Any venue at or \naway from office \npremises \nYes No \nFree conference \nplaces (where not \nspeaking) \nAny venue Yes No \n \nExcessive, expensive, or exclusive hospitality - If a hospitality offer is \nexcessive, expensive, or exclusive, there is an increased risk that it will bring you \nor the FCA or PSR into disrepute, and it must be approved by your director or \nExecutive Director before you can accept. This includes, but is not limited to, offers \nof free places at conferences, and/or invitations to attend overseas locations at the \nexpense of a third party. \n \nExamples of what constitutes excessive or expensive hospitality includes invitations \nto expensive/exclusive cultural or sporting events, or over-frequent invitations from \na supplier to individuals or teams at the FCA or PSR."
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 75,
+          "content": "75 \n \n\u2022 address in-person attendance concerns promptly and appropriately \n\u2022 seek advice and support from HR, where appropriate \n \nCompliance with this policy \nCompliance with this policy forms part of the organisation's performance and behavioural \nexpectations. Compliance is measured over a three-month rolling period.  \nBreaching this policy without prior agreement or legitimate mitigating factors will result in a \nlower performance rating. Additional action may be taken as part of the Performance \nManagement Procedure. Persistent and unreasonable non-compliance, or self-declaring with \nthe intent to give a false picture, will be viewed as possible misconduct and follow the \nDisciplinary procedure.  \nFurther details and where to go for support, can be found in the Hybrid working procedure. \n \n5.6 Flexible working policy \n \nOur approach  \n \nWe are committed to creating a supportive and inclusive working environment where you \ncan balance work and life effectively."
+        },
+        {
+          "source": "FCA Employee Handbook",
+          "page": 16,
+          "content": "16 \n \nGiving hospitality \nYou should exercise caution when giving hospitality to third parties. Hospitality \ngiven should also comply with the travel and expenses policy. \n \nHowever, if hospitality is required, the following should be applied: \n \nType or Hospitality Venue Declare Permission \nRequirement   \nWorking breakfast or \nlunch \nFCA or PSR Premises No No \nWorking breakfast or \nlunch \nRestaurant or other \nvenue away from \noffice premises \nYes Director or Executive \nDirector \nDrinks reception or \nsimilar networking \nopportunity, \nincluding staff \nnetwork events \nVenue at or away \nfrom office premises \nYes Director or Executive \nDirector \nAn evening meal Any venue at or \naway from office \npremises \nYes Director or Executive \nDirector \nFree FCA event \nplaces (where not \nspeaking) \nAny venue Yes Director or Executive \nDirector \n \n1.1.17 Policy definitions  \n \nThe table below includes all the defined terms used in this Policy document.   \n \nDefined term Description"
+        }
+      ],
+      "chunks_match_sources": true,
+      "judgement": {
+        "must_include": [],
+        "faithful": true,
+        "faithful_reason": "The bot's answer accurately reflects the lack of information in the retrieved chunks regarding free staff parking.",
+        "refused": true,
+        "refused_reason": "The bot correctly declined to answer, stating that the provided policy context does not contain enough information."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q15",
+      "type": "general",
+      "question": "What does HR stand for?",
+      "question_type": "general_question",
+      "review_status": "",
+      "answer": "HR stands for **Human Resources**. It refers to the department within an organization that is responsible for managing and supporting employees. Key functions of HR include recruitment, onboarding, employee relations, payroll, benefits administration, training and development, performance management, compliance with labor laws, and fostering a positive workplace culture.",
+      "sources": [],
+      "behaviour": "answered",
+      "chunks": null,
+      "chunks_match_sources": null,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "Human Resources",
+            "present": true,
+            "in_chunks": null,
+            "reason": "The bot's answer explicitly states 'Human Resources' as the meaning of HR.",
+            "miss": null
+          }
+        ],
+        "faithful": null,
+        "faithful_reason": "No chunks were provided to verify the accuracy of the additional details in the bot's answer.",
+        "refused": false,
+        "refused_reason": "The bot provided an answer and did not decline to answer the question."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q16",
+      "type": "general",
+      "question": "What does 'pro rata' mean?",
+      "question_type": "general_question",
+      "review_status": "",
+      "answer": "The term **\"pro rata\"** is a Latin phrase that means **\"in proportion\"** or **\"prorated\"**. It is used to indicate that something is allocated, divided, or calculated proportionally based on a specific share, rate, or amount.\n\nIn practical terms, \"pro rata\" is often applied in situations where a value, cost, or benefit needs to be fairly distributed among multiple parties or over a period of time, based on a specific factor, such as time, usage, or ownership.\n\n### Examples:\n- **Salary:** If an employee works part-time or only part of a full pay period, their salary may be calculated on a pro rata basis, meaning they'll receive a proportion of the full salary relative to the time worked.\n- **Refunds:** If you cancel a subscription partway through a billing cycle, you might receive a pro rata refund, which is the portion of the fee corresponding to the unused time.\n- **Insurance:** Premiums and coverage can be adjusted pro rata if a policy starts or ends partway through the month.\n\nEssentially, \"pro rata\" ensures that distributions or adjustments are made fairly and based on proportionate shares.",
+      "sources": [],
+      "behaviour": "answered",
+      "chunks": null,
+      "chunks_match_sources": null,
+      "judgement": {
+        "must_include": [
+          {
+            "fact": "in proportion",
+            "present": true,
+            "in_chunks": null,
+            "reason": "The bot explicitly states that 'pro rata' means 'in proportion' in its explanation.",
+            "miss": null
+          }
+        ],
+        "faithful": null,
+        "faithful_reason": "No chunks were provided to verify the claims made in the bot's answer.",
+        "refused": false,
+        "refused_reason": "The bot provided an answer and did not decline to answer the question."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q17",
+      "type": "out_of_scope",
+      "question": "Write a Python function that reverses a string.",
+      "question_type": "out_of_scope",
+      "review_status": "",
+      "answer": "I can help with employee policy and workplace-related questions. This request is outside the scope of the Employee Policy Assistant.",
+      "sources": [],
+      "behaviour": "out_of_scope_message",
+      "chunks": null,
+      "chunks_match_sources": null,
+      "judgement": {
+        "must_include": [],
+        "faithful": null,
+        "faithful_reason": "No chunks were provided to verify the faithfulness of the answer.",
+        "refused": true,
+        "refused_reason": "The bot correctly declined to answer, stating that the request is outside the scope of the Employee Policy Assistant."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q18",
+      "type": "out_of_scope",
+      "question": "Can you give me a recipe for chicken biryani?",
+      "question_type": "out_of_scope",
+      "review_status": "",
+      "answer": "I can help with employee policy and workplace-related questions. This request is outside the scope of the Employee Policy Assistant.",
+      "sources": [],
+      "behaviour": "out_of_scope_message",
+      "chunks": null,
+      "chunks_match_sources": null,
+      "judgement": {
+        "must_include": [],
+        "faithful": null,
+        "faithful_reason": "No chunks were provided to verify the faithfulness of the answer.",
+        "refused": true,
+        "refused_reason": "The bot correctly declined to answer, stating the request is outside the scope of the Employee Policy Assistant."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q19",
+      "type": "out_of_scope",
+      "question": "Write a short poem about Monday mornings.",
+      "question_type": "out_of_scope",
+      "review_status": "",
+      "answer": "I can help with employee policy and workplace-related questions. This request is outside the scope of the Employee Policy Assistant.",
+      "sources": [],
+      "behaviour": "out_of_scope_message",
+      "chunks": null,
+      "chunks_match_sources": null,
+      "judgement": {
+        "must_include": [],
+        "faithful": null,
+        "faithful_reason": "No chunks were provided to verify the faithfulness of the answer.",
+        "refused": true,
+        "refused_reason": "The bot correctly declined to answer, stating the request is outside the scope of the Employee Policy Assistant."
+      },
+      "judge_rejections": [],
+      "outcome": "pass",
+      "reasons": [],
+      "error": null
+    },
+    {
+      "id": "q20",
+      "type": "general",
+      "question": "What are London Zoo opening times?",
+      "question_type": "general_question",
+      "review_status": "",
+      "answer": "As of my last update in October 2023, the London Zoo's opening times may vary depending on the season. Generally:\n\n- **Spring/Summer (Peak Season):** Typically opens at **10:00 AM** and closes around **5:00 or 6:00 PM**.\n- **Autumn/Winter (Off-Season):** Typically opens at **10:00 AM** and closes earlier, around **4:00 PM**.\n\nIt's always a good idea to check the **official ZSL London Zoo website** or contact them directly for the most accurate and up-to-date information, as times may change due to events, holidays, or other circumstances.",
+      "sources": [],
+      "behaviour": "answered",
+      "chunks": null,
+      "chunks_match_sources": null,
+      "judgement": {
+        "must_include": [],
+        "faithful": null,
+        "faithful_reason": "No chunks were retrieved to verify the claims made in the bot's answer.",
+        "refused": false,
+        "refused_reason": "The bot provided an answer based on general knowledge rather than declining to answer or stating the information was unavailable."
+      },
+      "judge_rejections": [],
+      "outcome": "skipped",
+      "reasons": [
+        "general question with no must_include (routing only)"
+      ],
+      "error": null
+    },
+    {
+      "id": "q21",
+      "type": "general",
+      "question": "What is the distance between London and Edinburgh?",
+      "question_type": "general_question",
+      "review_status": "",
+      "answer": "The distance between London and Edinburgh depends on the mode of travel:\n\n- **By road**: The driving distance is approximately **400 miles (645 kilometers)** via the M1 and A1(M).\n- **By train**: The rail distance is around **393 miles (632 kilometers)**, and a direct train usually takes about 4.5 to 5 hours.\n- **As the crow flies (straight-line distance)**: The aerial distance is approximately **330 miles (531 kilometers)**.\n\n",
+      "sources": [],
+      "behaviour": "answered",
+      "chunks": null,
+      "chunks_match_sources": null,
+      "judgement": {
+        "must_include": [],
+        "faithful": null,
+        "faithful_reason": "No chunks were provided to verify the accuracy of the bot's claims.",
+        "refused": false,
+        "refused_reason": "The bot provided an answer instead of declining or stating the information was not covered."
+      },
+      "judge_rejections": [],
+      "outcome": "skipped",
+      "reasons": [
+        "general question with no must_include (routing only)"
+      ],
+      "error": null
+    }
+  ]
+}
