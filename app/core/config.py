@@ -20,6 +20,10 @@ class Settings(BaseSettings):
     azure_search_api_key: str
     azure_search_index: str
 
+    # Caps on questions, to limit Azure OpenAI spend when the app is public.
+    rate_limit_per_minute: int = 5
+    rate_limit_per_day: int = 200
+
     class Config:
         env_file = ".env"
 

@@ -62,7 +62,7 @@ The judge never scored q05 (see below), so the script reports policy as 67% over
 ## Other findings
 
 - **The reviewer approved every policy answer, including incomplete ones.** `review_policy_answer` sees only the question and answer, never the chunks, so it can't detect missing or unsupported facts.
-- **Cited page numbers are one too low.** The generator passes the index's 0-based page to the model and returns it in `sources`, so citations and `/ask` sources are off by one.
+- **Cited page numbers were one too low** in this baseline. The generator passed the index's 0-based page to the model and returned it in `sources`. Fixed after the baseline: the generator now uses printed pages.
 - **Duplicate chunks waste about one slot in three.** At k=3 the chunks cover 2.00 distinct pages on average, because several chunks often come from the same page.
 - **Not-covered questions still get chunks.** Pure vector search always returns k results, so refusing depends entirely on the generation prompt.
 

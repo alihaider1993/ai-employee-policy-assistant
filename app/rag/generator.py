@@ -1,6 +1,12 @@
 from app.ai.client import llm
 from app.rag.retriever import retrieve_policy_chunks
 
+
+def printed_page(result):
+    # The index stores PyPDFLoader's 0-based page index; readers use printed page numbers.
+    return result["page"] + 1
+
+
 def generate_policy_answer(question: str):
     results = retrieve_policy_chunks(question)
 
@@ -9,7 +15,7 @@ def generate_policy_answer(question: str):
     for result in results:
         context_part = (
             f"Source: {result['source']}\n"
-            f"Page: {result['page']}\n"
+            f"Page: {printed_page(result)}\n"
             f"Content: {result['content']}"
         )
 
@@ -45,7 +51,7 @@ def generate_policy_answer(question: str):
     for result in results:
         source = {
             "document": result["source"],
-            "page": result["page"],
+            "page": printed_page(result),
         }
 
         if source not in sources:

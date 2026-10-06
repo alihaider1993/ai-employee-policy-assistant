@@ -51,17 +51,17 @@ There is no linter, formatter, or CI configuration.
 ## Things that will trip you up
 
 - **Importing almost anything under `app/` needs a complete `.env`.** `app/core/config.py` instantiates `Settings()` at import time with no defaults for the database, Azure OpenAI, or Azure Search fields, and `app/ai/client.py`, `app/ai/embeddings.py`, `app/rag/retriever.py`, `app/database/connection.py`, and `app/graph/workflow.py` all build their clients / compile the graph as module-level singletons. This applies to `pytest` and `alembic` too.
-- **`.env.example` is out of date.** It lists `OPENAI_API_KEY` (unused) and omits the required `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT`. `Settings` in `app/core/config.py` is the source of truth for required variables.
+- **Rate limits are in memory.** `app/core/rate_limit.py` counts requests per process, so limits reset on restart and apply per replica. `/ask` and the UI share one limiter, and cached answers count too.
 - **Alembic's URL comes from `settings.database_url`**, not `alembic.ini` — `alembic/env.py` overrides `sqlalchemy.url`. Local host URL: `postgresql+psycopg://app_user:local_dev_password@localhost:5433/employee_policy`. Inside Compose the `api` service overrides `DATABASE_URL` to use `postgres:5432`.
 - **The cache stores every answer, forever.** `/ask` caches answers from every branch, including the out-of-scope message and the rejected-answer fallback, keyed on the exact question string with no expiry. After changing a prompt, re-asking the same question returns the old cached answer. To test the change, delete the matching `conversations` rows or reword the question.
 - **New models must be exported from `app/models/__init__.py`.** `alembic/env.py` imports `app.models` to populate `Base.metadata`, so autogenerate can't see a model that isn't exported there.
-- **Tests are not isolated.** `tests/test_main.py::test_ask_returns_cached_answer` uses the real `SessionLocal` against the configured database; on a cache miss it runs the full graph against live Azure OpenAI / Azure AI Search and writes a row. Nothing is mocked. `tests/test_graph.py` only covers the pure routing functions, but still needs `.env` to import.
+- **Tests are not isolated.** `tests/test_main.py::test_ask_returns_cached_answer` uses the real `SessionLocal` against the configured database; on a cache miss it runs the full graph against live Azure OpenAI / Azure AI Search and writes a row. Nothing is mocked. `tests/test_graph.py` only covers the pure routing functions, but still needs `.env` to import. `tests/test_rate_limit.py` and `tests/test_ui.py` use fakes and don't need `.env`; keep `app/core/rate_limit.py` and `app/ui.py` free of `app.core.config` imports so they stay that way.
 
 ## Architecture
 
 ### Request flow (`app/main.py`)
 
-`POST /ask` opens a `SessionLocal()` directly (no FastAPI dependency), looks up the most recent `Conversation` whose `question` exactly equals the request string, and returns its answer if found. Cached responses carry **no `sources`** — only `question`/`answer` are persisted. On a miss it invokes `policy_graph` with a fully initialised state dict, saves a `Conversation` with a fresh random `session_id` (not a real session — every request gets a new one), and returns the answer plus sources.
+`POST /ask` checks the rate limiter (429 when over a limit), then calls `answer_question`, which the Gradio page in `app/ui.py` (mounted at `/ui`; `/` redirects there) also uses. Questions are 1–500 characters (`MAX_QUESTION_LENGTH` in `app/schemas/ask.py`). `answer_question` opens a `SessionLocal()` directly (no FastAPI dependency), looks up the most recent `Conversation` whose `question` exactly equals the request string, and returns its answer if found. Cached responses carry **no `sources`** — only `question`/`answer` are persisted. On a miss it invokes `policy_graph` with a fully initialised state dict, saves a `Conversation` with a fresh random `session_id` (not a real session — every request gets a new one), and returns the answer plus sources.
 
 ### LangGraph workflow (`app/graph/`)
 
@@ -83,7 +83,7 @@ The review node sees only the question and answer, not the retrieved context. On
 - `search_index.py` — index schema: `id`, `content`, `source`, `page`, `content_vector` (1536 dims, HNSW). The dimension is tied to `text-embedding-3-small`.
 - `index_documents.py` — offline ingestion. IDs are positional (`chunk-{i}`), so re-indexing a different document overwrites earlier chunks rather than adding to them. `source` comes from the PDF's `title` metadata.
 - `retriever.py` — pure vector search (`search_text=None`), `top_k=3`.
-- `generator.py` — builds the grounded prompt from retrieved chunks and returns `{"answer", "sources"}` with de-duplicated `{document, page}` pairs; this shape must match `Source` in `app/schemas/ask.py`.
+- `generator.py` — builds the grounded prompt from retrieved chunks and returns `{"answer", "sources"}` with de-duplicated `{document, page}` pairs. Pages given to the model and returned in `sources` are printed pages (the index's 0-based page + 1); this shape must match `Source` in `app/schemas/ask.py`.
 
 ### Azure clients (`app/ai/`)
 
@@ -92,3 +92,5 @@ Chat and embeddings are configured as separate Azure OpenAI resources (separate 
 ### Deployment
 
 `Dockerfile` (`python:3.12-slim`, `uvicorn app.main:app` on 8000) → Azure Container Registry → Azure Container Apps (0–1 replicas), with secrets supplied as Container Apps secret references and Azure Database for PostgreSQL over SSL. The image does not run migrations on start.
+
+The same image also runs as a free public demo on a Hugging Face Docker Space, with Neon Postgres and an Azure AI Search free-tier service. Steps are in `deploy/huggingface/DEPLOY.md`; `deploy/huggingface/README.md` is the Space card (it sets `app_port: 8000`).
