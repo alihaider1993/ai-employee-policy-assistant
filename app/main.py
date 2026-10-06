@@ -1,5 +1,4 @@
 import logging
-import uuid
 
 import gradio as gr
 from fastapi import FastAPI, HTTPException, Request
@@ -7,10 +6,10 @@ from fastapi.responses import RedirectResponse
 
 from app.core.config import settings
 from app.core.rate_limit import DailyCapReached, RateLimiter, client_ip, utc_today
+from app.database.answer_cache import find_cached_answer, normalize_question, save_answer
 from app.database.connection import SessionLocal
 from app.database.daily_cap import reserve_daily_question
 from app.graph.workflow import policy_graph
-from app.models.conversation import Conversation
 from app.schemas.ask import AskRequest, AskResponse
 from app.ui import build_ui
 
@@ -30,21 +29,17 @@ limiter = RateLimiter(settings.rate_limit_per_minute)
 
 
 def answer_question(question: str) -> AskResponse:
+    question = normalize_question(question)
     db = SessionLocal()
 
     try:
-        # Check whether this exact question was answered before
-        cached_conversation = (
-            db.query(Conversation)
-            .filter(Conversation.question == question)
-            .order_by(Conversation.id.desc())
-            .first()
-        )
-
-        # Return cached answer without calling LangGraph / Azure OpenAI
-        if cached_conversation:
+        # Return an answer cached under the current cache version without
+        # calling LangGraph / Azure OpenAI
+        cached = find_cached_answer(db, question, settings.cache_version)
+        if cached:
             return AskResponse(
-                answer=cached_conversation.answer,
+                answer=cached.answer,
+                sources=cached.sources or [],
             )
 
         # Only questions that call Azure count towards the daily cap
@@ -62,18 +57,7 @@ def answer_question(question: str) -> AskResponse:
             }
         )
 
-        # Create unique ID for this conversation
-        session_id = str(uuid.uuid4())
-
-        # Save the new question and answer
-        conversation = Conversation(
-            session_id=session_id,
-            question=question,
-            answer=result["answer"],
-        )
-
-        db.add(conversation)
-        db.commit()
+        save_answer(db, question, result["answer"], result["sources"], settings.cache_version)
 
         return AskResponse(
             answer=result["answer"],

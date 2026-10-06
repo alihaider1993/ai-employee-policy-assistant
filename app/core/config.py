@@ -25,6 +25,10 @@ class Settings(BaseSettings):
     # Postgres across all visitors, for questions that call Azure (not cached).
     rate_limit_per_minute: int = 5
     rate_limit_per_day: int = 200
+    # Part of the answer cache key. Raise it after any prompt, model or index
+    # change so answers cached under the old version are ignored.
+    cache_version: str = "1"
+
     # Proxies in front of the app that append to X-Forwarded-For; 0 means none.
     trusted_proxy_hops: int = 1
 
