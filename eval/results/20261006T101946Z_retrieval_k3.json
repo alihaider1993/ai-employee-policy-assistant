@@ -1,0 +1,293 @@
+{
+  "part": "retrieval",
+  "started_at": "2026-10-06T10:19:46+00:00",
+  "summary": {
+    "k": 3,
+    "scored": 11,
+    "unscored": 3,
+    "errors": [],
+    "hit_rate_at_3": 0.8181818181818182,
+    "hit_rate_at_1": 0.8181818181818182,
+    "mrr": 0.8181818181818182,
+    "avg_distinct_pages": 2.0,
+    "misses": [
+      {
+        "id": "q03",
+        "question": "What protection is offered to whistleblowers?",
+        "expected_pages": [
+          36
+        ],
+        "pages": [
+          37,
+          37,
+          35
+        ]
+      },
+      {
+        "id": "q05",
+        "question": "My immediate family member is sick. How much leave can I take to care for them?",
+        "expected_pages": [
+          71
+        ],
+        "pages": [
+          70,
+          88,
+          73
+        ]
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "q01",
+      "type": "policy",
+      "question": "What is the policy on security of devices like laptops?",
+      "expected_pages": [
+        24,
+        25
+      ],
+      "scored": true,
+      "pages": [
+        24,
+        25,
+        24
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 2,
+      "error": null
+    },
+    {
+      "id": "q02",
+      "type": "policy",
+      "question": "What should we do if we suspect theft of information?",
+      "expected_pages": [
+        26
+      ],
+      "scored": true,
+      "pages": [
+        26,
+        22,
+        26
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 2,
+      "error": null
+    },
+    {
+      "id": "q03",
+      "type": "policy",
+      "question": "What protection is offered to whistleblowers?",
+      "expected_pages": [
+        36
+      ],
+      "scored": true,
+      "pages": [
+        37,
+        37,
+        35
+      ],
+      "hit": false,
+      "first_hit_rank": null,
+      "distinct_pages": 2,
+      "error": null
+    },
+    {
+      "id": "q04",
+      "type": "policy",
+      "question": "I'm unhappy with how my manager treats me. How do I raise a formal complaint?",
+      "expected_pages": [
+        56
+      ],
+      "scored": true,
+      "pages": [
+        56,
+        56,
+        54
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 2,
+      "error": null
+    },
+    {
+      "id": "q05",
+      "type": "policy",
+      "question": "My immediate family member is sick. How much leave can I take to care for them?",
+      "expected_pages": [
+        71
+      ],
+      "scored": true,
+      "pages": [
+        70,
+        88,
+        73
+      ],
+      "hit": false,
+      "first_hit_rank": null,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q06",
+      "type": "policy",
+      "question": "How do I report that I'm sick?",
+      "expected_pages": [
+        82
+      ],
+      "scored": true,
+      "pages": [
+        82,
+        82,
+        83
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 2,
+      "error": null
+    },
+    {
+      "id": "q07",
+      "type": "policy",
+      "question": "After how many sick days is a doctor's note required?",
+      "expected_pages": [
+        81,
+        82
+      ],
+      "scored": true,
+      "pages": [
+        82,
+        82,
+        82
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 1,
+      "error": null
+    },
+    {
+      "id": "q08",
+      "type": "policy",
+      "question": "How will I be adjusted due to a disability?",
+      "expected_pages": [
+        51,
+        86
+      ],
+      "scored": true,
+      "pages": [
+        51,
+        86,
+        86
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 2,
+      "error": null
+    },
+    {
+      "id": "q09",
+      "type": "policy",
+      "question": "If I am going through menopause, what am I entitled to?",
+      "expected_pages": [
+        86,
+        87
+      ],
+      "scored": true,
+      "pages": [
+        86,
+        86,
+        86
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 1,
+      "error": null
+    },
+    {
+      "id": "q10",
+      "type": "policy",
+      "question": "How do I resolve stress at work?",
+      "expected_pages": [
+        89,
+        90
+      ],
+      "scored": true,
+      "pages": [
+        90,
+        89,
+        89
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 2,
+      "error": null
+    },
+    {
+      "id": "q11",
+      "type": "policy",
+      "question": "I have a medical appointment monthly during office hours. What is the policy on that?",
+      "expected_pages": [
+        89
+      ],
+      "scored": true,
+      "pages": [
+        89,
+        88,
+        84
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q12",
+      "type": "not_covered",
+      "question": "Do I get a company car or a car allowance?",
+      "expected_pages": [],
+      "scored": false,
+      "pages": [
+        47,
+        47,
+        46
+      ],
+      "hit": null,
+      "first_hit_rank": null,
+      "distinct_pages": null,
+      "error": null
+    },
+    {
+      "id": "q13",
+      "type": "not_covered",
+      "question": "Does the FCA pay for gym membership?",
+      "expected_pages": [],
+      "scored": false,
+      "pages": [
+        47,
+        47,
+        46
+      ],
+      "hit": null,
+      "first_hit_rank": null,
+      "distinct_pages": null,
+      "error": null
+    },
+    {
+      "id": "q14",
+      "type": "not_covered",
+      "question": "Is there free staff parking at the office?",
+      "expected_pages": [],
+      "scored": false,
+      "pages": [
+        15,
+        75,
+        16
+      ],
+      "hit": null,
+      "first_hit_rank": null,
+      "distinct_pages": null,
+      "error": null
+    }
+  ]
+}
