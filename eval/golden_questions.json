@@ -1,1 +1,329 @@
-[]
+[
+  {
+    "id": "q01",
+    "question": "What is the policy on security of devices like laptops?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      24,
+      25
+    ],
+    "answer_key": "Integrate security controls to protect information, systems and devices: lock screens when unattended, protect equipment from theft or loss, never share passwords, report a compromised password to the IT Service Desk.",
+    "must_include": [
+      "lock screen when unattended",
+      "never share passwords",
+      "report compromised password to IT Service Desk"
+    ],
+    "expected_behaviour": "answer",
+    "notes": ""
+  },
+  {
+    "id": "q02",
+    "question": "What should we do if we suspect theft of information?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      26
+    ],
+    "answer_key": "Report any actual or suspected theft immediately using the Lost/Stolen reporting process or the Security Control Room helpline, without delay even outside office hours.",
+    "must_include": [
+      "report immediately",
+      "Lost/Stolen process or Security Control Room helpline",
+      "do not delay outside office hours"
+    ],
+    "expected_behaviour": "answer",
+    "notes": ""
+  },
+  {
+    "id": "q03",
+    "question": "What protection is offered to whistleblowers?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      36
+    ],
+    "answer_key": "Retaliation is not tolerated. Whistleblowers making protected disclosures must not suffer dismissal, disciplinary action, threats or other unfavourable treatment.",
+    "must_include": [
+      "retaliation not tolerated",
+      "no dismissal or disciplinary action",
+      "protected disclosure"
+    ],
+    "expected_behaviour": "answer",
+    "notes": ""
+  },
+  {
+    "id": "q04",
+    "question": "I'm unhappy with how my manager treats me. How do I raise a formal complaint?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      56
+    ],
+    "answer_key": "Try informally first. To raise a formal grievance, complete a grievance form and submit full details to the Employee Relations team. A meeting is held, ideally within 10 working days.",
+    "must_include": [
+      "grievance form",
+      "Employee Relations team",
+      "meeting ideally within 10 working days"
+    ],
+    "expected_behaviour": "answer",
+    "notes": ""
+  },
+  {
+    "id": "q05",
+    "question": "My immediate family member is sick. How much leave can I take to care for them?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      71
+    ],
+    "answer_key": "Up to 10 days' paid leave (pro rata) at line manager discretion, plus a further 10 days with head of department or director approval, in any rolling twelve months. Covers dependant emergencies and carer leave.",
+    "must_include": [
+      "10 days paid at line manager discretion",
+      "further 10 days with HoD or director approval",
+      "rolling twelve-month period"
+    ],
+    "expected_behaviour": "answer",
+    "notes": ""
+  },
+  {
+    "id": "q06",
+    "question": "How do I report that I'm sick?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      82
+    ],
+    "answer_key": "Telephone your line manager as early as possible and by 9:30am, and phone each working day for the first 7 calendar days.",
+    "must_include": [
+      "telephone line manager",
+      "by 9:30am",
+      "each working day for first 7 calendar days"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "table row 6a"
+  },
+  {
+    "id": "q07",
+    "question": "After how many sick days is a doctor's note required?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      81,
+      82
+    ],
+    "answer_key": "Absence up to 7 calendar days is recorded on Workday. For more than 7 calendar days a Fit Note from your doctor is required.",
+    "must_include": [
+      "more than 7 calendar days",
+      "Fit Note from doctor",
+      "Workday for absences up to 7 days"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "table row 6b"
+  },
+  {
+    "id": "q08",
+    "question": "How will I be adjusted due to a disability?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      51,
+      86
+    ],
+    "answer_key": "Contact your line manager and the HR Helpline about reasonable adjustments. Adjustments are considered case by case, possibly consulting your medical adviser, and reasons are explained if one is not reasonable.",
+    "must_include": [
+      "line manager and HR Helpline",
+      "case by case",
+      "reasons explained if adjustment refused"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "heading 6.2 sits at the foot of p85; consider adding 85"
+  },
+  {
+    "id": "q09",
+    "question": "If I am going through menopause, what am I entitled to?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      86,
+      87
+    ],
+    "answer_key": "Adjustments where necessary and consistent support; the policy includes perimenopause. Details are in the separate Menopause procedure. No fixed leave entitlement is stated.",
+    "must_include": [
+      "adjustments where necessary",
+      "includes perimenopause",
+      "Menopause procedure for details"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "trap: a bot inventing a fixed entitlement should fail"
+  },
+  {
+    "id": "q10",
+    "question": "How do I resolve stress at work?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      89,
+      90
+    ],
+    "answer_key": "Discuss it with your manager first, or contact the HR Helpline or the EAP. This may lead to an occupational health referral and a stress risk assessment.",
+    "must_include": [
+      "manager first",
+      "HR Helpline or EAP",
+      "stress risk assessment"
+    ],
+    "expected_behaviour": "answer",
+    "notes": ""
+  },
+  {
+    "id": "q11",
+    "question": "I have a medical appointment monthly during office hours. What is the policy on that?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [
+      89
+    ],
+    "answer_key": "Arrange appointments outside working hours where possible. Otherwise agree a time with your manager that causes least disruption and make up the time. Your manager may ask for confirmation.",
+    "must_include": [
+      "outside working hours where possible",
+      "make up the time",
+      "manager may ask for confirmation"
+    ],
+    "expected_behaviour": "answer",
+    "notes": ""
+  },
+  {
+    "id": "q12",
+    "question": "Do I get a company car or a car allowance?",
+    "type": "not_covered",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [],
+    "answer_key": "The handbook does not cover this. The bot should say so and not invent a benefit.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "checked: no matches for company car, car allowance, mileage"
+  },
+  {
+    "id": "q13",
+    "question": "Does the FCA pay for gym membership?",
+    "type": "not_covered",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [],
+    "answer_key": "Not covered. The handbook mentions wellbeing benefits generally (p81) but never gym membership.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "checked: no match for gym"
+  },
+  {
+    "id": "q14",
+    "question": "Is there free staff parking at the office?",
+    "type": "not_covered",
+    "expected_label": "policy_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [],
+    "answer_key": "Not covered in the handbook.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "checked: no match for parking"
+  },
+  {
+    "id": "q15",
+    "question": "What does HR stand for?",
+    "type": "general",
+    "expected_label": "general_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [],
+    "answer_key": "Human Resources.",
+    "must_include": [
+      "Human Resources"
+    ],
+    "expected_behaviour": "answer",
+    "notes": ""
+  },
+  {
+    "id": "q16",
+    "question": "What does 'pro rata' mean?",
+    "type": "general",
+    "expected_label": "general_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [],
+    "answer_key": "In proportion, for example part-time staff get benefits in proportion to their hours.",
+    "must_include": [
+      "in proportion"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "wording avoids 'leave', which the classifier lists as a policy topic"
+  },
+  {
+    "id": "q17",
+    "question": "Write a Python function that reverses a string.",
+    "type": "out_of_scope",
+    "expected_label": "out_of_scope",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [],
+    "answer_key": "Return the fixed out-of-scope message.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "coding: named in the classifier's out_of_scope definition"
+  },
+  {
+    "id": "q18",
+    "question": "Can you give me a recipe for chicken biryani?",
+    "type": "out_of_scope",
+    "expected_label": "out_of_scope",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [],
+    "answer_key": "Return the fixed out-of-scope message.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "borderline: a request for a task, but could be read as general knowledge"
+  },
+  {
+    "id": "q19",
+    "question": "Write a short poem about Monday mornings.",
+    "type": "out_of_scope",
+    "expected_label": "out_of_scope",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [],
+    "answer_key": "Return the fixed out-of-scope message.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "creative writing: named in the classifier's out_of_scope definition"
+  },
+  {
+    "id": "q20",
+    "question": "What are London Zoo opening times?",
+    "type": "general",
+    "expected_label": "general_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [],
+    "answer_key": "General question. Answer not scored (time-sensitive, no live data).",
+    "must_include": [],
+    "expected_behaviour": "answer",
+    "notes": "routing only"
+  },
+  {
+    "id": "q21",
+    "question": "What is the distance between London and Edinburgh?",
+    "type": "general",
+    "expected_label": "general_question",
+    "document": "fca_employee_handbook.pdf",
+    "expected_pages": [],
+    "answer_key": "General question. Answer not scored (approximate).",
+    "must_include": [],
+    "expected_behaviour": "answer",
+    "notes": "routing only"
+  }
+]
