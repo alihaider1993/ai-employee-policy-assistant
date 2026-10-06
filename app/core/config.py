@@ -23,6 +23,8 @@ class Settings(BaseSettings):
     # Caps on questions, to limit Azure OpenAI spend when the app is public.
     rate_limit_per_minute: int = 5
     rate_limit_per_day: int = 200
+    # Proxies in front of the app that append to X-Forwarded-For; 0 means none.
+    trusted_proxy_hops: int = 1
 
     class Config:
         env_file = ".env"

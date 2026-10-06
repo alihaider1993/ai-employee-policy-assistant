@@ -1,5 +1,6 @@
 from datetime import date
 
+from app.core import rate_limit
 from app.core.rate_limit import RateLimiter, client_ip
 
 
@@ -66,7 +67,41 @@ def test_daily_limit_applies_across_clients_and_resets_next_day():
     assert limiter.check("c") is None
 
 
-def test_client_ip_prefers_first_forwarded_address():
-    assert client_ip({"x-forwarded-for": "1.2.3.4, 10.0.0.1"}, "10.0.0.2") == "1.2.3.4"
-    assert client_ip({}, "10.0.0.2") == "10.0.0.2"
-    assert client_ip({}, None) == "unknown"
+def test_client_ip_uses_address_added_by_the_trusted_proxy():
+    assert client_ip({"x-forwarded-for": "1.2.3.4"}, "10.0.0.9", trusted_hops=1) == "1.2.3.4"
+
+
+def test_client_ip_ignores_addresses_the_client_forged():
+    # The client sent "6.6.6.6"; the proxy appended the real address.
+    headers = {"x-forwarded-for": "6.6.6.6, 1.2.3.4"}
+
+    assert client_ip(headers, "10.0.0.9", trusted_hops=1) == "1.2.3.4"
+
+
+def test_client_ip_counts_hops_from_the_right():
+    headers = {"x-forwarded-for": "6.6.6.6, 1.2.3.4, 10.0.0.1"}
+
+    assert client_ip(headers, "10.0.0.9", trusted_hops=2) == "1.2.3.4"
+
+
+def test_client_ip_with_fewer_addresses_than_hops_uses_the_leftmost():
+    assert client_ip({"x-forwarded-for": "1.2.3.4"}, "10.0.0.9", trusted_hops=2) == "1.2.3.4"
+
+
+def test_client_ip_falls_back_to_the_connection_address():
+    assert client_ip({}, "10.0.0.9", trusted_hops=1) == "10.0.0.9"
+    assert client_ip({"x-forwarded-for": " , "}, "10.0.0.9", trusted_hops=1) == "10.0.0.9"
+    assert client_ip({"x-forwarded-for": "1.2.3.4"}, "10.0.0.9", trusted_hops=0) == "10.0.0.9"
+    assert client_ip({}, None, trusted_hops=1) == "unknown"
+
+
+def test_client_ip_logs_only_the_address_count(caplog, monkeypatch):
+    # Each count is logged once per process; start from none logged.
+    monkeypatch.setattr(rate_limit, "_logged_forwarded_counts", set())
+    caplog.set_level("INFO", logger="app.core.rate_limit")
+
+    client_ip({"x-forwarded-for": "6.6.6.6, 1.2.3.4, 10.0.0.1, 10.0.0.2"}, "10.0.0.9", trusted_hops=1)
+
+    assert "X-Forwarded-For contains 4 address(es)" in caplog.text
+    assert "6.6.6.6" not in caplog.text
+    assert "1.2.3.4" not in caplog.text

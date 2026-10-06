@@ -1,3 +1,4 @@
+import logging
 import uuid
 
 import gradio as gr
@@ -11,6 +12,11 @@ from app.graph.workflow import policy_graph
 from app.models.conversation import Conversation
 from app.schemas.ask import AskRequest, AskResponse
 from app.ui import build_ui
+
+# Uvicorn only configures its own loggers. Show this app's INFO logs, and other
+# libraries' warnings, without the libraries' INFO noise.
+logging.basicConfig(level=logging.WARNING, format="%(levelname)s:     %(name)s: %(message)s")
+logging.getLogger("app").setLevel(logging.INFO)
 
 app = FastAPI(
     title=settings.app_name,
@@ -89,11 +95,15 @@ def health_check():
 @app.post("/ask", response_model=AskResponse)
 def ask_question(payload: AskRequest, request: Request):
     fallback = request.client.host if request.client else None
-    refusal = limiter.check(client_ip(request.headers, fallback))
+    refusal = limiter.check(client_ip(request.headers, fallback, settings.trusted_proxy_hops))
     if refusal:
         raise HTTPException(status_code=429, detail=refusal)
 
     return answer_question(payload.question)
 
 
-app = gr.mount_gradio_app(app, build_ui(answer_question, limiter), path="/ui")
+app = gr.mount_gradio_app(
+    app,
+    build_ui(answer_question, limiter, settings.trusted_proxy_hops),
+    path="/ui",
+)

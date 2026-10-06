@@ -29,7 +29,7 @@ def format_answer(response):
     return f"{response.answer}\n\n**Sources**\n{pages}"
 
 
-def make_responder(answer_question, limiter):
+def make_responder(answer_question, limiter, trusted_hops):
     def respond(question, request: gr.Request):
         question = (question or "").strip()
         if not question:
@@ -38,7 +38,7 @@ def make_responder(answer_question, limiter):
             return f"Please keep your question under {MAX_QUESTION_LENGTH} characters."
 
         fallback = request.client.host if request.client else None
-        refusal = limiter.check(client_ip(request.headers, fallback))
+        refusal = limiter.check(client_ip(request.headers, fallback, trusted_hops))
         if refusal:
             return refusal
 
@@ -51,7 +51,7 @@ def make_responder(answer_question, limiter):
     return respond
 
 
-def build_ui(answer_question, limiter):
+def build_ui(answer_question, limiter, trusted_hops):
     with gr.Blocks(title="Employee policy assistant") as ui:
         gr.Markdown("# Employee policy assistant")
         gr.Markdown(DESCRIPTION)
@@ -64,7 +64,7 @@ def build_ui(answer_question, limiter):
         answer = gr.Markdown()
         gr.Examples(EXAMPLES, inputs=question)
 
-        respond = make_responder(answer_question, limiter)
+        respond = make_responder(answer_question, limiter, trusted_hops)
         ask.click(respond, inputs=question, outputs=answer)
         question.submit(respond, inputs=question, outputs=answer)
     return ui

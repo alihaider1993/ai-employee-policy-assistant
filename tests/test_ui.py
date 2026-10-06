@@ -10,7 +10,7 @@ def fake_request(ip="1.2.3.4"):
 
 
 def make_respond(answer_question, per_minute=5):
-    return make_responder(answer_question, RateLimiter(per_minute, 100))
+    return make_responder(answer_question, RateLimiter(per_minute, 100), trusted_hops=1)
 
 
 def test_format_answer_lists_sources():
