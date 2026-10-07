@@ -5,6 +5,9 @@ Run from the repo root, signed in with `az login`:
     python deploy/azure/deploy.py                        # create or update with the default image tag
     python deploy/azure/deploy.py --image-tag <sha>      # deploy another image version
     python deploy/azure/deploy.py --cache-version 2      # ignore answers cached by earlier versions
+
+Without --cache-version, an existing app keeps its current CACHE_VERSION and a
+new app gets 1, so a deploy never switches back to older cached answers.
     python deploy/azure/deploy.py --dry-run              # show the az commands; reads nothing, changes nothing
 
 Reads the Azure OpenAI and Azure AI Search settings from .env and asks for the
@@ -269,13 +272,50 @@ def ensure_environment(az, subscription_id):
     return environment["id"] if environment else f"<{ENVIRONMENT} resource id>"
 
 
-def deploy_app(az, subscription_id, environment_id, plain, secrets, image, cache_version):
+def live_cache_version(app):
+    """The plain CACHE_VERSION value set on an existing app, or None if it isn't set."""
+    for container in app["properties"]["template"]["containers"]:
+        for variable in container.get("env") or []:
+            if variable["name"] == "CACHE_VERSION":
+                if "value" not in variable:
+                    raise DeployError("CACHE_VERSION on the live app isn't a plain value; pass --cache-version.")
+                return variable["value"]
+    return None
+
+
+def resolve_cache_version(requested, existing_app):
+    """Return (cache version, where it came from).
+
+    Without --cache-version, an existing app keeps its current version, so a
+    later deploy can't silently switch back to older cached answers. A new app
+    (or one with no CACHE_VERSION, which the app treats as 1) gets 1.
+    """
+    if requested is not None:
+        return requested, "from --cache-version"
+    if existing_app is None:
+        return DEFAULT_CACHE_VERSION, "default for a new app"
+    live = live_cache_version(existing_app)
+    if live is None:
+        return DEFAULT_CACHE_VERSION, "default; not set on the live app"
+    if not CACHE_VERSION_PATTERN.fullmatch(live):
+        raise DeployError("CACHE_VERSION on the live app isn't a valid cache version; pass --cache-version.")
+    return live, "kept from the live app"
+
+
+def deploy_app(az, subscription_id, environment_id, plain, secrets, image, requested_cache_version):
     url = arm_url(subscription_id, "containerApps", APP)
     existing = az.run("rest", "--method", "get", "--url", url, allow_not_found=True)
     if existing and existing["properties"].get("managedEnvironmentId", "").lower() != environment_id.lower():
         raise DeployError(f"{APP} exists in a different environment. Delete it first.")
     if existing:
         print(f"{APP} already exists; updating it.")
+
+    if az.dry_run and requested_cache_version is None:
+        cache_version, source = "<CACHE_VERSION of the live app, or 1 for a new app>", "resolved at run time"
+    else:
+        cache_version, source = resolve_cache_version(requested_cache_version, existing)
+    print(f"Cache version: {cache_version} ({source})")
+
     az.run("rest", "--method", "put", "--url", url, body=app_body(environment_id, plain, secrets, image, cache_version))
     app = wait_until_succeeded(az, url, APP)
     return app["properties"]["configuration"]["ingress"]["fqdn"] if app else "<app fqdn>"
@@ -291,14 +331,13 @@ def main(argv=None):
     )
     parser.add_argument(
         "--cache-version",
-        default=DEFAULT_CACHE_VERSION,
         help="answer cache version; raise it after any prompt, model or index change "
-        f"(default {DEFAULT_CACHE_VERSION})",
+        f"(default: keep the live app's version, or {DEFAULT_CACHE_VERSION} for a new app)",
     )
     args = parser.parse_args(argv)
     if not IMAGE_TAG_PATTERN.fullmatch(args.image_tag):
         parser.error(f"--image-tag {args.image_tag!r} is not a valid Docker tag")
-    if not CACHE_VERSION_PATTERN.fullmatch(args.cache_version):
+    if args.cache_version is not None and not CACHE_VERSION_PATTERN.fullmatch(args.cache_version):
         parser.error("--cache-version must be 1-32 letters, digits, _ . or -")
     image = f"{IMAGE_REPOSITORY}:{args.image_tag}"
 
@@ -308,7 +347,7 @@ def main(argv=None):
         az = Az(args.dry_run, secrets.values())
 
         if not args.dry_run:
-            print(f"About to create or update {ENVIRONMENT} and {APP} in {RESOURCE_GROUP} ({LOCATION}) from {image}, cache version {args.cache_version}.")
+            print(f"About to create or update {ENVIRONMENT} and {APP} in {RESOURCE_GROUP} ({LOCATION}) from {image}, cache version {args.cache_version or 'kept from the live app (1 for a new app)'}.")
             if input("Continue? [y/N] ").strip().lower() != "y":
                 print("Nothing changed.")
                 return 1

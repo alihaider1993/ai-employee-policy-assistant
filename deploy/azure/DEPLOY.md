@@ -15,7 +15,7 @@ Settings on the app:
 
 - **Secrets** (referenced with `secretRef`): `database-url`, `openai-key`, `embedding-key`, `search-key`.
 - **From `.env`** (plain): the Azure OpenAI and embedding endpoints and deployment names, `AZURE_SEARCH_ENDPOINT`, `AZURE_SEARCH_INDEX`.
-- **Fixed by `deploy.py`**: `ENVIRONMENT=production`, `GRADIO_ANALYTICS_ENABLED=False`, `FORWARDED_ALLOW_IPS=*` (so the app sees HTTPS behind the ingress proxy), `TRUSTED_PROXY_HOPS=1` (confirmed from the logs), `RATE_LIMIT_PER_MINUTE=5`, `RATE_LIMIT_PER_DAY=30`, and `CACHE_VERSION` from `--cache-version` (default `1`).
+- **Fixed by `deploy.py`**: `ENVIRONMENT=production`, `GRADIO_ANALYTICS_ENABLED=False`, `FORWARDED_ALLOW_IPS=*` (so the app sees HTTPS behind the ingress proxy), `TRUSTED_PROXY_HOPS=1` (confirmed from the logs), `RATE_LIMIT_PER_MINUTE=5`, `RATE_LIMIT_PER_DAY=30`, and `CACHE_VERSION` (from `--cache-version`; without it, the live app's current value is kept, and a new app gets `1`).
 
 ## Deploy a new version
 
@@ -60,11 +60,11 @@ You need Docker running, `docker login ghcr.io` with a GitHub token that has `wr
 
 Answers are cached forever, keyed on the question and `CACHE_VERSION`. After any change to a prompt, the model or the search index, deploy with a higher `--cache-version` (for example `2`), or visitors keep getting answers from the old version. Older rows are ignored rather than deleted, so deploying with the old number again brings them back.
 
-Every later deploy must pass the current number too: the default is `1`, so leaving it out would switch back to version 1.
+When you leave out `--cache-version`, `deploy.py` keeps the version currently set on the live app (and prints which one it used), so a routine deploy never switches back to older cached answers. Only a brand-new app gets `1`.
 
 ## Roll back
 
-Deploy the previous image again, with the cache version it used:
+Deploy the previous image again, passing the cache version it used. Without `--cache-version`, the live app's current (newer) version would be kept, and the old code would serve answers cached by the newer one.
 
 ```powershell
 python deploy/azure/deploy.py --image-tag <previous sha> --cache-version <its version>
