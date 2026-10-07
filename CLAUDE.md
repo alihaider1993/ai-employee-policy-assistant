@@ -92,5 +92,3 @@ Chat and embeddings are configured as separate Azure OpenAI resources (separate 
 ### Deployment
 
 `Dockerfile` (`python:3.12-slim`, `uvicorn app.main:app` on 8000) → public image `ghcr.io/alihaider1993/employee-policy-assistant:<short sha>` → Azure Container Apps (`employee-policy-api` in `employee-policy-rg`, uksouth, 0–1 replicas), with Neon Postgres over SSL and the free-tier Azure AI Search service `employee-policy-search`. Keys and `DATABASE_URL` are Container Apps secret references. `deploy/azure/deploy.py` creates or updates the environment and app (`--image-tag`, `--cache-version`, `--dry-run`); steps are in `deploy/azure/DEPLOY.md`. The image does not run migrations on start: run `alembic upgrade head` against Neon first. Docker builds what is on disk, not the commit, so `.dockerignore` must keep local and non-runtime files (including `.claude/`, `AGENTS.md`) out of the public image.
-
-`deploy/huggingface/` holds an alternative Hugging Face Docker Space setup (not currently used).
