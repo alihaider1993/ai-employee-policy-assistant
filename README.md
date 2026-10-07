@@ -4,7 +4,11 @@ I built this project to get hands-on experience with LangChain, LangGraph, Postg
 
 It's a RAG application that answers employee policy questions from an actual policy document and shows which pages each answer came from. For the demo I'm using the publicly available FCA Employee Handbook. It runs as a FastAPI service on Azure Container Apps, with Azure OpenAI for the models and Azure AI Search for retrieval.
 
-Built with **Python, FastAPI, LangChain, LangGraph, Azure OpenAI, Azure AI Search, PostgreSQL, SQLAlchemy, Alembic, Docker, pytest, Azure Container Registry, and Azure Container Apps**.
+**Try it live:** [employee-policy-api.ambitiousgrass-686b2448.uksouth.azurecontainerapps.io/ui/](https://employee-policy-api.ambitiousgrass-686b2448.uksouth.azurecontainerapps.io/ui/)
+
+The app scales to zero when nobody is using it, so the first load after a quiet spell takes about 20 seconds.
+
+Built with **Python, FastAPI, LangChain, LangGraph, Azure OpenAI, Azure AI Search, PostgreSQL, SQLAlchemy, Alembic, Gradio, Docker, pytest, and Azure Container Apps**.
 
 ---
 
@@ -342,6 +346,8 @@ id
 session_id
 question
 answer
+sources
+cache_version
 created_at
 ```
 
@@ -369,7 +375,7 @@ Answer
 
 This avoids unnecessary LLM calls for identical previously answered questions.
 
-The current implementation stores the answer in the cache; source metadata is not persisted with cached responses.
+The cache stores each answer with its sources, so cached responses keep their page references. Questions are matched after trimming and collapsing whitespace (case is kept), together with a cache version that is raised after any prompt, model or index change so older answers are ignored.
 
 ---
 
@@ -449,67 +455,21 @@ docker compose down
 
 ---
 
-## Azure Deployment
+## Deployment
 
-The application has been deployed using Azure services.
+The live app runs on Azure Container Apps and is set up to cost as little as possible while idle.
 
-```text
-                        Internet
-                           │
-                           ▼
-                 Azure Container Apps
-                           │
-                           ▼
-                    Dockerised FastAPI
-                           │
-                           ▼
-                       LangGraph
-                    ┌──────┼──────┐
-                    │      │      │
-                    ▼      ▼      ▼
-              Azure AI   Azure   Azure Database
-               Search   OpenAI   for PostgreSQL
-```
-
-### Azure Services Used
-
-| Service | Purpose |
+| Part | Service |
 |---|---|
-| Azure Container Apps | Hosts the FastAPI application |
-| Azure Container Registry | Stores the Docker image |
-| Azure OpenAI | GPT-4o generation and embeddings |
-| Azure AI Search | Vector index and policy retrieval |
-| Azure Database for PostgreSQL Flexible Server | Production relational database |
-| Managed Identity | Authenticates the deployment to Azure Container Registry |
-| Log Analytics | Container application diagnostics and logs |
+| App | Azure Container Apps (Consumption plan): HTTPS ingress, scales from 0 to 1 replica, so it costs nothing while idle |
+| Image | Public image on GitHub Container Registry, `ghcr.io/alihaider1993/employee-policy-assistant`, tagged with the commit it was built from |
+| Database | Neon serverless PostgreSQL (free tier), for the answer cache and the daily question count |
+| Retrieval | Azure AI Search, free tier |
+| Models | Azure OpenAI: GPT-4o for answers, `text-embedding-3-small` for embeddings |
 
-The Container App is configured with a minimum replica count of `0` and maximum of `1` for this portfolio deployment.
+API keys and the database URL are stored as Container Apps secrets. `deploy/azure/deploy.py` creates or updates the deployment, and [`deploy/azure/DEPLOY.md`](deploy/azure/DEPLOY.md) has the details and the steps to deploy a new version.
 
----
-
-## Container Deployment
-
-The Docker image is built and stored in Azure Container Registry.
-
-Deployment flow:
-
-```text
-Source Code
-    │
-    ▼
-Docker Build
-    │
-    ▼
-Azure Container Registry
-    │
-    ▼
-Azure Container Apps
-    │
-    ▼
-Running FastAPI Application
-```
-
-The Container App retrieves the image from ACR using a user-assigned managed identity with the `AcrPull` role.
+**Demo limits.** To keep Azure OpenAI costs bounded, each visitor can ask 5 questions per minute, and the app answers at most 30 new questions per day across all visitors. Cached answers are free: they don't count towards the daily limit and are still served after it's reached.
 
 ---
 
@@ -547,15 +507,9 @@ AZURE_OPENAI_EMBEDDING_KEY → embedding-key secret
 AZURE_SEARCH_API_KEY → search-key secret
 ```
 
-### Managed Identity
-
-A user-assigned Azure Managed Identity is used for pulling the application image from Azure Container Registry.
-
-This avoids storing ACR administrator credentials in the application.
-
 ### Database Transport
 
-The production PostgreSQL connection uses SSL.
+The production PostgreSQL connection (Neon) requires SSL (`sslmode=require`).
 
 ---
 
@@ -772,11 +726,9 @@ employee-policy-assistant/
 
 - Docker
 - Docker Compose
-- Azure Container Registry
 - Azure Container Apps
-- Azure Database for PostgreSQL Flexible Server
-- Azure Managed Identity
-- Azure Log Analytics
+- GitHub Container Registry
+- Neon serverless PostgreSQL
 
 ---
 
@@ -804,7 +756,6 @@ It includes:
 - cloud container deployment
 - production environment configuration
 - secret management
-- Azure managed identity
 - cloud logging and diagnostics
 
 ---
@@ -852,7 +803,6 @@ This is a portfolio and learning project rather than a production HR system.
 Current limitations include:
 
 - The knowledge base uses a limited demonstration policy dataset.
-- Cached answers do not currently persist their source metadata.
 - Exact-match caching does not perform semantic cache matching.
 - The application does not currently implement end-user authentication or authorisation.
 - The answer-review stage evaluates the generated response but does not independently re-retrieve the original policy context.
@@ -882,7 +832,6 @@ Potential future extensions include:
 
 - authentication and role-based access control
 - semantic caching
-- persistent source metadata for cached answers
 - document upload and automated indexing
 - stronger retrieval evaluation
 - hybrid keyword/vector search
