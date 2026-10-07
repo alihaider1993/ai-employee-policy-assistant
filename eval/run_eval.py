@@ -510,7 +510,8 @@ def run_answers(entries, run=1):
                 ]
                 if state["sources"]:
                     retrieved = []
-                    for chunk in chunks:
+                    # The graph's sources use printed pages, like result["chunks"].
+                    for chunk in result["chunks"]:
                         source = {"document": chunk["source"], "page": chunk["page"]}
                         if source not in retrieved:
                             retrieved.append(source)
