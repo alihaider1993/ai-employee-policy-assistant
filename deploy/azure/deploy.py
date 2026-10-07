@@ -2,8 +2,10 @@
 
 Run from the repo root, signed in with `az login`:
 
-    python deploy/azure/deploy.py            # create or update
-    python deploy/azure/deploy.py --dry-run  # show the az commands; reads nothing, changes nothing
+    python deploy/azure/deploy.py                        # create or update with the default image tag
+    python deploy/azure/deploy.py --image-tag <sha>      # deploy another image version
+    python deploy/azure/deploy.py --cache-version 2      # ignore answers cached by earlier versions
+    python deploy/azure/deploy.py --dry-run              # show the az commands; reads nothing, changes nothing
 
 Reads the Azure OpenAI and Azure AI Search settings from .env and asks for the
 Neon DATABASE_URL with a hidden prompt. Secret values are never printed and
@@ -20,6 +22,7 @@ import argparse
 import getpass
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -32,7 +35,13 @@ RESOURCE_GROUP = "employee-policy-rg"
 LOCATION = "uksouth"
 ENVIRONMENT = "employee-policy-env"
 APP = "employee-policy-api"
-IMAGE = "ghcr.io/alihaider1993/employee-policy-assistant:1910a8a"
+IMAGE_REPOSITORY = "ghcr.io/alihaider1993/employee-policy-assistant"
+DEFAULT_IMAGE_TAG = "1910a8a"
+# Docker tag rules: letters, digits, _ . -, up to 128 characters, not starting with . or -.
+IMAGE_TAG_PATTERN = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}")
+DEFAULT_CACHE_VERSION = "1"
+# Stored in conversations.cache_version, a String(32) column.
+CACHE_VERSION_PATTERN = re.compile(r"[A-Za-z0-9_.-]{1,32}")
 EXPECTED_SEARCH_SERVICE = "employee-policy-search"
 API_VERSION = "2024-03-01"
 POLL_SECONDS = 5
@@ -60,7 +69,6 @@ FIXED_PLAIN = {
     # Trust the ingress proxy's X-Forwarded-* headers so the app (and Gradio's
     # links) see https rather than http.
     "FORWARDED_ALLOW_IPS": "*",
-    "CACHE_VERSION": "1",
     "TRUSTED_PROXY_HOPS": "1",
     "RATE_LIMIT_PER_MINUTE": "5",
     "RATE_LIMIT_PER_DAY": "30",
@@ -187,8 +195,9 @@ def environment_body():
     return {"location": LOCATION, "properties": {"zoneRedundant": False}}
 
 
-def app_body(environment_id, plain, secrets):
-    env = [{"name": name, "value": value} for name, value in {**plain, **FIXED_PLAIN}.items()]
+def app_body(environment_id, plain, secrets, image, cache_version):
+    fixed = {**FIXED_PLAIN, "CACHE_VERSION": cache_version}
+    env = [{"name": name, "value": value} for name, value in {**plain, **fixed}.items()]
     env += [
         {"name": "DATABASE_URL", "secretRef": "database-url"},
         *({"name": variable, "secretRef": secret} for secret, variable in ENV_FILE_SECRETS.items()),
@@ -211,7 +220,7 @@ def app_body(environment_id, plain, secrets):
                 "containers": [
                     {
                         "name": APP,
-                        "image": IMAGE,
+                        "image": image,
                         "resources": {"cpu": 0.5, "memory": "1Gi"},
                         "env": env,
                     }
@@ -260,14 +269,14 @@ def ensure_environment(az, subscription_id):
     return environment["id"] if environment else f"<{ENVIRONMENT} resource id>"
 
 
-def deploy_app(az, subscription_id, environment_id, plain, secrets):
+def deploy_app(az, subscription_id, environment_id, plain, secrets, image, cache_version):
     url = arm_url(subscription_id, "containerApps", APP)
     existing = az.run("rest", "--method", "get", "--url", url, allow_not_found=True)
     if existing and existing["properties"].get("managedEnvironmentId", "").lower() != environment_id.lower():
         raise DeployError(f"{APP} exists in a different environment. Delete it first.")
     if existing:
         print(f"{APP} already exists; updating it.")
-    az.run("rest", "--method", "put", "--url", url, body=app_body(environment_id, plain, secrets))
+    az.run("rest", "--method", "put", "--url", url, body=app_body(environment_id, plain, secrets, image, cache_version))
     app = wait_until_succeeded(az, url, APP)
     return app["properties"]["configuration"]["ingress"]["fqdn"] if app else "<app fqdn>"
 
@@ -275,7 +284,23 @@ def deploy_app(az, subscription_id, environment_id, plain, secrets):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--dry-run", action="store_true", help="show the az commands without reading .env or calling Azure")
+    parser.add_argument(
+        "--image-tag",
+        default=DEFAULT_IMAGE_TAG,
+        help=f"tag of {IMAGE_REPOSITORY} to deploy, normally the short commit sha (default {DEFAULT_IMAGE_TAG})",
+    )
+    parser.add_argument(
+        "--cache-version",
+        default=DEFAULT_CACHE_VERSION,
+        help="answer cache version; raise it after any prompt, model or index change "
+        f"(default {DEFAULT_CACHE_VERSION})",
+    )
     args = parser.parse_args(argv)
+    if not IMAGE_TAG_PATTERN.fullmatch(args.image_tag):
+        parser.error(f"--image-tag {args.image_tag!r} is not a valid Docker tag")
+    if not CACHE_VERSION_PATTERN.fullmatch(args.cache_version):
+        parser.error("--cache-version must be 1-32 letters, digits, _ . or -")
+    image = f"{IMAGE_REPOSITORY}:{args.image_tag}"
 
     az = None
     try:
@@ -283,7 +308,7 @@ def main(argv=None):
         az = Az(args.dry_run, secrets.values())
 
         if not args.dry_run:
-            print(f"About to create or update {ENVIRONMENT} and {APP} in {RESOURCE_GROUP} ({LOCATION}) from {IMAGE}.")
+            print(f"About to create or update {ENVIRONMENT} and {APP} in {RESOURCE_GROUP} ({LOCATION}) from {image}, cache version {args.cache_version}.")
             if input("Continue? [y/N] ").strip().lower() != "y":
                 print("Nothing changed.")
                 return 1
@@ -295,7 +320,7 @@ def main(argv=None):
             raise DeployError(f"{RESOURCE_GROUP} is in {group['location']}, not {LOCATION}.")
 
         environment_id = ensure_environment(az, subscription_id)
-        fqdn = deploy_app(az, subscription_id, environment_id, plain, secrets)
+        fqdn = deploy_app(az, subscription_id, environment_id, plain, secrets, image, args.cache_version)
     except DeployError as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1
