@@ -144,3 +144,13 @@ def test_daily_cap_stops_azure_calls_but_not_cached_answers(app_with):
         main.answer_question("What is Y?")
     assert graph.questions == []
     assert len(db.rows) == 1
+
+
+def test_personal_data_is_redacted_before_the_graph_and_the_cache(app_with):
+    db, graph, _ = app_with()
+
+    main.answer_question("I am jo@example.com, call me on 07700 900123 about sick pay")
+
+    assert graph.questions == ["I am [EMAIL], call me on [PHONE] about sick pay"]
+    assert db.rows[-1].question == "I am [EMAIL], call me on [PHONE] about sick pay"
+    assert "example.com" not in str(db.rows[-1].__dict__)

@@ -6,6 +6,7 @@ from fastapi.responses import RedirectResponse
 
 from app.core.config import settings
 from app.core.rate_limit import DailyCapReached, RateLimiter, client_ip, utc_today
+from app.core.redaction import redact_personal_data
 from app.database.answer_cache import find_cached_answer, normalize_question, save_answer
 from app.database.connection import SessionLocal
 from app.database.daily_cap import reserve_daily_question
@@ -17,6 +18,7 @@ from app.ui import build_ui
 # libraries' warnings, without the libraries' INFO noise.
 logging.basicConfig(level=logging.WARNING, format="%(levelname)s:     %(name)s: %(message)s")
 logging.getLogger("app").setLevel(logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title=settings.app_name,
@@ -29,7 +31,11 @@ limiter = RateLimiter(settings.rate_limit_per_minute)
 
 
 def answer_question(question: str) -> AskResponse:
-    question = normalize_question(question)
+    # Redact before the cache lookup, so personal data is never stored, logged
+    # or sent to Azure OpenAI, and equal questions share one cached answer.
+    question, redacted = redact_personal_data(normalize_question(question))
+    if redacted:
+        logger.info("Redacted personal data from a question: %s", redacted)
     db = SessionLocal()
 
     try:
