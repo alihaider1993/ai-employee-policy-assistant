@@ -1,0 +1,1142 @@
+{
+  "part": "retrieval",
+  "started_at": "2026-11-17T12:11:55+00:00",
+  "summary": {
+    "k": 5,
+    "scored": 33,
+    "unscored": 6,
+    "errors": [],
+    "hit_rate_at_5": 1.0,
+    "hit_rate_at_1": 0.7878787878787878,
+    "mrr": 0.8722222222222222,
+    "avg_distinct_pages": 3.606060606060606,
+    "by_source": {
+      "Code of Practice on disciplinary and grievance procedures": {
+        "questions": 4,
+        "hits": 4
+      },
+      "Discrimination: your rights - GOV.UK": {
+        "questions": 3,
+        "hits": 3
+      },
+      "FCA Employee Handbook": {
+        "questions": 11,
+        "hits": 11
+      },
+      "Holiday entitlement - GOV.UK": {
+        "questions": 5,
+        "hits": 5
+      },
+      "Maximum weekly working hours - GOV.UK": {
+        "questions": 3,
+        "hits": 3
+      },
+      "Redundancy: your rights - GOV.UK": {
+        "questions": 4,
+        "hits": 4
+      },
+      "Statutory Sick Pay (SSP): employer guide - GOV.UK": {
+        "questions": 3,
+        "hits": 3
+      }
+    },
+    "misses": []
+  },
+  "results": [
+    {
+      "id": "q01",
+      "type": "policy",
+      "question": "What is the policy on security of devices like laptops?",
+      "expected_pages": [
+        24,
+        25
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        24,
+        25,
+        24,
+        25,
+        19
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q02",
+      "type": "policy",
+      "question": "What should we do if we suspect theft of information?",
+      "expected_pages": [
+        26
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        26,
+        22,
+        26,
+        25,
+        26
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q03",
+      "type": "policy",
+      "question": "What protection is offered to whistleblowers?",
+      "expected_pages": [
+        36,
+        37
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        37,
+        37,
+        35,
+        36,
+        38
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q04",
+      "type": "policy",
+      "question": "I'm unhappy with how my manager treats me. How do I raise a formal complaint?",
+      "expected_pages": [
+        56
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        56,
+        56,
+        54,
+        53,
+        62
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q05",
+      "type": "policy",
+      "question": "My immediate family member is sick. How much leave can I take to care for them?",
+      "expected_pages": [
+        71
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        70,
+        5,
+        88,
+        73,
+        71
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "Holiday entitlement - GOV.UK",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 5,
+      "distinct_pages": 5,
+      "error": null
+    },
+    {
+      "id": "q06",
+      "type": "policy",
+      "question": "How do I report that I'm sick?",
+      "expected_pages": [
+        82
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        82,
+        82,
+        83,
+        5,
+        77
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q07",
+      "type": "policy",
+      "question": "After how many sick days is a doctor's note required?",
+      "expected_pages": [
+        81,
+        82
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        82,
+        82,
+        82,
+        5,
+        5
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 2,
+      "error": null
+    },
+    {
+      "id": "q08",
+      "type": "policy",
+      "question": "How will I be adjusted due to a disability?",
+      "expected_pages": [
+        51,
+        86
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        51,
+        86,
+        86,
+        84,
+        3
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "Discrimination: your rights - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q09",
+      "type": "policy",
+      "question": "If I am going through menopause, what am I entitled to?",
+      "expected_pages": [
+        86,
+        87
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        86,
+        86,
+        86,
+        86,
+        83
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 2,
+      "error": null
+    },
+    {
+      "id": "q10",
+      "type": "policy",
+      "question": "How do I resolve stress at work?",
+      "expected_pages": [
+        89,
+        90
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        90,
+        89,
+        89,
+        89,
+        53
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q11",
+      "type": "policy",
+      "question": "I have a medical appointment monthly during office hours. What is the policy on that?",
+      "expected_pages": [
+        89
+      ],
+      "expected_source": "FCA Employee Handbook",
+      "scored": true,
+      "pages": [
+        89,
+        88,
+        84,
+        74,
+        77
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 5,
+      "error": null
+    },
+    {
+      "id": "q12",
+      "type": "not_covered",
+      "question": "Do I get a company car or a car allowance?",
+      "expected_pages": [],
+      "expected_source": "FCA Employee Handbook",
+      "scored": false,
+      "pages": [
+        47,
+        47,
+        46,
+        41,
+        46
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": null,
+      "first_hit_rank": null,
+      "distinct_pages": null,
+      "error": null
+    },
+    {
+      "id": "q13",
+      "type": "not_covered",
+      "question": "Does the FCA pay for gym membership?",
+      "expected_pages": [],
+      "expected_source": "FCA Employee Handbook",
+      "scored": false,
+      "pages": [
+        47,
+        47,
+        46,
+        93,
+        39
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": null,
+      "first_hit_rank": null,
+      "distinct_pages": null,
+      "error": null
+    },
+    {
+      "id": "q14",
+      "type": "not_covered",
+      "question": "Is there free staff parking at the office?",
+      "expected_pages": [],
+      "expected_source": "FCA Employee Handbook",
+      "scored": false,
+      "pages": [
+        15,
+        75,
+        16,
+        29,
+        75
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": null,
+      "first_hit_rank": null,
+      "distinct_pages": null,
+      "error": null
+    },
+    {
+      "id": "q22",
+      "type": "policy",
+      "question": "How many weeks of paid holiday are workers legally entitled to each year?",
+      "expected_pages": [
+        1
+      ],
+      "expected_source": "Holiday entitlement - GOV.UK",
+      "scored": true,
+      "pages": [
+        1,
+        1,
+        6,
+        2,
+        3
+      ],
+      "sources": [
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q23",
+      "type": "policy",
+      "question": "How much statutory holiday must a part-time worker on 3 days a week get?",
+      "expected_pages": [
+        1
+      ],
+      "expected_source": "Holiday entitlement - GOV.UK",
+      "scored": true,
+      "pages": [
+        1,
+        1,
+        2,
+        6,
+        70
+      ],
+      "sources": [
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q24",
+      "type": "policy",
+      "question": "How much notice do I have to give to take one day of holiday?",
+      "expected_pages": [
+        9
+      ],
+      "expected_source": "Holiday entitlement - GOV.UK",
+      "scored": true,
+      "pages": [
+        9,
+        69,
+        9,
+        1,
+        69
+      ],
+      "sources": [
+        "Holiday entitlement - GOV.UK",
+        "FCA Employee Handbook",
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q25",
+      "type": "policy",
+      "question": "Can my employer pay me instead of letting me take my statutory holiday?",
+      "expected_pages": [
+        10
+      ],
+      "expected_source": "Holiday entitlement - GOV.UK",
+      "scored": true,
+      "pages": [
+        2,
+        10,
+        3,
+        6,
+        8
+      ],
+      "sources": [
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 2,
+      "distinct_pages": 5,
+      "error": null
+    },
+    {
+      "id": "q26",
+      "type": "policy",
+      "question": "If I get 28 days' leave, how many can I carry over to next year?",
+      "expected_pages": [
+        5
+      ],
+      "expected_source": "Holiday entitlement - GOV.UK",
+      "scored": true,
+      "pages": [
+        5,
+        70,
+        5,
+        70,
+        69
+      ],
+      "sources": [
+        "Holiday entitlement - GOV.UK",
+        "FCA Employee Handbook",
+        "Holiday entitlement - GOV.UK",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q27",
+      "type": "policy",
+      "question": "What is the maximum number of hours I can be made to work in a week on average?",
+      "expected_pages": [
+        1,
+        2
+      ],
+      "expected_source": "Maximum weekly working hours - GOV.UK",
+      "scored": true,
+      "pages": [
+        1,
+        2,
+        3,
+        6,
+        7
+      ],
+      "sources": [
+        "Maximum weekly working hours - GOV.UK",
+        "Maximum weekly working hours - GOV.UK",
+        "Maximum weekly working hours - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "Holiday entitlement - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 5,
+      "error": null
+    },
+    {
+      "id": "q28",
+      "type": "policy",
+      "question": "Can I opt out of the 48 hour working week, and how do I cancel the opt-out?",
+      "expected_pages": [
+        3,
+        4
+      ],
+      "expected_source": "Maximum weekly working hours - GOV.UK",
+      "scored": true,
+      "pages": [
+        3,
+        4,
+        3,
+        4,
+        1
+      ],
+      "sources": [
+        "Maximum weekly working hours - GOV.UK",
+        "Maximum weekly working hours - GOV.UK",
+        "Maximum weekly working hours - GOV.UK",
+        "Maximum weekly working hours - GOV.UK",
+        "Maximum weekly working hours - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q29",
+      "type": "policy",
+      "question": "Does travel to and from work count towards my working hours?",
+      "expected_pages": [
+        2,
+        3
+      ],
+      "expected_source": "Maximum weekly working hours - GOV.UK",
+      "scored": true,
+      "pages": [
+        3,
+        76,
+        2,
+        76,
+        76
+      ],
+      "sources": [
+        "Maximum weekly working hours - GOV.UK",
+        "FCA Employee Handbook",
+        "Maximum weekly working hours - GOV.UK",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q30",
+      "type": "policy",
+      "question": "How is statutory redundancy pay worked out?",
+      "expected_pages": [
+        4
+      ],
+      "expected_source": "Redundancy: your rights - GOV.UK",
+      "scored": true,
+      "pages": [
+        4,
+        4,
+        5,
+        6,
+        5
+      ],
+      "sources": [
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q31",
+      "type": "policy",
+      "question": "How much notice must I get if I am made redundant after 5 years in the job?",
+      "expected_pages": [
+        6
+      ],
+      "expected_source": "Redundancy: your rights - GOV.UK",
+      "scored": true,
+      "pages": [
+        7,
+        9,
+        6,
+        4,
+        5
+      ],
+      "sources": [
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 3,
+      "distinct_pages": 5,
+      "error": null
+    },
+    {
+      "id": "q32",
+      "type": "policy",
+      "question": "What is the minimum consultation period if my employer plans 50 redundancies at once?",
+      "expected_pages": [
+        7,
+        8
+      ],
+      "expected_source": "Redundancy: your rights - GOV.UK",
+      "scored": true,
+      "pages": [
+        8,
+        7,
+        7,
+        66,
+        66
+      ],
+      "sources": [
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q33",
+      "type": "policy",
+      "question": "Do I get time off to look for a new job if I am being made redundant?",
+      "expected_pages": [
+        9,
+        10
+      ],
+      "expected_source": "Redundancy: your rights - GOV.UK",
+      "scored": true,
+      "pages": [
+        9,
+        9,
+        11,
+        10,
+        1
+      ],
+      "sources": [
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Redundancy: your rights - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q34",
+      "type": "policy",
+      "question": "What is the weekly rate of Statutory Sick Pay and how long is it paid for?",
+      "expected_pages": [
+        1,
+        2
+      ],
+      "expected_source": "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+      "scored": true,
+      "pages": [
+        2,
+        1,
+        3,
+        3,
+        7
+      ],
+      "sources": [
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "Holiday entitlement - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q35",
+      "type": "policy",
+      "question": "When can an employer ask an employee for a fit note?",
+      "expected_pages": [
+        5
+      ],
+      "expected_source": "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+      "scored": true,
+      "pages": [
+        5,
+        5,
+        82,
+        6,
+        82
+      ],
+      "sources": [
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "FCA Employee Handbook",
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q36",
+      "type": "policy",
+      "question": "Who is allowed to issue a fit note?",
+      "expected_pages": [
+        5,
+        6
+      ],
+      "expected_source": "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+      "scored": true,
+      "pages": [
+        5,
+        6,
+        82,
+        5,
+        88
+      ],
+      "sources": [
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "FCA Employee Handbook",
+        "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q37",
+      "type": "policy",
+      "question": "What are the protected characteristics under discrimination law?",
+      "expected_pages": [
+        1
+      ],
+      "expected_source": "Discrimination: your rights - GOV.UK",
+      "scored": true,
+      "pages": [
+        1,
+        2,
+        2,
+        50,
+        51
+      ],
+      "sources": [
+        "Discrimination: your rights - GOV.UK",
+        "Discrimination: your rights - GOV.UK",
+        "Discrimination: your rights - GOV.UK",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q38",
+      "type": "policy",
+      "question": "What are the different forms of discrimination?",
+      "expected_pages": [
+        2
+      ],
+      "expected_source": "Discrimination: your rights - GOV.UK",
+      "scored": true,
+      "pages": [
+        1,
+        2,
+        51,
+        3,
+        2
+      ],
+      "sources": [
+        "Discrimination: your rights - GOV.UK",
+        "Discrimination: your rights - GOV.UK",
+        "FCA Employee Handbook",
+        "Discrimination: your rights - GOV.UK",
+        "Discrimination: your rights - GOV.UK"
+      ],
+      "hit": true,
+      "first_hit_rank": 2,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q39",
+      "type": "policy",
+      "question": "What can I do if I think I have been discriminated against at work?",
+      "expected_pages": [
+        4
+      ],
+      "expected_source": "Discrimination: your rights - GOV.UK",
+      "scored": true,
+      "pages": [
+        4,
+        4,
+        53,
+        3,
+        53
+      ],
+      "sources": [
+        "Discrimination: your rights - GOV.UK",
+        "Discrimination: your rights - GOV.UK",
+        "FCA Employee Handbook",
+        "Discrimination: your rights - GOV.UK",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q40",
+      "type": "policy",
+      "question": "Who is allowed to accompany me to a disciplinary meeting?",
+      "expected_pages": [
+        3
+      ],
+      "expected_source": "Code of Practice on disciplinary and grievance procedures",
+      "scored": true,
+      "pages": [
+        3,
+        60,
+        60,
+        59,
+        60
+      ],
+      "sources": [
+        "Code of Practice on disciplinary and grievance procedures",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 1,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q41",
+      "type": "policy",
+      "question": "What happens if my chosen companion cannot attend the date set for the disciplinary hearing?",
+      "expected_pages": [
+        4,
+        6
+      ],
+      "expected_source": "Code of Practice on disciplinary and grievance procedures",
+      "scored": true,
+      "pages": [
+        60,
+        62,
+        60,
+        4,
+        60
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "Code of Practice on disciplinary and grievance procedures",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 4,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q42",
+      "type": "policy",
+      "question": "What counts as gross misconduct under the code of practice?",
+      "expected_pages": [
+        4
+      ],
+      "expected_source": "Code of Practice on disciplinary and grievance procedures",
+      "scored": true,
+      "pages": [
+        58,
+        4,
+        58,
+        2,
+        58
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "Code of Practice on disciplinary and grievance procedures",
+        "FCA Employee Handbook",
+        "Code of Practice on disciplinary and grievance procedures",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 2,
+      "distinct_pages": 3,
+      "error": null
+    },
+    {
+      "id": "q43",
+      "type": "policy",
+      "question": "How should an employer handle an appeal against a disciplinary decision?",
+      "expected_pages": [
+        4,
+        5
+      ],
+      "expected_source": "Code of Practice on disciplinary and grievance procedures",
+      "scored": true,
+      "pages": [
+        61,
+        4,
+        5,
+        65,
+        61
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "Code of Practice on disciplinary and grievance procedures",
+        "Code of Practice on disciplinary and grievance procedures",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": true,
+      "first_hit_rank": 2,
+      "distinct_pages": 4,
+      "error": null
+    },
+    {
+      "id": "q44",
+      "type": "not_covered",
+      "question": "What is the national minimum wage?",
+      "expected_pages": [],
+      "expected_source": "FCA Employee Handbook",
+      "scored": false,
+      "pages": [
+        7,
+        6,
+        7,
+        46,
+        46
+      ],
+      "sources": [
+        "Holiday entitlement - GOV.UK",
+        "Redundancy: your rights - GOV.UK",
+        "Holiday entitlement - GOV.UK",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": null,
+      "first_hit_rank": null,
+      "distinct_pages": null,
+      "error": null
+    },
+    {
+      "id": "q45",
+      "type": "not_covered",
+      "question": "Does the company offer a sabbatical?",
+      "expected_pages": [],
+      "expected_source": "FCA Employee Handbook",
+      "scored": false,
+      "pages": [
+        80,
+        77,
+        69,
+        72,
+        81
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": null,
+      "first_hit_rank": null,
+      "distinct_pages": null,
+      "error": null
+    },
+    {
+      "id": "q46",
+      "type": "not_covered",
+      "question": "Is there a cycle to work scheme?",
+      "expected_pages": [],
+      "expected_source": "FCA Employee Handbook",
+      "scored": false,
+      "pages": [
+        75,
+        84,
+        75,
+        76,
+        69
+      ],
+      "sources": [
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook",
+        "FCA Employee Handbook"
+      ],
+      "hit": null,
+      "first_hit_rank": null,
+      "distinct_pages": null,
+      "error": null
+    }
+  ]
+}

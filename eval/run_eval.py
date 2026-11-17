@@ -33,6 +33,7 @@ OUTCOMES = ("correct", "wrong", "invalid", "error")
 CONFUSION_COLUMNS = (*LABELS, "invalid", "error")
 SCORED_TYPE = "policy"
 UNSCORED_RETRIEVAL_TYPES = ("not_covered",)
+DEFAULT_SOURCE = "FCA Employee Handbook"  # entries without expected_source come from the handbook
 MAX_ERROR_MESSAGE = 200
 # Matches the retriever default that generate_policy_answer uses.
 ANSWER_TOP_K = 3
@@ -234,15 +235,20 @@ def print_routing_summary(summary):
         print(f"\nChanged label between runs ({len(changed)}): {', '.join(changed) or 'none'}")
 
 
-def score_retrieval(pages, expected_pages):
+def score_retrieval(pages, sources, expected_pages, expected_source):
+    # A chunk only counts if both the document and the printed page match.
     first_hit_rank = next(
-        (rank for rank, page in enumerate(pages, start=1) if page in expected_pages),
+        (
+            rank
+            for rank, (source, page) in enumerate(zip(sources, pages), start=1)
+            if source == expected_source and page in expected_pages
+        ),
         None,
     )
     return {
         "hit": first_hit_rank is not None,
         "first_hit_rank": first_hit_rank,
-        "distinct_pages": len(set(pages)),
+        "distinct_pages": len(set(zip(sources, pages))),
     }
 
 
@@ -261,8 +267,10 @@ def run_retrieval(entries, k):
             "type": entry["type"],
             "question": entry["question"],
             "expected_pages": entry["expected_pages"],
+            "expected_source": entry.get("expected_source", DEFAULT_SOURCE),
             "scored": scored,
             "pages": None,
+            "sources": None,
             "hit": None,
             "first_hit_rank": None,
             "distinct_pages": None,
@@ -275,8 +283,16 @@ def run_retrieval(entries, k):
         else:
             # The index stores 0-based PDF page indexes; expected_pages are printed pages.
             result["pages"] = [chunk["page"] + 1 for chunk in chunks]
+            result["sources"] = [chunk["source"] for chunk in chunks]
             if scored:
-                result.update(score_retrieval(result["pages"], entry["expected_pages"]))
+                result.update(
+                    score_retrieval(
+                        result["pages"],
+                        result["sources"],
+                        entry["expected_pages"],
+                        result["expected_source"],
+                    )
+                )
         results.append(result)
 
         if result["error"] is not None:
@@ -312,12 +328,21 @@ def summarise_retrieval(results, k):
         "hit_rate_at_1": mean([result["first_hit_rank"] == 1 for result in scored]),
         "mrr": mean([1 / result["first_hit_rank"] if result["hit"] else 0 for result in scored]),
         "avg_distinct_pages": mean([result["distinct_pages"] for result in scored]),
+        "by_source": {
+            source: {
+                "questions": sum(r["expected_source"] == source for r in scored),
+                "hits": sum(r["expected_source"] == source and r["hit"] for r in scored),
+            }
+            for source in sorted({r["expected_source"] for r in scored})
+        },
         "misses": [
             {
                 "id": result["id"],
                 "question": result["question"],
+                "expected_source": result["expected_source"],
                 "expected_pages": result["expected_pages"],
                 "pages": result["pages"],
+                "sources": result["sources"],
             }
             for result in scored
             if not result["hit"]
@@ -339,10 +364,15 @@ def print_retrieval_summary(summary):
     print(f"  MRR:                 {show(summary['mrr'])}")
     print(f"  avg distinct pages:  {show(summary['avg_distinct_pages'])}")
 
+    print("\nHits by document")
+    for source, counts in summary["by_source"].items():
+        print(f"  {counts['hits']}/{counts['questions']}  {source}")
+
     print(f"\nMisses ({len(summary['misses'])})")
     for miss in summary["misses"]:
         print(f"  {miss['id']}  {miss['question']}")
-        print(f"        expected {miss['expected_pages']}, returned {miss['pages']}")
+        print(f"        expected {miss['expected_source']} {miss['expected_pages']}")
+        print(f"        returned {list(zip(miss['sources'], miss['pages']))}")
 
     if summary["errors"]:
         print(f"\nErrors ({len(summary['errors'])})")
@@ -484,6 +514,7 @@ def run_answers(entries, run=1):
                     "answer": "",
                     "review_status": "",
                     "sources": [],
+                    "context": "",
                 }
             )
         except Exception as exc:  # the real graph failing is a failed answer

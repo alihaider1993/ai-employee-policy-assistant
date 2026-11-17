@@ -315,5 +315,442 @@
     "must_include": [],
     "expected_behaviour": "answer",
     "notes": "routing only"
+  },
+  {
+    "id": "q22",
+    "question": "How many weeks of paid holiday are workers legally entitled to each year?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Holiday entitlement - GOV.UK.pdf",
+    "expected_source": "Holiday entitlement - GOV.UK",
+    "expected_pages": [
+      1
+    ],
+    "answer_key": "Almost all workers are legally entitled to 5.6 weeks' paid holiday a year, which is 28 days for most people working a 5-day week.",
+    "must_include": [
+      "5.6 weeks",
+      "28 days"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q23",
+    "question": "How much statutory holiday must a part-time worker on 3 days a week get?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Holiday entitlement - GOV.UK.pdf",
+    "expected_source": "Holiday entitlement - GOV.UK",
+    "expected_pages": [
+      1
+    ],
+    "answer_key": "At least 5.6 weeks' paid holiday, which is 16.8 days for someone working 3 days a week (3 x 5.6).",
+    "must_include": [
+      "16.8 days"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q24",
+    "question": "How much notice do I have to give to take one day of holiday?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Holiday entitlement - GOV.UK.pdf",
+    "expected_source": "Holiday entitlement - GOV.UK",
+    "expected_pages": [
+      9
+    ],
+    "answer_key": "At least twice as long as the leave wanted, plus 1 day, so 3 days' notice for 1 day's leave, unless the contract says otherwise.",
+    "must_include": [
+      "twice as long as the leave plus 1 day"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q25",
+    "question": "Can my employer pay me instead of letting me take my statutory holiday?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Holiday entitlement - GOV.UK.pdf",
+    "expected_source": "Holiday entitlement - GOV.UK",
+    "expected_pages": [
+      10
+    ],
+    "answer_key": "Only when the worker leaves their job (payment in lieu). Untaken statutory leave must be paid even after dismissal for gross misconduct.",
+    "must_include": [
+      "only when leaving the job"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q26",
+    "question": "If I get 28 days' leave, how many can I carry over to next year?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Holiday entitlement - GOV.UK.pdf",
+    "expected_source": "Holiday entitlement - GOV.UK",
+    "expected_pages": [
+      5
+    ],
+    "answer_key": "A maximum of 8 days, though the contract says how many days can be carried over.",
+    "must_include": [
+      "8 days"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q27",
+    "question": "What is the maximum number of hours I can be made to work in a week on average?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Maximum weekly working hours - GOV.UK.pdf",
+    "expected_source": "Maximum weekly working hours - GOV.UK",
+    "expected_pages": [
+      1,
+      2
+    ],
+    "answer_key": "You cannot work more than 48 hours a week on average, normally averaged over 17 weeks.",
+    "must_include": [
+      "48 hours",
+      "17 weeks"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q28",
+    "question": "Can I opt out of the 48 hour working week, and how do I cancel the opt-out?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Maximum weekly working hours - GOV.UK.pdf",
+    "expected_source": "Maximum weekly working hours - GOV.UK",
+    "expected_pages": [
+      3,
+      4
+    ],
+    "answer_key": "Opting out must be voluntary and in writing, and you can cancel whenever you want with at least 7 days' notice (up to 3 months depending on the agreement).",
+    "must_include": [
+      "voluntary and in writing",
+      "at least 7 days' notice to cancel"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q29",
+    "question": "Does travel to and from work count towards my working hours?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Maximum weekly working hours - GOV.UK.pdf",
+    "expected_source": "Maximum weekly working hours - GOV.UK",
+    "expected_pages": [
+      2,
+      3
+    ],
+    "answer_key": "Not if you have a fixed place of work. It counts if you have no fixed place of work, and travel as part of the job counts.",
+    "must_include": [
+      "does not count with a fixed place of work"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q30",
+    "question": "How is statutory redundancy pay worked out?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Redundancy: your rights - GOV.UK.pdf",
+    "expected_source": "Redundancy: your rights - GOV.UK",
+    "expected_pages": [
+      4
+    ],
+    "answer_key": "Employees with 2 or more years' service get half a week's pay per full year under 22, one week's pay per year aged 22 to 40, and one and a half weeks' pay per year aged 41 or over. Service is capped at 20 years.",
+    "must_include": [
+      "2 years' service",
+      "one and a half weeks' pay per year if 41 or older"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q31",
+    "question": "How much notice must I get if I am made redundant after 5 years in the job?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Redundancy: your rights - GOV.UK.pdf",
+    "expected_source": "Redundancy: your rights - GOV.UK",
+    "expected_pages": [
+      6
+    ],
+    "answer_key": "One week's notice for each year of service between 2 and 12 years, so 5 weeks.",
+    "must_include": [
+      "one week's notice for each year of service"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q32",
+    "question": "What is the minimum consultation period if my employer plans 50 redundancies at once?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Redundancy: your rights - GOV.UK.pdf",
+    "expected_source": "Redundancy: your rights - GOV.UK",
+    "expected_pages": [
+      7,
+      8
+    ],
+    "answer_key": "For 20 to 99 redundancies the consultation must start at least 30 days before any dismissals take effect.",
+    "must_include": [
+      "30 days"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q33",
+    "question": "Do I get time off to look for a new job if I am being made redundant?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Redundancy: your rights - GOV.UK.pdf",
+    "expected_source": "Redundancy: your rights - GOV.UK",
+    "expected_pages": [
+      9,
+      10
+    ],
+    "answer_key": "Yes, a reasonable amount of time off if continuously employed for 2 years by the end of the notice period. The employer pays at most 40% of one week's pay.",
+    "must_include": [
+      "reasonable time off",
+      "2 years' continuous employment"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q34",
+    "question": "What is the weekly rate of Statutory Sick Pay and how long is it paid for?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Statutory Sick Pay (SSP): employer guide - GOV.UK.pdf",
+    "expected_source": "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+    "expected_pages": [
+      1,
+      2
+    ],
+    "answer_key": "£123.25 a week or 80% of average weekly earnings, whichever is lower, for up to 28 weeks.",
+    "must_include": [
+      "£123.25",
+      "28 weeks"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q35",
+    "question": "When can an employer ask an employee for a fit note?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Statutory Sick Pay (SSP): employer guide - GOV.UK.pdf",
+    "expected_source": "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+    "expected_pages": [
+      5
+    ],
+    "answer_key": "Only if the employee is off work for more than 7 days in a row, including non-working days.",
+    "must_include": [
+      "more than 7 days in a row"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q36",
+    "question": "Who is allowed to issue a fit note?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Statutory Sick Pay (SSP): employer guide - GOV.UK.pdf",
+    "expected_source": "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+    "expected_pages": [
+      5,
+      6
+    ],
+    "answer_key": "A GP or hospital doctor, registered nurse, occupational therapist, pharmacist or physiotherapist.",
+    "must_include": [
+      "GP or hospital doctor",
+      "pharmacist"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q37",
+    "question": "What are the protected characteristics under discrimination law?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Discrimination: your rights - GOV.UK.pdf",
+    "expected_source": "Discrimination: your rights - GOV.UK",
+    "expected_pages": [
+      1
+    ],
+    "answer_key": "Age, gender reassignment, marriage or civil partnership, pregnancy or maternity, disability, race, religion or belief, sex and sexual orientation.",
+    "must_include": [
+      "age",
+      "disability",
+      "race",
+      "religion or belief"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q38",
+    "question": "What are the different forms of discrimination?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Discrimination: your rights - GOV.UK.pdf",
+    "expected_source": "Discrimination: your rights - GOV.UK",
+    "expected_pages": [
+      2
+    ],
+    "answer_key": "Direct discrimination, indirect discrimination, harassment and victimisation.",
+    "must_include": [
+      "direct discrimination",
+      "indirect discrimination",
+      "harassment",
+      "victimisation"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q39",
+    "question": "What can I do if I think I have been discriminated against at work?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Discrimination: your rights - GOV.UK.pdf",
+    "expected_source": "Discrimination: your rights - GOV.UK",
+    "expected_pages": [
+      4
+    ],
+    "answer_key": "Talk to the employer first to try to sort it out informally. If that fails, talk to Acas, Citizens Advice or a trade union rep, and you might be able to take a claim to an employment tribunal.",
+    "must_include": [
+      "talk to the employer informally first",
+      "employment tribunal"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q40",
+    "question": "Who is allowed to accompany me to a disciplinary meeting?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "code-of-practice-on-disciplinary-and-grievance-procedures.pdf",
+    "expected_source": "Code of Practice on disciplinary and grievance procedures",
+    "expected_pages": [
+      3
+    ],
+    "answer_key": "A fellow worker, a trade union representative, or an official employed by a trade union.",
+    "must_include": [
+      "fellow worker",
+      "trade union representative"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q41",
+    "question": "What happens if my chosen companion cannot attend the date set for the disciplinary hearing?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "code-of-practice-on-disciplinary-and-grievance-procedures.pdf",
+    "expected_source": "Code of Practice on disciplinary and grievance procedures",
+    "expected_pages": [
+      4,
+      6
+    ],
+    "answer_key": "The employer must postpone the hearing to a time the worker proposes, as long as it is reasonable and not more than five working days after the original date.",
+    "must_include": [
+      "postpone the hearing",
+      "five working days"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q42",
+    "question": "What counts as gross misconduct under the code of practice?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "code-of-practice-on-disciplinary-and-grievance-procedures.pdf",
+    "expected_source": "Code of Practice on disciplinary and grievance procedures",
+    "expected_pages": [
+      4
+    ],
+    "answer_key": "Acts so serious they may justify dismissal without notice for a first offence, such as theft or fraud, physical violence, gross negligence or serious insubordination, though a fair process must still be followed.",
+    "must_include": [
+      "theft or fraud",
+      "physical violence"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q43",
+    "question": "How should an employer handle an appeal against a disciplinary decision?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "code-of-practice-on-disciplinary-and-grievance-procedures.pdf",
+    "expected_source": "Code of Practice on disciplinary and grievance procedures",
+    "expected_pages": [
+      4,
+      5
+    ],
+    "answer_key": "Heard without unreasonable delay, dealt with impartially and wherever possible by a manager not previously involved, with the result given in writing.",
+    "must_include": [
+      "impartial",
+      "manager not previously involved"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q44",
+    "question": "What is the national minimum wage?",
+    "type": "not_covered",
+    "expected_label": "policy_question",
+    "document": "all indexed documents",
+    "expected_pages": [],
+    "answer_key": "Not covered in any indexed document. The bot should say so and not invent a benefit.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "checked: no match for minimum wage in any indexed document"
+  },
+  {
+    "id": "q45",
+    "question": "Does the company offer childcare vouchers?",
+    "type": "not_covered",
+    "expected_label": "policy_question",
+    "document": "all indexed documents",
+    "expected_pages": [],
+    "answer_key": "Not covered in any indexed document. The bot should say so and not invent a benefit.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "checked: no match for childcare voucher or nursery in any indexed document (a first choice, sabbatical, was wrong: the handbook has a career leave policy)"
+  },
+  {
+    "id": "q46",
+    "question": "Is there a cycle to work scheme?",
+    "type": "not_covered",
+    "expected_label": "policy_question",
+    "document": "all indexed documents",
+    "expected_pages": [],
+    "answer_key": "Not covered in any indexed document. The bot should say so and not invent a benefit.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "checked: no match for cycle to work in any indexed document"
   }
 ]

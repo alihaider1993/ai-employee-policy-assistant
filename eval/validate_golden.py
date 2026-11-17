@@ -24,7 +24,18 @@ REQUIRED_FIELDS = (
 TYPES = ("policy", "general", "out_of_scope", "not_covered")
 LABELS = ("policy_question", "general_question", "out_of_scope")
 BEHAVIOURS = ("answer", "refuse")
-FIRST_PAGE, LAST_PAGE = 1, 95  # printed page numbers of fca_employee_handbook.pdf
+FIRST_PAGE = 1
+DEFAULT_SOURCE = "FCA Employee Handbook"
+# Last printed page of each indexed document, keyed by the source name stored in the index.
+SOURCE_LAST_PAGE = {
+    DEFAULT_SOURCE: 95,
+    "Holiday entitlement - GOV.UK": 10,
+    "Maximum weekly working hours - GOV.UK": 5,
+    "Redundancy: your rights - GOV.UK": 11,
+    "Statutory Sick Pay (SSP): employer guide - GOV.UK": 7,
+    "Discrimination: your rights - GOV.UK": 5,
+    "Code of Practice on disciplinary and grievance procedures": 6,
+}
 
 
 def validate(entries):
@@ -71,6 +82,12 @@ def validate(entries):
                 f"{name}: expected_behaviour {behaviour!r} not one of {', '.join(BEHAVIOURS)}"
             )
 
+        source = entry.get("expected_source", DEFAULT_SOURCE)
+        if source not in SOURCE_LAST_PAGE:
+            errors.append(f"{name}: expected_source {source!r} is not an indexed document")
+            source = DEFAULT_SOURCE
+        last_page = SOURCE_LAST_PAGE[source]
+
         if "expected_pages" in entry:
             pages = entry["expected_pages"]
             if not isinstance(pages, list):
@@ -82,11 +99,11 @@ def validate(entries):
                     # bool is a subclass of int, so exclude it explicitly
                     if isinstance(page, bool)
                     or not isinstance(page, int)
-                    or not FIRST_PAGE <= page <= LAST_PAGE
+                    or not FIRST_PAGE <= page <= last_page
                 ]
                 if bad:
                     errors.append(
-                        f"{name}: expected_pages must be integers {FIRST_PAGE}-{LAST_PAGE}, got {bad}"
+                        f"{name}: expected_pages must be integers {FIRST_PAGE}-{last_page}, got {bad}"
                     )
                 if not pages and entry_type == "policy":
                     errors.append(f"{name}: expected_pages is empty for a policy question")
