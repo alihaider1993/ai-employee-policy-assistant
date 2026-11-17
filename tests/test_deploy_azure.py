@@ -54,3 +54,21 @@ def test_app_body_sets_cache_version_and_keeps_secrets_as_references():
     assert env["CACHE_VERSION"] == {"name": "CACHE_VERSION", "value": "3"}
     assert env["DATABASE_URL"] == {"name": "DATABASE_URL", "secretRef": "database-url"}
     assert "db-secret" not in str(deploy.mask_body(body))
+
+
+def test_consumption_only_environment_is_accepted_with_its_built_in_profile():
+    assert not deploy.uses_dedicated_workload_profile({})
+    assert not deploy.uses_dedicated_workload_profile(
+        {"workloadProfiles": [{"name": "Consumption", "workloadProfileType": "Consumption"}]}
+    )
+
+
+def test_environment_with_a_dedicated_workload_profile_is_rejected():
+    properties = {
+        "workloadProfiles": [
+            {"name": "Consumption", "workloadProfileType": "Consumption"},
+            {"name": "dedicated", "workloadProfileType": "D4"},
+        ]
+    }
+
+    assert deploy.uses_dedicated_workload_profile(properties)

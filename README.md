@@ -2,7 +2,7 @@
 
 I built this project to get hands-on experience with LangChain, LangGraph, PostgreSQL and Docker.
 
-It's a RAG application that answers employee policy questions from an actual policy document and shows which pages each answer came from. For the demo I'm using the publicly available FCA Employee Handbook. It runs as a FastAPI service on Azure Container Apps, with Azure OpenAI for the models and Azure AI Search for retrieval.
+It's a RAG application that answers employee policy questions from real policy documents and shows which document and page each answer came from. For the demo I'm using seven publicly available documents: the FCA Employee Handbook, the Acas Code of Practice on disciplinary and grievance procedures, and five GOV.UK employment guides (holiday entitlement, maximum weekly working hours, Statutory Sick Pay, redundancy, and discrimination). It runs as a FastAPI service on Azure Container Apps, with Azure OpenAI for the models and Azure AI Search for retrieval.
 
 **Try it live:** [employee-policy-api.ambitiousgrass-686b2448.uksouth.azurecontainerapps.io/ui/](https://employee-policy-api.ambitiousgrass-686b2448.uksouth.azurecontainerapps.io/ui/)
 
@@ -83,7 +83,7 @@ The application is deployed to Azure Container Apps and exposed through a FastAP
 
 ### Grounded RAG Responses
 
-Policy questions are answered using retrieved context from the FCA Employee Handbook. The API returns the generated answer together with the source document and page numbers.
+Policy questions are answered using retrieved context from the indexed policy documents. The API returns the generated answer together with the source document and page numbers.
 
 ![RAG response with source attribution](docs/screenshots/03-carry-over-leave-rag-sources.png)
 
@@ -95,7 +95,7 @@ LangGraph classifies incoming requests and routes them through different workflo
 
 ### Azure AI Search Vector Index
 
-The FCA Employee Handbook was split into 410 chunks, embedded using Azure OpenAI `text-embedding-3-small`, and indexed in Azure AI Search for vector retrieval.
+The seven policy documents (about 500 chunks in total, 410 of them from the FCA Employee Handbook) were split, embedded using Azure OpenAI `text-embedding-3-small`, and indexed in Azure AI Search for vector retrieval.
 
 ![Azure AI Search vector index](docs/screenshots/11-azure-ai-search-vector-index.png)
 
@@ -193,7 +193,7 @@ Chunk size:    1000 characters
 Chunk overlap: 200 characters
 ```
 
-The demonstration FCA Employee Handbook contains approximately:
+The largest document, the FCA Employee Handbook, contains approximately:
 
 ```text
 95 PDF pages
@@ -805,7 +805,7 @@ Current limitations include:
 - The knowledge base uses a limited demonstration policy dataset.
 - Exact-match caching does not perform semantic cache matching.
 - The application does not currently implement end-user authentication or authorisation.
-- The answer-review stage evaluates the generated response but does not independently re-retrieve the original policy context.
+- The answer-review stage checks the generated response against the retrieved chunks but does not re-retrieve. When the handbook and a statutory source give different figures (for example holiday notice), answers can misquote or contradict themselves; see `eval/README.md`.
 - Policy content must be re-indexed when the underlying source documentation changes.
 
 These are deliberate scope boundaries rather than claims of full enterprise production readiness.
@@ -814,9 +814,9 @@ These are deliberate scope boundaries rather than claims of full enterprise prod
 
 ## Policy Dataset & Disclaimer
 
-This project uses the **FCA Employee Handbook** as a public policy document for demonstrating the RAG architecture.
+This project uses the **FCA Employee Handbook**, the **Acas Code of Practice on disciplinary and grievance procedures**, and five **GOV.UK** employment guides (holiday entitlement, maximum weekly working hours, Statutory Sick Pay, redundancy, and discrimination) as public policy documents for demonstrating the RAG architecture. The GOV.UK content is published under the Open Government Licence v3.0.
 
-The handbook is used as a technical demonstration dataset only.
+These documents are used as a technical demonstration dataset only.
 
 **This project is independent and is not affiliated with, sponsored by, or endorsed by the Financial Conduct Authority (FCA).**
 
