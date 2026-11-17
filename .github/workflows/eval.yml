@@ -1,0 +1,77 @@
+name: Eval gate
+
+# Runs the golden-set evals against live Azure OpenAI and Azure AI Search, then fails
+# the build if quality, latency or cost cross the thresholds in eval/thresholds.json.
+# It costs real tokens (a few US dollars a run), so it only runs when the code that
+# affects answers changes, every Monday, or when started by hand.
+#
+# One-time setup, not done by this file: add these repository secrets, with the same
+# values as the matching variables in .env: AZURE_OPENAI_ENDPOINT,
+# AZURE_OPENAI_API_KEY, AZURE_OPENAI_DEPLOYMENT, AZURE_OPENAI_EMBEDDING_ENDPOINT,
+# AZURE_OPENAI_EMBEDDING_KEY, AZURE_OPENAI_EMBEDDING_DEPLOYMENT,
+# AZURE_SEARCH_ENDPOINT, AZURE_SEARCH_API_KEY and AZURE_SEARCH_INDEX.
+# The thresholds in eval/thresholds.json were set from local runs; expect to adjust
+# them after the first run on GitHub's runners.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+  pull_request:
+    paths:
+      - "app/graph/**"
+      - "app/rag/**"
+      - "app/core/safety.py"
+      - "app/ai/**"
+      - "eval/**"
+      - "requirements.txt"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eval-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  eval:
+    # Pull requests from forks cannot read the Azure secrets.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      # The eval never touches the database; this only lets the settings load.
+      DATABASE_URL: postgresql+psycopg://user:password@localhost:5432/db
+      AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+      AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+      AZURE_OPENAI_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_DEPLOYMENT }}
+      AZURE_OPENAI_EMBEDDING_ENDPOINT: ${{ secrets.AZURE_OPENAI_EMBEDDING_ENDPOINT }}
+      AZURE_OPENAI_EMBEDDING_KEY: ${{ secrets.AZURE_OPENAI_EMBEDDING_KEY }}
+      AZURE_OPENAI_EMBEDDING_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_EMBEDDING_DEPLOYMENT }}
+      AZURE_SEARCH_ENDPOINT: ${{ secrets.AZURE_SEARCH_ENDPOINT }}
+      AZURE_SEARCH_API_KEY: ${{ secrets.AZURE_SEARCH_API_KEY }}
+      AZURE_SEARCH_INDEX: ${{ secrets.AZURE_SEARCH_INDEX }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: python eval/validate_golden.py
+      - run: python -m eval.run_eval --part routing
+      - run: python -m eval.run_eval --part retrieval --k 3
+      - run: python -m eval.run_eval --part answers --repeat 2
+      - run: python -m eval.run_eval --part injection --repeat 2
+      - name: Quality gate
+        run: |
+          python -m eval.gate \
+            "$(ls -t eval/results/*_routing.json | head -1)" \
+            "$(ls -t eval/results/*_retrieval_k3.json | head -1)" \
+            "$(ls -t eval/results/*_answers.json | head -1)" \
+            "$(ls -t eval/results/*_injection.json | head -1)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-results
+          path: eval/results/

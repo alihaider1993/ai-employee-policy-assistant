@@ -1,0 +1,92 @@
+name: Deploy
+
+# Builds the image, pushes it to ghcr.io and points the live Container App at it.
+# It does NOT run database migrations and does NOT change CACHE_VERSION: run
+# `alembic upgrade head` against Neon first when a release adds a migration, and
+# raise the cache version with deploy/azure/deploy.py after any prompt, model or
+# index change.
+#
+# One-time setup, not done by this file:
+#   1. In Azure, create an app registration with a federated credential for this
+#      repository's "production" environment, and give it the Contributor role on
+#      the employee-policy-rg resource group.
+#   2. In GitHub, add the repository variables AZURE_CLIENT_ID, AZURE_TENANT_ID and
+#      AZURE_SUBSCRIPTION_ID, and create an environment named "production" with
+#      required reviewers so every deploy needs a click.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "alembic/**"
+      - "requirements.txt"
+      - "Dockerfile"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/alihaider1993/employee-policy-assistant
+  RESOURCE_GROUP: employee-policy-rg
+  APP_NAME: employee-policy-api
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: tag
+        run: echo "sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE }}:${{ steps.tag.outputs.sha }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Point the app at the new image
+        run: |
+          az containerapp update \
+            --resource-group "$RESOURCE_GROUP" --name "$APP_NAME" \
+            --image "$IMAGE:${{ steps.tag.outputs.sha }}"
+
+      - name: Smoke test
+        run: |
+          fqdn=$(az containerapp show -g "$RESOURCE_GROUP" -n "$APP_NAME" --query properties.configuration.ingress.fqdn -o tsv)
+          for attempt in 1 2 3 4 5 6; do
+            if curl -fsS --max-time 60 "https://$fqdn/health"; then exit 0; fi
+            sleep 20
+          done
+          echo "The new revision did not become healthy. Roll back with: az containerapp update --image <previous image>" >&2
+          exit 1
