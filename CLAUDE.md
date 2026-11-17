@@ -46,7 +46,14 @@ python -m app.rag.index_documents    # chunk, embed and upload every PDF in data
 python -m app.rag.retriever          # smoke-test retrieval with a sample question
 ```
 
-There is no linter, formatter, or CI configuration.
+Lint with `ruff check .` (config in `ruff.toml`; dev tools are in `requirements-dev.txt`). Evals, from the repo root as modules, all call live Azure:
+
+```powershell
+python -m eval.run_eval --part routing|retrieval|answers|injection [--repeat N]
+python -m eval.gate <results files>     # fails when a metric crosses eval/thresholds.json
+```
+
+CI is in `.github/workflows/`: `ci.yml` (lint and tests, no Azure), `eval.yml` (evals plus the gate, needs Azure secrets) and `deploy.yml` (build, push and update the Container App). `ci.yml` has passed on GitHub. `eval.yml` has only failed so far (it ran before its secrets were added) and `deploy.yml` has never run. The Azure identity (app registration `employee-policy-assistant-github`, Contributor on `employee-policy-rg`, federated to the `production` environment), the repository variables and the Azure secrets were created on 2026-11-17; the secrets were copied from the Container App, so rotate them in both places. The Bicep in `infra/` has been compiled but never applied. The live app runs image `881a5e8` with `CACHE_VERSION=3`, deployed by hand with `az containerapp update`.
 
 ## Things that will trip you up
 
@@ -55,7 +62,8 @@ There is no linter, formatter, or CI configuration.
 - **Alembic's URL comes from `settings.database_url`**, not `alembic.ini` — `alembic/env.py` overrides `sqlalchemy.url`. Local host URL: `postgresql+psycopg://app_user:local_dev_password@localhost:5433/employee_policy`. Inside Compose the `api` service overrides `DATABASE_URL` to use `postgres:5432`.
 - **The cache stores every answer, forever, per cache version.** `/ask` caches answers from every branch, including the out-of-scope message and the rejected-answer fallback, keyed on the normalised question and `CACHE_VERSION` with no expiry. After any prompt, model or index change, raise `CACHE_VERSION` (default `'1'`; rows from before versioning are `'0'`), or re-asking returns the old cached answer. The eval script calls the graph directly and never uses the cache.
 - **New models must be exported from `app/models/__init__.py`.** `alembic/env.py` imports `app.models` to populate `Base.metadata`, so autogenerate can't see a model that isn't exported there.
-- **Tests are not isolated.** `tests/test_main.py::test_ask_returns_cached_answer` uses the real `SessionLocal` against the configured database; on a cache miss it runs the full graph against live Azure OpenAI / Azure AI Search and writes a row. Nothing is mocked. `tests/test_graph.py` only covers the pure routing functions, but still needs `.env` to import. `tests/test_rate_limit.py` and `tests/test_ui.py` use fakes and don't need `.env`; keep `app/core/rate_limit.py` and `app/ui.py` free of `app.core.config` imports so they stay that way.
+- **Tests are not isolated.** `tests/test_main.py::test_ask_returns_cached_answer` uses the real `SessionLocal` against the configured database; on a cache miss it runs the full graph against live Azure OpenAI / Azure AI Search and writes a row. Nothing is mocked. `tests/test_graph.py` only covers the pure routing functions, but still needs `.env` to import. `tests/test_rate_limit.py` and `tests/test_ui.py` use fakes and don't need `.env`; keep `app/core/rate_limit.py` and `app/ui.py` free of `app.core.config` imports so they stay that way. The same goes for `app/core/redaction.py` and `app/core/safety.py`.
+- **Questions are redacted and prompts treat all input as untrusted.** `answer_question` replaces emails, phone numbers, NI numbers, IBANs, card numbers and postcodes (`app/core/redaction.py`) before the cache lookup, so the cache key and the model only ever see the redacted text. Every prompt wraps the question, answer and retrieved context in tags and strips those tags from user text (`app/core/safety.py`). The classifier falls back to `out_of_scope` and the reviewer to `rejected` on any unrecognised reply, and Azure content-filter refusals become a fixed message. When you change a prompt, run `--part injection` and `--part answers`; `docs/SECURITY.md` lists what is still weak.
 
 ## Architecture
 

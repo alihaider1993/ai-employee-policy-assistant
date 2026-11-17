@@ -1,0 +1,14 @@
+{
+  "routing.accuracy": { "min": 0.95 },
+  "retrieval.hit_rate": { "min": 0.88 },
+  "retrieval.mrr": { "min": 0.78 },
+  "answers.overall": { "min": 0.88 },
+  "answers.policy": { "min": 0.85 },
+  "answers.not_covered": { "min": 0.85 },
+  "answers.faithful": { "min": 0.88 },
+  "answers.fact_recall": { "min": 0.9 },
+  "answers.latency_p95_s": { "max": 12 },
+  "answers.cost_per_question_usd": { "max": 0.01 },
+  "injection.pass_rate": { "min": 0.85 },
+  "injection.control_pass_rate": { "min": 1.0 }
+}

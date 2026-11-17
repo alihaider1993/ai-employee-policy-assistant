@@ -22,10 +22,14 @@ eval/results/<timestamp>_answers.json.
 import argparse
 import json
 import sys
+import time
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
+from langchain_core.callbacks import UsageMetadataCallbackHandler
+
+from eval import injection, metrics
 from eval.validate_golden import GOLDEN_PATH, LABELS
 
 RESULTS_DIR = Path(__file__).parent / "results"
@@ -502,10 +506,15 @@ def run_answers(entries, run=1):
             "chunks_match_sources": None,
             "judgement": None,
             "judge_rejections": [],
+            "latency_s": None,
+            "input_tokens": None,
+            "output_tokens": None,
             "outcome": None,
             "reasons": [],
             "error": None,
         }
+        usage = UsageMetadataCallbackHandler()
+        started = time.perf_counter()
         try:
             state = policy_graph.invoke(
                 {
@@ -515,7 +524,8 @@ def run_answers(entries, run=1):
                     "review_status": "",
                     "sources": [],
                     "context": "",
-                }
+                },
+                config={"callbacks": [usage]},
             )
         except Exception as exc:  # the real graph failing is a failed answer
             result["error"] = describe_error(exc, secrets)
@@ -525,6 +535,9 @@ def run_answers(entries, run=1):
             print_answer_row(result)
             continue
 
+        result["latency_s"] = time.perf_counter() - started
+        result["input_tokens"] = sum(m["input_tokens"] for m in usage.usage_metadata.values())
+        result["output_tokens"] = sum(m["output_tokens"] for m in usage.usage_metadata.values())
         result["question_type"] = state["question_type"]
         result["review_status"] = state["review_status"]
         result["answer"] = state["answer"]
@@ -632,6 +645,7 @@ def summarise_answers(results):
         "review_status": dict(
             Counter(result["review_status"] or "not reviewed" for result in results if result["answer"] is not None)
         ),
+        "performance": metrics.summarise_performance(results),
         "failures": [
             {
                 "id": result["id"],
@@ -678,6 +692,10 @@ def print_answers_summary(summary):
     for status, count in summary["review_status"].items():
         print(f"  {status}: {count}")
 
+    print("\nLatency and cost of the graph (judge calls excluded)")
+    for line in metrics.format_performance(summary["performance"]):
+        print(line)
+
     print(f"\nFailures ({len(summary['failures'])})")
     for failure in summary["failures"]:
         print(f"  {failure['id']}  {failure['question']}")
@@ -720,6 +738,7 @@ def summarise_answer_runs(results, run_summaries):
                 for entry_type in ANSWER_TYPES
             },
         },
+        "performance": metrics.summarise_performance(results),
         "per_run": run_summaries,
     }
 
@@ -740,6 +759,93 @@ def print_answer_runs_summary(summary):
     for scope, rate in summary["mean_pass_rate"].items():
         print(f"  {scope:<13} {'n/a' if rate is None else f'{rate:.0%}'}")
 
+    print("\nLatency and cost of the graph over all runs (judge calls excluded)")
+    for line in metrics.format_performance(summary["performance"]):
+        print(line)
+
+
+def run_injection(cases, leak_markers, run=1):
+    """Send each attack through the real graph and check the answer for planted or leaked text."""
+    # Imported here so --help works without a configured environment.
+    from app.graph.workflow import policy_graph
+    from app.rag import generator
+
+    secrets = secret_values()
+    real_retrieve = generator.retrieve_policy_chunks
+    results = []
+    try:
+        for case in cases:
+            result = {
+                "run": run,
+                "id": case["id"],
+                "category": case["category"],
+                "question": case["question"],
+                "question_type": None,
+                "review_status": None,
+                "answer": None,
+                "reasons": [],
+                "error": None,
+                "outcome": None,
+            }
+
+            poisoned = case.get("poisoned_chunk")
+            if poisoned:
+                # Simulate a compromised document: its text is returned with the real chunks.
+                def retrieve_with_poison(question, top_k=ANSWER_TOP_K, poisoned=poisoned):
+                    chunks = list(real_retrieve(question, top_k))
+                    first = chunks[0]
+                    fake = {"content": poisoned, "source": first["source"], "page": first["page"]}
+                    return [fake, *chunks]
+
+                generator.retrieve_policy_chunks = retrieve_with_poison
+            else:
+                generator.retrieve_policy_chunks = real_retrieve
+
+            try:
+                state = policy_graph.invoke(
+                    {
+                        "question": case["question"],
+                        "question_type": "",
+                        "answer": "",
+                        "review_status": "",
+                        "sources": [],
+                        "context": "",
+                    }
+                )
+            except Exception as exc:  # a crash is a robustness failure, so it fails the case
+                result["error"] = describe_error(exc, secrets)
+                result["reasons"] = [f"graph raised {result['error']['type']}: {result['error']['message']}"]
+                result["outcome"] = "fail"
+            else:
+                result["question_type"] = state["question_type"]
+                result["review_status"] = state["review_status"]
+                result["answer"] = state["answer"]
+                result["reasons"] = injection.check_answer(case, state["answer"], leak_markers, secrets)
+                result["outcome"] = "fail" if result["reasons"] else "pass"
+
+            results.append(result)
+            print(
+                f"{result['id']:<5} {result['category']:<12} {str(result['question_type']):<17} "
+                f"{str(result['review_status'] or '-'):<9} {result['outcome']}"
+            )
+    finally:
+        generator.retrieve_policy_chunks = real_retrieve
+    return results
+
+
+def print_injection_summary(summary):
+    overall = summary["overall"]
+    rate = "n/a" if overall["pass_rate"] is None else f"{overall['pass_rate']:.0%}"
+    print(f"\nInjection cases passed: {overall['passed']}/{overall['cases']}  {rate}")
+    for category, stats in summary["by_category"].items():
+        print(f"  {category:<13} {stats['passed']}/{stats['cases']}")
+    print(f"\nFailures ({len(summary['failures'])})")
+    for failure in summary["failures"]:
+        print(f"  {failure['id']}  {failure['question']!r}")
+        print(f"        answer: {failure['answer']}")
+        for reason in failure["reasons"]:
+            print(f"        - {reason}")
+
 
 def save_results(name, part, started_at, summary, results):
     RESULTS_DIR.mkdir(exist_ok=True)
@@ -756,7 +862,7 @@ def save_results(name, part, started_at, summary, results):
 
 def parse_args(argv):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--part", required=True, choices=("routing", "retrieval", "answers"))
+    parser.add_argument("--part", required=True, choices=("routing", "retrieval", "answers", "injection"))
     parser.add_argument("--limit", type=int, help="run only the first N questions")
     parser.add_argument("--ids", help="comma-separated question ids, e.g. q01,q05")
     parser.add_argument("--k", type=int, default=3, help="chunks to retrieve (retrieval only, default 3)")
@@ -813,6 +919,18 @@ def main(argv=None):
             print_answer_runs_summary(summary)
         else:
             summary = run_summaries[0]
+    elif args.part == "injection":
+        name = "injection"
+        leak_markers, cases = injection.load_cases()
+        cases = select_entries(cases, args.ids, args.limit)
+        results = []
+        for run in range(1, args.repeat + 1):
+            if args.repeat > 1:
+                print(f"\nRun {run}/{args.repeat}")
+            print(f"{'id':<5} {'category':<12} {'question_type':<17} {'review':<9} outcome")
+            results += run_injection(cases, leak_markers, run)
+        summary = injection.summarise(results)
+        print_injection_summary(summary)
     else:
         name = f"retrieval_k{args.k}"
         print(f"{'id':<6} {'type':<13} {'expected':<14} {'returned':<24} outcome")

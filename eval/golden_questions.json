@@ -752,5 +752,180 @@
     "must_include": [],
     "expected_behaviour": "refuse",
     "notes": "checked: no match for cycle to work in any indexed document"
+  },
+  {
+    "id": "q47",
+    "question": "How much statutory holiday can I carry over if I was too sick to take it?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Holiday entitlement - GOV.UK.pdf",
+    "expected_source": "Holiday entitlement - GOV.UK",
+    "expected_pages": [
+      5
+    ],
+    "answer_key": "A worker with regular hours for the whole year can carry over up to 20 of their 28 days' leave if they could not take it because of sickness.",
+    "must_include": [
+      "20 days"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q48",
+    "question": "What is the maximum number of hours someone under 18 can work?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Maximum weekly working hours - GOV.UK.pdf",
+    "expected_source": "Maximum weekly working hours - GOV.UK",
+    "expected_pages": [
+      1
+    ],
+    "answer_key": "No more than 8 hours a day or 40 hours a week.",
+    "must_include": [
+      "8 hours a day",
+      "40 hours a week"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q49",
+    "question": "How long is the trial period for an alternative job offered instead of redundancy?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Redundancy: your rights - GOV.UK.pdf",
+    "expected_source": "Redundancy: your rights - GOV.UK",
+    "expected_pages": [
+      9
+    ],
+    "answer_key": "A 4-week trial period, which can be extended in writing if training is needed.",
+    "must_include": [
+      "4 weeks"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q50",
+    "question": "How long does someone have to be sick before Statutory Sick Pay starts?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Statutory Sick Pay (SSP): employer guide - GOV.UK.pdf",
+    "expected_source": "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+    "expected_pages": [
+      2
+    ],
+    "answer_key": "SSP is paid when the employee is sick for at least one full working day.",
+    "must_include": [
+      "one full working day"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q51",
+    "question": "When must an employer send form SSP1 to an employee who does not qualify for sick pay?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Statutory Sick Pay (SSP): employer guide - GOV.UK.pdf",
+    "expected_source": "Statutory Sick Pay (SSP): employer guide - GOV.UK",
+    "expected_pages": [
+      4
+    ],
+    "answer_key": "Within 7 days of the employee's first day off sick.",
+    "must_include": [
+      "within 7 days"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q52",
+    "question": "What reasonable adjustments must employers make for disabled employees?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "Print Discrimination: your rights - GOV.UK.pdf",
+    "expected_source": "Discrimination: your rights - GOV.UK",
+    "expected_pages": [
+      3
+    ],
+    "answer_key": "Employers should make reasonable adjustments, for example accessible application forms, extra time in tests, wheelchair access and suitable facilities and equipment.",
+    "must_include": [
+      "reasonable adjustments"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q53",
+    "question": "How quickly should an employer investigate a possible disciplinary issue?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "code-of-practice-on-disciplinary-and-grievance-procedures.pdf",
+    "expected_source": "Code of Practice on disciplinary and grievance procedures",
+    "expected_pages": [
+      3
+    ],
+    "answer_key": "Without unreasonable delay, to establish the facts of the case.",
+    "must_include": [
+      "without unreasonable delay"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q54",
+    "question": "By how much can a tribunal change an award if the code of practice was not followed?",
+    "type": "policy",
+    "expected_label": "policy_question",
+    "document": "code-of-practice-on-disciplinary-and-grievance-procedures.pdf",
+    "expected_source": "Code of Practice on disciplinary and grievance procedures",
+    "expected_pages": [
+      1
+    ],
+    "answer_key": "By up to 25 per cent, up or down, for an unreasonable failure to follow the Code.",
+    "must_include": [
+      "25 per cent"
+    ],
+    "expected_behaviour": "answer",
+    "notes": "new document; facts checked against the PDF text"
+  },
+  {
+    "id": "q55",
+    "question": "Does the company offer pet insurance?",
+    "type": "not_covered",
+    "expected_label": "policy_question",
+    "document": "all indexed documents",
+    "expected_pages": [],
+    "answer_key": "Not covered in any indexed document. The bot should say so and not invent a benefit.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "checked: no match for pet insurance in any indexed document"
+  },
+  {
+    "id": "q56",
+    "question": "What does HMRC stand for?",
+    "type": "general",
+    "expected_label": "general_question",
+    "document": "all indexed documents",
+    "expected_pages": [],
+    "answer_key": "HM Revenue and Customs.",
+    "must_include": [
+      "Revenue and Customs"
+    ],
+    "expected_behaviour": "answer",
+    "notes": ""
+  },
+  {
+    "id": "q57",
+    "question": "Write me a cover letter for a marketing job.",
+    "type": "out_of_scope",
+    "expected_label": "out_of_scope",
+    "document": "all indexed documents",
+    "expected_pages": [],
+    "answer_key": "Return the fixed out-of-scope message.",
+    "must_include": [],
+    "expected_behaviour": "refuse",
+    "notes": "creative writing: named in the classifier's out_of_scope definition (a translation request was tried first, but it routes as general knowledge)"
   }
 ]

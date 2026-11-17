@@ -1,0 +1,40 @@
+name: CI
+
+# Lint and unit tests. No Azure access: every test uses fakes. tests/test_main.py is
+# skipped because it calls live services until it is isolated (see CLAUDE.md).
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # Placeholders so app.core.config can build its settings at import time.
+      DATABASE_URL: postgresql+psycopg://user:password@localhost:5432/db
+      AZURE_OPENAI_ENDPOINT: https://example.openai.azure.com
+      AZURE_OPENAI_API_KEY: placeholder
+      AZURE_OPENAI_DEPLOYMENT: placeholder
+      AZURE_OPENAI_EMBEDDING_ENDPOINT: https://example.openai.azure.com
+      AZURE_OPENAI_EMBEDDING_KEY: placeholder
+      AZURE_OPENAI_EMBEDDING_DEPLOYMENT: placeholder
+      AZURE_SEARCH_ENDPOINT: https://example.search.windows.net
+      AZURE_SEARCH_API_KEY: placeholder
+      AZURE_SEARCH_INDEX: placeholder
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: python eval/validate_golden.py
+      - run: pytest --ignore=tests/test_main.py -q
