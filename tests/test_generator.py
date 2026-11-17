@@ -28,3 +28,5 @@ def test_generator_uses_printed_page_numbers(monkeypatch):
     assert "Page: 24" in prompts[0]
     assert "Page: 25" in prompts[0]
     assert "Page: 23" not in prompts[0]
+
+    assert "Never share passwords." in result["context"]

@@ -7,3 +7,4 @@ class PolicyAssistantState(TypedDict):
     answer: str
     review_status: str
     sources: list[dict]
+    context: str

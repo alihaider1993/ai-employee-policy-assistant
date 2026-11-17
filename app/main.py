@@ -54,6 +54,7 @@ def answer_question(question: str) -> AskResponse:
                 "answer": "",
                 "review_status": "",
                 "sources": [],
+                "context": "",
             }
         )
 
