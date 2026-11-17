@@ -116,7 +116,7 @@ Measured on 2026-11-17 by the eval workflow on GitHub Actions, over 2 runs of al
 
 ## Quality gate
 
-`python -m eval.gate <results files>` reads result files and exits 1 when a metric crosses its limit in `thresholds.json` (a `min` for rates, a `max` for latency and cost per question). It is what `.github/workflows/eval.yml` runs after the four parts. The thresholds sit a few points below the 2026-11-17 measurements. The gate has passed once on GitHub's runners (every metric, with the injection rate closest to its limit); a threshold that fails on noise should be loosened rather than the check removed.
+`python -m eval.gate <results files>` reads result files and exits 1 when a metric crosses its limit in `thresholds.json` (a `min` for rates, a `max` for latency and cost per question). It is what `.github/workflows/eval.yml` runs after the four parts. The thresholds sit a few points below the 2026-11-17 measurements. The gate has passed once on GitHub's runners (every metric, with the injection rate closest to its limit); a threshold that fails on noise should be loosened rather than the check removed. The injection limit was lowered from 85% to 80% on 2026-11-17: the pass rate measured 94% on my machine and 87.5% on GitHub for the same code, which is within the noise of 32 samples, so 85% would have failed builds at random.
 
 ## Golden set changes
 

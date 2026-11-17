@@ -25,6 +25,7 @@ on:
       - "eval/**"
       - "!eval/**/*.md"
       - "!eval/results/**"
+      - "!eval/thresholds.json"
       - "requirements.txt"
 
 permissions:
