@@ -571,7 +571,7 @@ Three GitHub Actions workflows live in `.github/workflows/`:
 - **`eval.yml`** runs the routing, retrieval, answers and injection evals against live Azure, then `python -m eval.gate` fails the build if any metric crosses a threshold in `eval/thresholds.json` (accuracy, grounding, injection pass rate, p95 latency, cost per question). It runs when answer-affecting code changes, every Monday, or by hand, and needs the Azure keys as repository secrets.
 - **`deploy.yml`** builds the image, pushes it to ghcr.io and updates the Container App on merges to `main`, behind a `production` environment approval, with an OIDC login to Azure and a health check afterwards.
 
-The Azure resources are described in Bicep under [`infra/`](infra/README.md). The workflows and Bicep are in the repository but have not been run yet: they need the one-time setup in the header comments of `deploy.yml` and `eval.yml`.
+The Azure resources are described in Bicep under [`infra/`](infra/README.md). Status: `ci.yml` has passed on a pull request. `eval.yml` has run once and failed because the Azure secrets did not exist yet; the secrets, an Azure identity with Contributor on the app's resource group (OIDC, no stored password) and a `production` environment with a required reviewer were added afterwards, so the gate has not yet run to completion on GitHub and its thresholds may need adjusting. `deploy.yml` has not run: the live app was updated by hand with `az containerapp update`. The Bicep compiles but has not been applied.
 
 Some tests exercise local application/database behaviour and are closer to integration tests than completely isolated unit tests.
 
