@@ -23,6 +23,8 @@ on:
       - "app/core/safety.py"
       - "app/ai/**"
       - "eval/**"
+      - "!eval/**/*.md"
+      - "!eval/results/**"
       - "requirements.txt"
 
 permissions:

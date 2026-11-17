@@ -102,7 +102,7 @@ When the handbook and a statutory source give different figures, the answer is u
 
 The answers part times each `policy_graph.invoke` call and records the chat tokens it used (from the model's usage metadata), then reports p50, p95, mean tokens and cost per question by question type (`metrics.py`). Latency covers classification, retrieval, generation and review; it excludes the answer cache, the database and the network to the visitor. Cost counts chat tokens only, at assumed GPT-4o list prices of $2.50 input and $10 output per million tokens (`INPUT_USD_PER_MILLION` and `OUTPUT_USD_PER_MILLION`), so check the price for your deployment before quoting it. The judge's calls and the embedding call are not counted.
 
-Measured on 2026-11-17 over 3 runs of 46 questions (`results/20261117T182418Z_answers.json`): median 4.3 s and p95 6.2 s overall, $0.0061 per question on average. Policy questions take longer and cost more (p95 6.5 s, $0.0074) because they retrieve, generate and review; out-of-scope questions need only the classifier (p95 4.0 s, $0.0009).
+Measured on 2026-11-17 by the eval workflow on GitHub Actions, over 2 runs of all 57 questions (`results/20261117T195228Z_answers.json`): median 4.6 s and p95 6.6 s overall, $0.0060 per question on average. Policy questions take longer and cost more (p95 6.7 s, $0.0073) because they retrieve, generate and review; out-of-scope questions need only the classifier (p95 1.4 s, $0.0006). An earlier run on my machine (3 runs of 46 questions, `results/20261117T182418Z_answers.json`) gave median 4.3 s, p95 6.2 s and $0.0061.
 
 ## Prompt injection
 
@@ -111,14 +111,15 @@ Measured on 2026-11-17 over 3 runs of 46 questions (`results/20261117T182418Z_an
 | Run | Result |
 |---|---|
 | Before hardening (`results/20261117T181740Z_injection.json`) | 33/48 (69%) |
-| After hardening (`results/20261117T184133Z_injection.json`) | 45/48 (94%); the 3 misses are case i02, where the question itself asks for text to be appended |
+| After hardening, my machine (`results/20261117T184133Z_injection.json`) | 45/48 (94%); the 3 misses are case i02, where the question itself asks for text to be appended |
+| After hardening, GitHub Actions (`results/20261117T200419Z_injection.json`) | 28/32 (88%); the misses are i02 and i11, which both ask for text to be added to the answer, so those two cases vary between runs |
 
 ## Quality gate
 
-`python -m eval.gate <results files>` reads result files and exits 1 when a metric crosses its limit in `thresholds.json` (a `min` for rates, a `max` for latency and cost per question). It is what `.github/workflows/eval.yml` runs after the four parts. The thresholds sit a few points below the 2026-11-17 local measurements; they have not been tuned on GitHub's runners yet, and a threshold that fails on noise should be loosened rather than the check removed.
+`python -m eval.gate <results files>` reads result files and exits 1 when a metric crosses its limit in `thresholds.json` (a `min` for rates, a `max` for latency and cost per question). It is what `.github/workflows/eval.yml` runs after the four parts. The thresholds sit a few points below the 2026-11-17 measurements. The gate has passed once on GitHub's runners (every metric, with the injection rate closest to its limit); a threshold that fails on noise should be loosened rather than the check removed.
 
 ## Golden set changes
 
-The set is now 57 questions: 21 original, 22 policy and 3 not-covered questions for the six new documents, then 8 more policy questions, 1 not covered, 1 general and 1 out of scope. Retrieval on all 57 (`results/20261117T183814Z_retrieval_k3.json` and `..._k5.json`): hit rate 93% at k=3 and 100% at k=5. Routing on all 57 over 3 runs: 170 of 171 correct (`results/20261117T183846Z_routing.json`).
+The set is now 57 questions: 21 original, 22 policy and 3 not-covered questions for the six new documents, then 8 more policy questions, 1 not covered, 1 general and 1 out of scope. Retrieval on all 57 (`results/20261117T183814Z_retrieval_k3.json` and `..._k5.json`): hit rate 93% at k=3 and 100% at k=5. Routing on all 57 over 3 runs on my machine: 170 of 171 correct (`results/20261117T183846Z_routing.json`); on GitHub, 57 of 57 in one run (`results/20261117T195100Z_routing.json`).
 
-The final answers run on all 57 was stopped by low system memory before it finished, so the answer figures above are from the 46-question version of the set. The 11 added questions have not had an answers run.
+A local answers run on all 57 was stopped by low system memory, so the full-set answers figures come from the GitHub run: 95.4% overall, 93.8% policy, 100% not covered, 96% faithful, 97% fact recall (2 runs, `results/20261117T195228Z_answers.json`). The quality gate passed on every metric there; the injection pass rate (87.5%) was only 2.5 points above its threshold, so expect that threshold to need loosening if it starts failing on noise.

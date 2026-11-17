@@ -20,24 +20,24 @@ The demo shows the production application running on Azure, including the FastAP
 
 ## Measured results
 
-Measured on 2026-11-17 against the live Azure OpenAI and Azure AI Search deployments, using a hand-verified golden set built from the seven indexed documents. Run the evals yourself with `python -m eval.run_eval --part <routing|retrieval|answers|injection>`; the method and limits are in [`eval/README.md`](eval/README.md).
+Measured on 2026-11-17 against the live Azure OpenAI and Azure AI Search deployments, using a hand-verified golden set of 57 questions built from the seven indexed documents. The headline figures come from the eval workflow on GitHub Actions ([run 44162887996](https://github.com/alihaider1993/ai-employee-policy-assistant/actions/runs/44162887996)); my own runs on my machine agree within a few points. Run the evals yourself with `python -m eval.run_eval --part <routing|retrieval|answers|injection>`; the method and limits are in [`eval/README.md`](eval/README.md).
 
 | Measure | Result | Notes |
 |---|---|---|
-| Answer pass rate | **95%** overall, 94% on policy questions, 100% on questions the documents don't cover | 3 runs of 46 questions, judged by an LLM against hand-written key facts |
-| Grounding | **96%** of policy answers faithful to the retrieved text (average of the 3 runs) | Same judge |
+| Answer pass rate | **95%** overall, 94% on policy questions, 100% on questions the documents don't cover | 2 runs of all 57 questions, judged by an LLM against hand-written key facts |
+| Grounding | **96%** of policy answers faithful to the retrieved text | Same runs and judge |
 | Fact recall | **97%** of required facts present in answers | Same runs |
-| Routing | **99%** (170 of 171 labels correct) | 57 questions, 3 runs |
-| Retrieval | **93%** of policy questions find the right page in the top 3 chunks, 100% in the top 5 | 41 policy questions |
-| Latency | **4.3 s** median, **6.2 s** p95 per uncached answer | The graph only: classify, retrieve, generate, review. Excludes the answer cache and the network |
+| Routing | **100%** (57 of 57 labels correct) | 99% (170 of 171) over 3 runs on my machine |
+| Retrieval | **93%** of policy questions find the right page in the top 3 chunks, 100% in the top 5 | 41 policy questions; the top-5 figure is from my machine |
+| Latency | **4.6 s** median, **6.6 s** p95 per uncached answer | The graph only: classify, retrieve, generate, review. Excludes the answer cache and the network |
 | Cost | **$0.006** per uncached question on average ($0.007 for policy questions) | Chat tokens at assumed GPT-4o list prices of $2.50 and $10 per million input and output tokens; excludes embeddings and the judge |
-| Prompt injection | **45 of 48** attack runs defended (94%), up from 33 of 48 (69%) before hardening | 16 attacks, 3 runs each; see [`docs/SECURITY.md`](docs/SECURITY.md) |
+| Prompt injection | **88 to 94%** of attack runs defended (28 of 32 on GitHub, 45 of 48 on my machine), up from 69% before hardening | 16 attacks; the reviewer-manipulation attack is unstable; see [`docs/SECURITY.md`](docs/SECURITY.md) |
 
 Read these with the limits in mind:
 
 - **The judge is the bot's own model,** so it shares its blind spots, and the grounding figure is best read as an upper bound.
-- **I wrote the golden questions,** several close to the source wording, so the numbers are probably optimistic. The set is 57 questions.
-- **The answer figures come from the 46-question version of the set.** The final answers run on all 57 was interrupted, so they have not been re-measured on the extra 11.
+- **I wrote the golden questions,** several close to the source wording, so the numbers are probably optimistic.
+- **Injection results move between runs** because the model is not deterministic. The attacks that still work ask the answer to include text the user supplied.
 - **When the handbook and a statutory source disagree** (for example holiday notice), answers can misquote or contradict themselves; this is documented in `eval/README.md` and not fixed.
 - **There are no real-user numbers yet.**
 
@@ -538,7 +538,7 @@ The production PostgreSQL connection (Neon) requires SSL (`sslmode=require`).
 
 ### Prompt Injection and Personal Data
 
-Questions are redacted for personal identifiers (emails, phone numbers, National Insurance numbers, IBANs, card numbers, postcodes) before they are cached, logged or sent to Azure OpenAI. User text, answers and retrieved chunks are delimited and treated as untrusted by every prompt, markdown images are stripped from answers, and unrecognised classifier or reviewer output fails closed instead of crashing. A 16-attack test set run through the real graph defended 45 of 48 runs after hardening, against 33 of 48 before. The write-up, including what is still weak, is in [`docs/SECURITY.md`](docs/SECURITY.md).
+Questions are redacted for personal identifiers (emails, phone numbers, National Insurance numbers, IBANs, card numbers, postcodes) before they are cached, logged or sent to Azure OpenAI. User text, answers and retrieved chunks are delimited and treated as untrusted by every prompt, markdown images are stripped from answers, and unrecognised classifier or reviewer output fails closed instead of crashing. A 16-attack test set run through the real graph defended 88 to 94% of runs after hardening (28 of 32 on GitHub, 45 of 48 locally), against 69% before. The write-up, including what is still weak, is in [`docs/SECURITY.md`](docs/SECURITY.md).
 
 ---
 
@@ -571,7 +571,7 @@ Three GitHub Actions workflows live in `.github/workflows/`:
 - **`eval.yml`** runs the routing, retrieval, answers and injection evals against live Azure, then `python -m eval.gate` fails the build if any metric crosses a threshold in `eval/thresholds.json` (accuracy, grounding, injection pass rate, p95 latency, cost per question). It runs when answer-affecting code changes, every Monday, or by hand, and needs the Azure keys as repository secrets.
 - **`deploy.yml`** builds the image, pushes it to ghcr.io and updates the Container App on merges to `main`, behind a `production` environment approval, with an OIDC login to Azure and a health check afterwards.
 
-The Azure resources are described in Bicep under [`infra/`](infra/README.md). Status: `ci.yml` has passed on a pull request. `eval.yml` has run once and failed because the Azure secrets did not exist yet; the secrets, an Azure identity with Contributor on the app's resource group (OIDC, no stored password) and a `production` environment with a required reviewer were added afterwards, so the gate has not yet run to completion on GitHub and its thresholds may need adjusting. `deploy.yml` has not run: the live app was updated by hand with `az containerapp update`. The Bicep compiles but has not been applied.
+The Azure resources are described in Bicep under [`infra/`](infra/README.md). Status: `ci.yml` has passed on a pull request. `eval.yml` failed once because the Azure secrets did not exist yet; the secrets, an Azure identity with Contributor on the app's resource group (OIDC, no stored password) and a `production` environment with a required reviewer were added, and its next run passed the gate on every metric. `deploy.yml` has not run: the live app was updated by hand with `az containerapp update`. The Bicep compiles but has not been applied.
 
 Some tests exercise local application/database behaviour and are closer to integration tests than completely isolated unit tests.
 
