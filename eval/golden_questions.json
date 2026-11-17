@@ -366,7 +366,7 @@
       "twice as long as the leave plus 1 day"
     ],
     "expected_behaviour": "answer",
-    "notes": "new document; facts checked against the PDF text"
+    "notes": "known conflict: the FCA handbook says twice the leave, GOV.UK says twice the leave plus 1 day; expected to fail some runs"
   },
   {
     "id": "q25",
