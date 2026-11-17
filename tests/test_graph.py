@@ -34,3 +34,31 @@ def test_route_review():
 
     assert route_review(approved_state) == "approved"
     assert route_review(rejected_state) == "rejected"
+
+def test_review_prompt_includes_retrieved_context(monkeypatch):
+    from types import SimpleNamespace
+
+    from app.graph import nodes
+
+    prompts = []
+
+    class FakeLLM:
+        def invoke(self, prompt):
+            prompts.append(prompt)
+            return SimpleNamespace(content="Approved\n")
+
+    monkeypatch.setattr(nodes, "llm", FakeLLM())
+
+    result = nodes.review_policy_answer(
+        {
+            "question": "What is the SSP rate?",
+            "question_type": "policy_question",
+            "answer": "It is 123.25 a week.",
+            "review_status": "",
+            "sources": [],
+            "context": "Source: SSP guide\nPage: 1\nContent: weekly rate is 123.25",
+        }
+    )
+
+    assert "weekly rate is 123.25" in prompts[0]
+    assert result["review_status"] == "approved"

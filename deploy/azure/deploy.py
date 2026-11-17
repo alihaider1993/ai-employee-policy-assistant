@@ -256,6 +256,13 @@ def wait_until_succeeded(az, url, label):
         time.sleep(POLL_SECONDS)
 
 
+def uses_dedicated_workload_profile(properties):
+    # Azure lists a Consumption-only environment's built-in profile as
+    # {"workloadProfileType": "Consumption"}; only other types are dedicated hardware.
+    profiles = properties.get("workloadProfiles") or []
+    return any(profile.get("workloadProfileType") != "Consumption" for profile in profiles)
+
+
 def ensure_environment(az, subscription_id):
     url = arm_url(subscription_id, "managedEnvironments", ENVIRONMENT)
     existing = az.run("rest", "--method", "get", "--url", url, allow_not_found=True)
@@ -263,7 +270,7 @@ def ensure_environment(az, subscription_id):
         properties = existing["properties"]
         if existing["location"].replace(" ", "").lower() != LOCATION:
             raise DeployError(f"{ENVIRONMENT} exists in {existing['location']}, not {LOCATION}. Delete it or change LOCATION.")
-        if properties.get("workloadProfiles"):
+        if uses_dedicated_workload_profile(properties):
             raise DeployError(f"{ENVIRONMENT} exists but uses workload profiles, not Consumption only. Delete it first.")
         print(f"{ENVIRONMENT} already exists; reusing it.")
     else:

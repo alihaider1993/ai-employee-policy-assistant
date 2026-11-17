@@ -35,6 +35,11 @@ def generate_policy_answer(question: str):
     say that the provided policy context does not contain enough information.
     - Give a clear and concise answer.
     - Mention the source and page when appropriate.
+    - Some sources are the company's own handbook and others are UK statutory
+    guidance (GOV.UK, Acas). Say which one each point comes from.
+    - Quote each source's figures and wording exactly as written. Never say two
+    sources agree unless their figures are identical. If they differ, say so,
+    give each source's figure separately, and give the company handbook rule first.
 
     Question:
     {question}
@@ -60,5 +65,6 @@ def generate_policy_answer(question: str):
     return {
         "answer": response.content,
         "sources": sources,
+        "context": context,
     }
 

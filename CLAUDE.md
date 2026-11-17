@@ -42,7 +42,7 @@ One-off RAG scripts (run as modules so `app.*` imports resolve):
 
 ```powershell
 python -c "from app.rag.search_index import create_search_index; create_search_index()"   # create the Azure AI Search index
-python -m app.rag.index_documents    # chunk, embed and upload data/policies/fca_employee_handbook.pdf
+python -m app.rag.index_documents    # chunk, embed and upload every PDF in data/policies/ (or only the files given as arguments)
 python -m app.rag.retriever          # smoke-test retrieval with a sample question
 ```
 
@@ -65,7 +65,7 @@ There is no linter, formatter, or CI configuration.
 
 ### LangGraph workflow (`app/graph/`)
 
-`state.py` defines `PolicyAssistantState` (`question`, `question_type`, `answer`, `review_status`, `sources`). `workflow.py` wires nodes from `nodes.py`:
+`state.py` defines `PolicyAssistantState` (`question`, `question_type`, `answer`, `review_status`, `sources`, `context`). `workflow.py` wires nodes from `nodes.py`:
 
 ```
 classify_question ─┬─ policy_question  → generate_policy_rag_answer → review_policy_answer ─┬─ approved → END
@@ -75,13 +75,13 @@ classify_question ─┬─ policy_question  → generate_policy_rag_answer → 
 
 Routing uses the raw LLM text: `classify_question` stores `response.content.strip()` and `review_policy_answer` stores `.strip().lower()`, and the router functions return those strings as edge keys. Any output outside the expected labels has no matching edge and fails the request, so prompt changes to these two nodes must keep the exact label vocabulary in sync with the edge maps in `workflow.py`.
 
-The review node sees only the question and answer, not the retrieved context. Only the policy branch is reviewed.
+The review node sees the question, the answer and the retrieved chunks (`context`, set by `generate_policy_rag_answer`), and treats the chunks as the only source of truth. It still approves answers that misquote conflicting sources, for example the handbook and GOV.UK holiday notice rules (see `eval/README.md`). Only the policy branch is reviewed.
 
 ### RAG (`app/rag/`)
 
 - `loader.py` — `PyPDFLoader` + `RecursiveCharacterTextSplitter` (1000 / 200).
 - `search_index.py` — index schema: `id`, `content`, `source`, `page`, `content_vector` (1536 dims, HNSW). The dimension is tied to `text-embedding-3-small`.
-- `index_documents.py` — offline ingestion. IDs are positional (`chunk-{i}`), so re-indexing a different document overwrites earlier chunks rather than adding to them. `source` comes from the PDF's `title` metadata.
+- `index_documents.py` — offline ingestion of every PDF in `data/policies/`, or only the paths given as arguments. IDs are `<file-slug>-<n>` (the handbook keeps its original `chunk-<n>` IDs, see `LEGACY_ID_PREFIXES` in `loader.py`), so documents don't overwrite each other. `source` is the PDF's `title` metadata with any "Print " prefix removed, falling back to the file name; GOV.UK link paths are stripped from the text. The free-tier search service shares one 50 MB quota across all its indexes, and uploads are refused once it is exceeded.
 - `retriever.py` — pure vector search (`search_text=None`), `top_k=3`.
 - `generator.py` — builds the grounded prompt from retrieved chunks and returns `{"answer", "sources"}` with de-duplicated `{document, page}` pairs. Pages given to the model and returned in `sources` are printed pages (the index's 0-based page + 1); this shape must match `Source` in `app/schemas/ask.py`.
 

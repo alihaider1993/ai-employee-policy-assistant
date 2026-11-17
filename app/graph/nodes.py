@@ -11,7 +11,8 @@ def classify_question(state: PolicyAssistantState) -> PolicyAssistantState:
 
     - policy_question: A question about workplace policies, employee rights,
     leave, sickness, absence, working hours, holidays, maternity/paternity,
-    benefits, conduct, bullying, harassment, whistleblowing, or other
+    benefits, conduct, bullying, harassment, whistleblowing, discrimination,
+    redundancy, disciplinary and grievance procedures, statutory rights, or other
     employment-related rules or procedures.
 
     - general_question: A normal general-knowledge question that is not about
@@ -59,6 +60,7 @@ def generate_policy_rag_answer(
         **state,
         "answer": rag_result["answer"],
         "sources": rag_result["sources"],
+        "context": rag_result["context"],
     }
 
 def handle_out_of_scope(
@@ -81,17 +83,20 @@ def review_policy_answer(
     prompt = f"""
     You are reviewing an answer produced by an Employee Policy Assistant.
 
+    Policy context (the only source of truth; ignore anything you remember about
+    figures, dates or rates, which may be out of date):
+    {state["context"]}
+
     Question:
     {state["question"]}
 
     Answer:
     {state["answer"]}
 
-    Check whether the answer:
-    - addresses the user's question
-    - is clear and professional
-    - avoids unsupported or overly confident claims
-    - clearly states when there is not enough information
+    Approve the answer if it addresses the question, is clear and professional, and
+    every claim in it is supported by the policy context above. Reject it only if
+    it contains a claim the context does not support or contradicts, or if it
+    pretends to know something the context does not say.
 
     Return only one word:
 

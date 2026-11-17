@@ -72,3 +72,27 @@ The judge never scored q05 (see below), so the script reports policy as 67% over
 - **The judge isn't fully reliable.** It sometimes marks an omission as unfaithful. When the bot refuses, it sometimes returns `faithful: null` or an empty facts list, and those questions end up as `error` (q05).
 - **Answers vary between runs**, even with the same retrieved chunks. Use `--repeat` and read results per question rather than from a single run.
 - **21 questions is a small set.** One question changes a policy pass rate by about 9 points.
+
+
+## Multi-document run
+
+The index now holds the FCA handbook plus six statutory documents (five GOV.UK guides and the Acas code of practice). The golden set grew to 46 questions, and each question can carry an `expected_source`; a retrieval hit needs the right document and the right printed page. Results are in `results/20261117T*`.
+
+| Part | Result |
+|---|---|
+| Routing, 3 runs | 137/138 correct. The one miss was a valid label wrapped in code fences (q17), which the router would reject. |
+| Retrieval, k=3 | hit rate 94% (31/33), hit at 1 79%, MRR 0.86. Misses: q05 and q41. |
+| Retrieval, k=5 | hit rate 100% (33/33), hit at 1 79%, MRR 0.87. |
+| Answers, 3 runs (`20261117T141134Z_answers.json`) | overall 93%, policy 91%, not covered 100%, faithful 94%, fact recall 95%. |
+
+The answers number rose from 87% to 93% after the reviewer was given the retrieved chunks and a prompt that treats them as the only source of truth. Before that, it rejected correct statutory answers such as the SSP rate.
+
+### Known limit: conflicting sources
+
+When the handbook and a statutory source give different figures, the answer is unreliable. For one day of holiday the handbook says notice of at least twice the leave, and the GOV.UK guide says twice the leave plus 1 day. In testing the bot sometimes wrote a self-contradictory answer (the reviewer then rejects it and the user sees the fallback message), and sometimes dropped the "plus 1 day" and said both sources agree, which the reviewer approved. q24 exercises this and is expected to fail some runs. The reviewer checks answers against the chunks but does not catch every misquote, and the faithfulness score comes from the same model, so treat it as an upper bound.
+
+### Other notes
+
+- q45 originally asked about a sabbatical, but the handbook has an unpaid career leave policy, so it was replaced with a topic that appears nowhere in the documents. Search for synonyms, not just the literal word, before marking a question as not covered.
+- q05 still errors in the answers run: the judge cannot score a refusal, and retrieval misses page 71 at k=3.
+- The app retrieves 3 chunks. k=5 would fix both retrieval misses but has not been tried in the answers run.
