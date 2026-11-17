@@ -1,7 +1,10 @@
 # Infrastructure as code
 
-Bicep for the Azure resources this app runs on. Nothing here has been applied: the live
-app was created by `deploy/azure/deploy.py`, and these files describe the same resources.
+Bicep for the Azure resources this app runs on. These files describe the same
+resources `deploy/azure/deploy.py` created. `main.bicep` was applied once on 2026-11-17 (a `what-if`
+first showed only Azure-defaulted properties differing) and changed nothing about the app's
+behaviour. The image tag is a parameter, so later pipeline deploys move the live image ahead of
+whatever tag you last passed here.
 
 | File | Resources |
 |---|---|

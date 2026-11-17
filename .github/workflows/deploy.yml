@@ -10,9 +10,14 @@ name: Deploy
 #   1. In Azure, create an app registration with a federated credential for this
 #      repository's "production" environment, and give it the Contributor role on
 #      the employee-policy-rg resource group.
+#      The federated credential's subject must use GitHub's ID-based form,
+#      repo:<owner>@<owner id>/<repo>@<repo id>:environment:production (the failed
+#      login prints the exact subject GitHub sends).
 #   2. In GitHub, add the repository variables AZURE_CLIENT_ID, AZURE_TENANT_ID and
 #      AZURE_SUBSCRIPTION_ID, and create an environment named "production" with
 #      required reviewers so every deploy needs a click.
+#   3. In the ghcr.io package settings, add this repository under "Manage Actions
+#      access" with the Write role, or the image push is denied.
 on:
   push:
     branches: [main]
