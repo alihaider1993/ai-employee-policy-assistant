@@ -39,7 +39,6 @@ Read these with the limits in mind:
 - **I wrote the golden questions,** several close to the source wording, so the numbers are probably optimistic.
 - **Injection results move between runs** because the model is not deterministic. The attacks that still work ask the answer to include text the user supplied.
 - **When the handbook and a statutory source disagree** (for example holiday notice), answers can misquote or contradict themselves; this is documented in `eval/README.md` and not fixed.
-- **There are no real-user numbers yet.**
 
 ---
 
